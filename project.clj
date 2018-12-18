@@ -8,7 +8,8 @@
                            [reagent "0.8.1" :exclusions [cljsjs/react cljsjs/react-dom cljsjs/react-dom-server cljsjs/create-react-class]]
 [re-frame "0.10.6"]]
             :plugins [[lein-cljsbuild "1.1.4"]
-                      [lein-figwheel "0.5.14"]]
+                      [lein-figwheel "0.5.14"]
+                      [lein-re-frisk "0.5.8"]]
             :clean-targets ["target/" "index.ios.js" "index.android.js" #_($PLATFORM_CLEAN$)]
             :aliases {"prod-build" ^{:doc "Recompile code with prod profile."}
                                    ["do" "clean"
@@ -18,7 +19,11 @@
                                     ["with-profile" "advanced" "cljsbuild" "once"]]}
             :jvm-opts ["-XX:+IgnoreUnrecognizedVMOptions" "--add-modules=java.xml.bind"]
             :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.14"]
-                                            [com.cemerick/piggieback "0.2.1"]]
+                                            [com.cemerick/piggieback "0.2.1"]
+                                            [re-frisk-remote "0.5.5"]
+                                            [re-frisk-sidecar "0.5.7"]
+                                            [day8.re-frame/re-frame-10x "0.3.6-react16"]
+                                            [cider/piggieback "0.3.10"]]
                              :source-paths ["src" "env/dev"]
                              :cljsbuild    {:builds [
                                                      {:id           "ios"
@@ -28,6 +33,7 @@
                                                                      :main          "env.ios.main"
                                                                      :output-dir    "target/ios"
                                                                      :optimizations :none
+                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                                                                      :target :nodejs}}
                                                      {:id           "android"
                                                       :source-paths ["src" "env/dev"]
@@ -36,6 +42,7 @@
                                                                      :main          "env.android.main"
                                                                      :output-dir    "target/android"
                                                                      :optimizations :none
+                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                                                                      :target :nodejs}}
 #_($DEV_PROFILES$)]}
                              :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
