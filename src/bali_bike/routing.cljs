@@ -1,7 +1,7 @@
 (ns bali-bike.routing
   (:require [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [reagent.core :as r]
-            [bali-bike.ui.screens.saved-bikes :as saved-bikes]
+            [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.search :as search-screen]))
 
 (def ReactNavigation (js/require "react-navigation"))
@@ -15,4 +15,4 @@
 (defn container []
   [:> (create-app-container (create-bottom-tab-navigator
                              {:Search {:screen (r/reactify-component search-screen/main)}
-                              :Saved {:screen (r/reactify-component saved-bikes/main)}}))])
+                              :Saved {:screen (r/reactify-component saved-screen/main)}}))])
