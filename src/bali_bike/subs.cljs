@@ -1,12 +1,8 @@
 (ns bali-bike.subs
-  (:require [re-frame.core :refer [reg-sub]]))
-
-(reg-sub
-  :get-greeting
-  (fn [db _]
-    (:greeting db)))
+  (:require [re-frame.core :refer [reg-sub]]
+            [bali-bike.db :as db]))
 
 (reg-sub
  :bikes
- (fn [db _]
-   (:bikes db)))
+ (fn [app-db _]
+   (db/get-collection app-db :bikes :list)))

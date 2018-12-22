@@ -24,7 +24,6 @@
 
 (reg-event-db
  :initialize-db
- validate-spec
  (fn [_ _]
    app-db))
 
