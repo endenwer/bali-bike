@@ -1,6 +1,7 @@
 (ns bali-bike.ui.components.bike
   (:require [reagent.core :as r]
-            [bali-bike.rn :refer [text view image rating]]))
+            [bali-bike.rn :refer [text view image rating touchable-highlight]]
+            [re-frame.core :as rf]))
 
 (def Swiper (js/require "react-native-swiper"))
 (def swiper (r/adapt-react-class Swiper))
@@ -19,16 +20,17 @@
      ^{:key photo-url} [render-photo photo-url])])
 
 (defn main [bike-data]
-  (.log js/console "HELLo")
-  [view {:flex 1 :margin-bottom 25}
-   [render-photos (:photos bike-data)]
-   [view {:style {:margin-horizontal 10}}
-    [text {:style {:font-weight "600" :font-size 25}} (:name bike-data)]
-    [view {:flex-direction "row" :align-items "center" :justify-content "flex-start"}
-     [rating {:startingValue (:rating bike-data)
-              :readonly true
-              :imageSize 12}]
-     [text {:style {:margin-left 5
-                    :color "gray"
-                    :font-size 12}} (:reviews-count bike-data)]]
-    [text {:style {:margin-top 5}} (str (:price bike-data) "K IDR per month")]]])
+  [touchable-highlight
+   {:on-press #(rf/dispatch [:navigate-to :bike])}
+   [view {:flex 1 :margin-bottom 25}
+    [render-photos (:photos bike-data)]
+    [view {:style {:margin-horizontal 10}}
+     [text {:style {:font-weight "600" :font-size 25}} (:name bike-data)]
+     [view {:flex-direction "row" :align-items "center" :justify-content "flex-start"}
+      [rating {:startingValue (:rating bike-data)
+               :readonly true
+               :imageSize 12}]
+      [text {:style {:margin-left 5
+                     :color "gray"
+                     :font-size 12}} (:reviews-count bike-data)]]
+     [text {:style {:margin-top 5}} (str (:price bike-data) "K IDR per month")]]]])

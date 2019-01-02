@@ -1,8 +1,9 @@
 (ns bali-bike.events
   (:require
-   [re-frame.core :refer [reg-event-db after]]
+   [re-frame.core :refer [reg-event-db after] :as rf]
    [clojure.spec.alpha :as s]
-   [bali-bike.db :as db :refer [app-db]]))
+   [bali-bike.db :as db :refer [app-db]]
+   [bali-bike.routing :as routing]))
 
 ;; -- Interceptors ------------------------------------------------------------
 ;;
@@ -22,7 +23,27 @@
 
 ;; -- Handlers --------------------------------------------------------------
 
-(reg-event-db
+(rf/reg-fx
+ ::navigate-to
+ (fn [view-id]
+   (routing/navigate-to view-id)))
+
+(rf/reg-fx
+ ::navigate-back
+ (fn []
+   (routing/navigate-back)))
+
+(rf/reg-event-fx
+ :navigate-to
+ (fn [_ [_ view-id]]
+   {::navigate-to view-id}))
+
+(rf/reg-event-fx
+ :navigate-back
+ (fn [_ _]
+   {::navigate-back nil}))
+
+(rf/reg-event-db
  :initialize-db
  (fn [_ _]
    app-db))
