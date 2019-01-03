@@ -1,20 +1,19 @@
 (ns bali-bike.ui.components.search-header
-  (:require [bali-bike.rn :refer [text view touchable-highlight]]
+  (:require [bali-bike.rn :refer [text safe-area-view touchable-highlight]]
+            [bali-bike.ui.components.filter-buttons :as filter-buttons]
+            [bali-bike.colors :as colors]
             [re-frame.core :as rf]))
 
-(def button-styles
-  {:background-color "#7f8c8d" :padding 5 :margin-horizontal 5})
-
 (defn main []
-  [touchable-highlight
-   {:on-press #(rf/dispatch [:navigate-to :area-filter])}
-   [view {:style {:flex-direction "row"
-                  :padding-horizontal 20
-                  :padding-vertical 30
-                  :align-self "stretch"
-                  :align-items "center"
-                  :background-color "#ecf0f1"}}
-    [text {:style button-styles} "Any area"]
-    [text {:style button-styles} "Any model"]
-    [text {:style button-styles} "Any dates"]
-    [text {:style button-styles} "Filters"]]])
+  [safe-area-view {:style {:flex-direction "row"
+                           :flex-wrap "wrap"
+                           :padding-horizontal 10
+                           :align-self "stretch"
+                           :align-items "center"
+                           :border-bottom-width 1
+                           :border-color colors/silver
+                           :background-color colors/clouds}}
+   [filter-buttons/area]
+   [filter-buttons/model]
+   [filter-buttons/dates]
+   [filter-buttons/filters]])

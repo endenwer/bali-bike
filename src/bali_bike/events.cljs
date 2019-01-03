@@ -2,26 +2,8 @@
   (:require
    [re-frame.core :refer [reg-event-db after] :as rf]
    [clojure.spec.alpha :as s]
-   [bali-bike.db :as db :refer [app-db]]
+   [bali-bike.edb :as edb]
    [bali-bike.routing :as routing]))
-
-;; -- Interceptors ------------------------------------------------------------
-;;
-;; See https://github.com/Day8/re-frame/blob/master/docs/Interceptors.md
-;;
-(defn check-and-throw
-  "Throw an exception if db doesn't have a valid spec."
-  [spec db [event]]
-  (when-not (s/valid? spec db)
-    (let [explain-data (s/explain-data spec db)]
-      (throw (ex-info (str "Spec check after " event " failed: " explain-data) explain-data)))))
-
-(def validate-spec
-  (if goog.DEBUG
-    (after (partial check-and-throw ::db/app-db))
-    []))
-
-;; -- Handlers --------------------------------------------------------------
 
 (rf/reg-fx
  ::navigate-to
@@ -44,6 +26,19 @@
    {::navigate-back nil}))
 
 (rf/reg-event-db
+ :change-area-search-bar-text
+ (fn [app-db [_ value]]
+   (assoc app-db :area-search-bar-text value)))
+
+(rf/reg-event-fx
+ :set-area-filter-id
+ (fn [{:keys [db]} [_ area-id]]
+   {:db (-> db
+            (assoc :area-filter-id area-id)
+            (dissoc :area-search-bar-text))
+    ::navigate-back nil}))
+
+(rf/reg-event-db
  :initialize-db
  (fn [_ _]
-   app-db))
+   edb/initial-app-db))

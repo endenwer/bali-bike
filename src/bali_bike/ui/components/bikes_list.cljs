@@ -6,7 +6,7 @@
 
 (defn main []
   (r/with-let [bikes (rf/subscribe [:bikes])]
-    [scroll-view {:style {:flex 1}
+    [scroll-view {:style {:flex 1 :padding-top 20}
                   :showsVerticalScrollIndicator false}
      (for [bike-data @bikes]
        ^{:key (:id bike-data)} [bike/main bike-data])]))

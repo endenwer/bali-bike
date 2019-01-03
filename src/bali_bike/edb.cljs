@@ -1,4 +1,4 @@
-(ns bali-bike.db
+(ns bali-bike.edb
   (:require [clojure.spec.alpha :as s]
             [entitydb.core :as edb]))
 
@@ -50,7 +50,7 @@
   (s/keys :req-un [::greeting]))
 
 ;; initial state of app-db
-(def app-db (insert-collection {} :bikes :list  [{:id 1
+(def initial-app-db (insert-collection {} :bikes :list  [{:id 1
                                                   :name "Honda Vario"
                                                   :rating 4.3
                                                   :reviews-count 23

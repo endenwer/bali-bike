@@ -1,8 +1,24 @@
 (ns bali-bike.subs
-  (:require [re-frame.core :refer [reg-sub]]
-            [bali-bike.db :as db]))
+  (:require [re-frame.core :as rf]
+            [clojure.string :as string]
+            [bali-bike.edb :as edb]
+            [bali-bike.constants :as constants]))
 
-(reg-sub
+(rf/reg-sub
  :bikes
  (fn [app-db _]
-   (db/get-collection app-db :bikes :list)))
+   (edb/get-collection app-db :bikes :list)))
+
+(rf/reg-sub
+ :area-filter-id
+ (fn [app-db _]
+   (:area-filter-id app-db)))
+
+(rf/reg-sub
+ :filtered-areas
+ (fn [app-db _]
+   (if-let [area-search-bar-text (:area-search-bar-text app-db)]
+     (filter
+      #(string/includes? (string/lower-case (second %)) (string/lower-case area-search-bar-text))
+      constants/areas)
+     constants/areas)))

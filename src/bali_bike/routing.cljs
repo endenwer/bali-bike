@@ -1,6 +1,7 @@
 (ns bali-bike.routing
   (:require [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [reagent.core :as r]
+            [bali-bike.colors :as colors]
             [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.search :as search-screen]
             [bali-bike.ui.screens.bike :as bike-screen]
@@ -41,7 +42,9 @@
   (create-stack-navigator
    {:search {:screen (r/reactify-component search-screen/main)
              :navigationOptions {:header nil}}
-    :area-filter {:screen (r/reactify-component area-filter/main)}
+    :area-filter {:screen (r/reactify-component area-filter/main)
+                  :navigationOptions {:headerStyle {:backgroundColor colors/clouds
+                                                    :borderBottomWidth 0}}}
     :bike {:screen (r/reactify-component bike-screen/main)}}))
 
 (defn- search-stack-navigation-options
