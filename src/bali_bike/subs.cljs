@@ -22,3 +22,8 @@
       #(string/includes? (string/lower-case (second %)) (string/lower-case area-search-bar-text))
       constants/areas)
      constants/areas)))
+
+(rf/reg-sub
+ :dates-range
+ (fn [app-db _]
+   (:dates-range app-db)))

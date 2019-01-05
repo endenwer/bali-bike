@@ -5,7 +5,8 @@
             [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.search :as search-screen]
             [bali-bike.ui.screens.bike :as bike-screen]
-            [bali-bike.ui.screens.area-filter :as area-filter]))
+            [bali-bike.ui.screens.area-filter :as area-filter]
+            [bali-bike.ui.screens.dates-filter :as dates-filter]))
 
 (def ReactNavigation (js/require "react-navigation"))
 
@@ -45,6 +46,7 @@
     :area-filter {:screen (r/reactify-component area-filter/main)
                   :navigationOptions {:headerStyle {:backgroundColor colors/clouds
                                                     :borderBottomWidth 0}}}
+    :dates-filter {:screen (r/reactify-component dates-filter/main)}
     :bike {:screen (r/reactify-component bike-screen/main)}}))
 
 (defn- search-stack-navigation-options

@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@babel/plugin-external-helpers": "^7.0.0",
+    "moment": "^2.23.0",
     "react": "16.6.1",
     "react-native": "0.57.7",
+    "react-native-calendar-picker": "^5.22.0",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-swiper": "^1.5.14",

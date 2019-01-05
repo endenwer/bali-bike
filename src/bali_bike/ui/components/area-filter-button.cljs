@@ -5,6 +5,8 @@
             [re-frame.core :as rf]
             [reagent.core :as r]))
 
+(def moment (js/require "moment"))
+
 (defn button-styles [is-active]
   {:background-color (if is-active colors/turquoise colors/white)
    :margin-horizontal 5
@@ -34,11 +36,20 @@
                     :is-active @area-filter-id
                     :filter-screen-name :area-filter}]))
 
+(defn dates []
+  (r/with-let [dates-range (rf/subscribe [:dates-range])]
+    (let [start-date (:start-date @dates-range)
+          end-date (:end-date @dates-range)]
+      [render-button {:title (if @dates-range
+                               (str (.format (moment start-date) "MMM D")
+                                    " - "
+                                    (.format (moment end-date) "MMM D"))
+                               "Any dates")
+                      :is-active @dates-range
+                      :filter-screen-name :dates-filter}])))
+
 (defn model []
   [render-button {:title "Any model" :filter-screen-name :area-filter}])
-
-(defn dates []
-  [render-button {:title "Any dates" :filter-screen-name :area-filter}])
 
 (defn filters []
   [render-button {:title "Filters" :filter-screen-name :area-filter}])

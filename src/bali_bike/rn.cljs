@@ -22,6 +22,7 @@
 (def search-bar (r/adapt-react-class (.-SearchBar ReactNativeElements)))
 (def list (r/adapt-react-class (.-List ReactNativeElements)))
 (def list-item (r/adapt-react-class (.-ListItem ReactNativeElements)))
+(def button (r/adapt-react-class (.-Button ReactNativeElements)))
 
 ; icons
 

@@ -10,7 +10,9 @@
     "react-native-gesture-handler",
     "react-native-swiper",
     "react-native-elements",
-    "react-native-vector-icons/MaterialIcons"
+    "react-native-vector-icons/MaterialIcons",
+    "react-native-calendar-picker",
+    "moment"
   ],
   "imageDirs": [
     "images"

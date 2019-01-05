@@ -1,0 +1,58 @@
+(ns bali-bike.ui.screens.dates-filter
+  (:require [bali-bike.rn :refer [text safe-area-view view button]]
+            [bali-bike.colors :as colors]
+            [reagent.core :as r]
+            [re-frame.core :as rf]))
+
+(def CalendarPicker (.-default (js/require "react-native-calendar-picker")))
+(def calendar-picker (r/adapt-react-class CalendarPicker))
+(def moment (js/require "moment"))
+
+(defn render-selected-date
+  [date title]
+  [text {:style {:font-size 20}}
+   (if date (.format date "MMM D") title)])
+
+(defn render-selected-dates
+  [start-date end-date]
+  [view {:style {:flex-direction "row"
+                 :align-items "center"
+                 :margin-top 40
+                 :justify-content "center"}}
+   [render-selected-date start-date "Start date"]
+   [text {:style {:font-size 50
+                  :margin-horizontal 30
+                  :color colors/clouds}} "/"]
+   [render-selected-date end-date "End date"]])
+
+(defn main []
+  (r/with-let [dates-range @(rf/subscribe [:dates-range])
+               saved-start-date (:start-date dates-range)
+               saved-end-date (:end-date dates-range)
+               start-date (r/atom (if saved-start-date (moment saved-start-date) nil))
+               end-date (r/atom (if saved-end-date (moment saved-end-date) nil))
+               on-date-change (fn [date type] (if (= type "END_DATE")
+                                                (reset! end-date date)
+                                                (do (reset! end-date nil)
+                                                    (reset! start-date date))))]
+    [view {:style {:flex 1
+                   :flex-direction "column"}}
+     [calendar-picker {:allow-range-selection true
+                       :selected-day-color colors/turquoise
+                       :selected-day-text-color colors/white
+                       :start-from-monday true
+                       :min-date (js/Date.)
+                       :selected-start-date @start-date
+                       :selected-end-date @end-date
+                       :on-date-change on-date-change}]
+     [render-selected-dates @start-date @end-date]
+     [safe-area-view {:style {:flex 1
+                              :justify-content "flex-end"
+                              :margin-bottom 20}}
+      [button {:title "Save"
+               :disabled (or (nil? @start-date) (nil? @end-date))
+               :border-radius 5
+               :background-color colors/turquoise
+               :on-press #(rf/dispatch [:set-dates-range
+                                        (.toISOString @start-date)
+                                        (.toISOString @end-date)])}]]]))

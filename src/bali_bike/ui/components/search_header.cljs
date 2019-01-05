@@ -11,9 +11,8 @@
                            :align-self "stretch"
                            :align-items "center"
                            :border-bottom-width 1
-                           :border-color colors/silver
-                           :background-color colors/clouds}}
+                           :border-color colors/silver}}
    [filter-buttons/area]
-   [filter-buttons/model]
    [filter-buttons/dates]
+   [filter-buttons/model]
    [filter-buttons/filters]])

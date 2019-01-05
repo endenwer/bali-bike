@@ -38,6 +38,12 @@
             (dissoc :area-search-bar-text))
     ::navigate-back nil}))
 
+(rf/reg-event-fx
+ :set-dates-range
+ (fn [{:keys [db]} [_ start-date end-date]]
+   {:db (assoc db :dates-range {:start-date start-date :end-date end-date})
+    ::navigate-back nil}))
+
 (rf/reg-event-db
  :initialize-db
  (fn [_ _]
