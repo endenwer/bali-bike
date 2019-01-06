@@ -1,8 +1,9 @@
 (ns bali-bike.events
   (:require
    [re-frame.core :refer [reg-event-db after] :as rf]
-   [clojure.spec.alpha :as s]
+   [re-graph.core :as re-graph]
    [bali-bike.edb :as edb]
+   [bali-bike.interceptors :as interceptors]
    [bali-bike.routing :as routing]))
 
 (rf/reg-fx
@@ -43,6 +44,22 @@
  (fn [{:keys [db]} [_ start-date end-date]]
    {:db (assoc db :dates-range {:start-date start-date :end-date end-date})
     ::navigate-back nil}))
+
+(rf/reg-event-db
+ :on-bikes-loaded
+ [interceptors/transform-event-to-kebab]
+ (fn [db [_ {:keys [data]}]]
+   (.log js/console data)
+   (edb/insert-collection db :bikes :list (:bikes data) {:loading? false})))
+
+(rf/reg-event-fx
+ :load-bikes
+ (fn [{:keys [db]} [_ _]]
+   {:db (edb/insert-meta db :bikes :list {:loading? true})
+    :dispatch [::re-graph/query
+               "{ bikes {id, modelId, photos, price, rating, reviewsCount}}"
+               nil
+               [:on-bikes-loaded]]}))
 
 (rf/reg-event-db
  :initialize-db

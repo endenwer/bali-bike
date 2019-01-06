@@ -1,6 +1,7 @@
 (ns bali-bike.ui.components.bike
   (:require [reagent.core :as r]
             [bali-bike.rn :refer [text view image rating touchable-highlight]]
+            [bali-bike.constants :as constants]
             [re-frame.core :as rf]))
 
 (def Swiper (js/require "react-native-swiper"))
@@ -25,7 +26,7 @@
    [view {:flex 1 :margin-bottom 25}
     [render-photos (:photos bike-data)]
     [view {:style {:margin-horizontal 10}}
-     [text {:style {:font-weight "600" :font-size 25}} (:name bike-data)]
+     [text {:style {:font-weight "600" :font-size 25}} (get constants/models (:model-id bike-data))]
      [view {:flex-direction "row" :align-items "center" :justify-content "flex-start"}
       [rating {:startingValue (:rating bike-data)
                :readonly true
