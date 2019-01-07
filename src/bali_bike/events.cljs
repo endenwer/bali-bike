@@ -49,7 +49,6 @@
  :on-bikes-loaded
  [interceptors/transform-event-to-kebab]
  (fn [db [_ {:keys [data]}]]
-   (.log js/console data)
    (edb/insert-collection db :bikes :list (:bikes data) {:loading? false})))
 
 (rf/reg-event-fx

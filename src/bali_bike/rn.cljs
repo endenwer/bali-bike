@@ -14,6 +14,7 @@
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
 (def image (r/adapt-react-class (.-Image ReactNative)))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight ReactNative)))
+(def activity-indicator (r/adapt-react-class (.-ActivityIndicator ReactNative)))
 (defn alert [title] (.alert (.-Alert ReactNative) title))
 
 ; react native elements
