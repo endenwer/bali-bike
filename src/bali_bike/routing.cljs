@@ -47,7 +47,8 @@
                   :navigationOptions {:headerStyle {:backgroundColor colors/clouds
                                                     :borderBottomWidth 0}}}
     :dates-filter {:screen (r/reactify-component dates-filter/main)}
-    :bike {:screen (r/reactify-component bike-screen/main)}}))
+    :bike {:screen (r/reactify-component bike-screen/main)
+           :navigationOptions {:headerTransparent true}}}))
 
 (defn- search-stack-navigation-options
   [navigator]

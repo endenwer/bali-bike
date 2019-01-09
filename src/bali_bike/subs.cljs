@@ -27,3 +27,8 @@
  :dates-range
  (fn [app-db _]
    (:dates-range app-db)))
+
+(rf/reg-sub
+ :current-bike
+ (fn [app-db _]
+   (edb/get-named-item app-db :bikes :current)))

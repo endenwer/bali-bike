@@ -1,5 +1,6 @@
 (ns bali-bike.ui.screens.dates-filter
-  (:require [bali-bike.rn :refer [text safe-area-view view button]]
+  (:require [bali-bike.rn :refer [text safe-area-view view]]
+            [bali-bike.ui.components.common :refer [button]]
             [bali-bike.colors :as colors]
             [reagent.core :as r]
             [re-frame.core :as rf]))
@@ -51,7 +52,6 @@
                               :margin-bottom 20}}
       [button {:title "Save"
                :disabled (or (nil? @start-date) (nil? @end-date))
-               :border-radius 5
                :background-color colors/turquoise
                :on-press #(rf/dispatch [:set-dates-range
                                         (.toISOString @start-date)

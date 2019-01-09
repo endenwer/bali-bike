@@ -7,3 +7,4 @@
 (def midnight-blue "#2c3e50")
 (def turquoise "#1abc9c")
 (def gree-sea "#16a085")
+(def alizarin "#e74c3c")

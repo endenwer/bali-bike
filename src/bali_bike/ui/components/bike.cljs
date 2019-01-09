@@ -2,36 +2,17 @@
   (:require [reagent.core :as r]
             [bali-bike.rn :refer [text view image rating touchable-highlight]]
             [bali-bike.constants :as constants]
+            [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
+            [bali-bike.ui.components.bike-title :as bike-title]
+            [bali-bike.ui.components.bike-rating :as bike-rating]
             [re-frame.core :as rf]))
-
-(def Swiper (js/require "react-native-swiper"))
-(def swiper (r/adapt-react-class Swiper))
-
-(defn render-photo [photo-url]
-  [view {:style {:flex 1 :align-items "center" :background-color "powderblue"}}
-   [image {:style {:flex 1 :background-color "skyblue" :align-self "stretch"}
-           :source {:uri photo-url}}]])
-
-(defn render-photos [photos]
-  [swiper {:showButtons true
-           :loadMinimalSize 1
-           :loop false
-           :style {:height 250 :align-self "stretch"}}
-   (for [photo-url photos]
-     ^{:key photo-url} [render-photo photo-url])])
 
 (defn main [bike-data]
   [touchable-highlight
-   {:on-press #(rf/dispatch [:navigate-to :bike])}
+   {:on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])}
    [view {:flex 1 :margin-bottom 25}
-    [render-photos (:photos bike-data)]
+    [bike-photos-swiper/main (:photos bike-data)]
     [view {:style {:margin-horizontal 10}}
-     [text {:style {:font-weight "600" :font-size 25}} (get constants/models (:model-id bike-data))]
-     [view {:flex-direction "row" :align-items "center" :justify-content "flex-start"}
-      [rating {:startingValue (:rating bike-data)
-               :readonly true
-               :imageSize 12}]
-      [text {:style {:margin-left 5
-                     :color "gray"
-                     :font-size 12}} (:reviews-count bike-data)]]
+     [bike-title/main bike-data]
+     [bike-rating/main bike-data]
      [text {:style {:margin-top 5}} (str (:price bike-data) "K IDR per month")]]]])

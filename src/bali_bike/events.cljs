@@ -26,6 +26,12 @@
  (fn [_ _]
    {::navigate-back nil}))
 
+(rf/reg-event-fx
+ :navigate-to-bike
+ (fn [{:keys [db]} [_ bike-id]]
+   {:db (edb/insert-named-item db :bikes :current {:id bike-id})
+    ::navigate-to :bike}))
+
 (rf/reg-event-db
  :change-area-search-bar-text
  (fn [app-db [_ value]]
@@ -56,7 +62,7 @@
  (fn [{:keys [db]} [_ _]]
    {:db (edb/insert-meta db :bikes :list {:loading? true})
     :dispatch [::re-graph/query
-               "{ bikes {id, modelId, photos, price, rating, reviewsCount}}"
+               "{ bikes {id, modelId, photos, price, rating, reviewsCount, mileage, manufactureYear}}"
                nil
                [:on-bikes-loaded]]}))
 
