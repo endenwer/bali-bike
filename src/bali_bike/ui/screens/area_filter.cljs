@@ -1,5 +1,6 @@
 (ns bali-bike.ui.screens.area-filter
-  (:require [bali-bike.rn :refer [text view search-bar list list-item]]
+  (:require [bali-bike.rn :refer [view search-bar list list-item]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.colors :as colors]
             [reagent.core :as r]
             [re-frame.core :as rf]))

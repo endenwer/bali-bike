@@ -1,7 +1,7 @@
 (ns bali-bike.ui.components.bike-title
   (:require [bali-bike.constants :as constants]
-            [bali-bike.rn :refer [text]]))
+            [bali-bike.ui.components.common :refer [h4]]))
 
 (defn main [bike]
-  [text {:style {:font-weight "600" :font-size 25}}
+  [h4 {:font-weight "600"}
    (get constants/models (:model-id bike))])

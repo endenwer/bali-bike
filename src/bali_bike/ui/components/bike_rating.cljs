@@ -1,5 +1,6 @@
 (ns bali-bike.ui.components.bike-rating
-  (:require [bali-bike.rn :refer [text view rating]]))
+  (:require [bali-bike.rn :refer [view rating]]
+            [bali-bike.ui.components.common :refer [text]]))
 
 (defn main
   [bike]

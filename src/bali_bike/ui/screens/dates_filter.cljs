@@ -1,6 +1,6 @@
 (ns bali-bike.ui.screens.dates-filter
-  (:require [bali-bike.rn :refer [text safe-area-view view]]
-            [bali-bike.ui.components.common :refer [button]]
+  (:require [bali-bike.rn :refer [safe-area-view view]]
+            [bali-bike.ui.components.common :refer [button text]]
             [bali-bike.colors :as colors]
             [reagent.core :as r]
             [re-frame.core :as rf]))

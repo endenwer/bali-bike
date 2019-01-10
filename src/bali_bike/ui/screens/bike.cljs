@@ -1,9 +1,9 @@
 (ns bali-bike.ui.screens.bike
-  (:require [bali-bike.rn :refer [text view scroll-view safe-area-view]]
+  (:require [bali-bike.rn :refer [view scroll-view safe-area-view]]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.ui.components.property-item :as property-item]
-            [bali-bike.ui.components.common :refer [button]]
+            [bali-bike.ui.components.common :refer [button text]]
             [bali-bike.colors :as colors]
             [bali-bike.ui.components.bike-rating :as bike-rating]
             [reagent.core :as r]

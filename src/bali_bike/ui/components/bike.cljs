@@ -1,6 +1,7 @@
 (ns bali-bike.ui.components.bike
   (:require [reagent.core :as r]
-            [bali-bike.rn :refer [text view image rating touchable-highlight]]
+            [bali-bike.rn :refer [view image rating touchable-highlight]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.constants :as constants]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.ui.components.bike-title :as bike-title]

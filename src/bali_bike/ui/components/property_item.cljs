@@ -1,6 +1,7 @@
 (ns bali-bike.ui.components.property-item
   (:require
-   [bali-bike.rn :refer [text view]]
+   [bali-bike.rn :refer [view]]
+   [bali-bike.ui.components.common :refer [text]]
    [bali-bike.colors :as colors]))
 
 (defn main

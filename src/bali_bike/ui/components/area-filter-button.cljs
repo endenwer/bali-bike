@@ -1,5 +1,6 @@
 (ns bali-bike.ui.components.filter-buttons
-  (:require [bali-bike.rn :refer [text view touchable-highlight]]
+  (:require [bali-bike.rn :refer [view touchable-highlight]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.colors :as colors]
             [bali-bike.constants :as constants]
             [re-frame.core :as rf]

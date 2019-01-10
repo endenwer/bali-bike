@@ -1,5 +1,6 @@
 (ns bali-bike.ui.components.search-header
-  (:require [bali-bike.rn :refer [text safe-area-view touchable-highlight]]
+  (:require [bali-bike.rn :refer [safe-area-view touchable-highlight]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.ui.components.filter-buttons :as filter-buttons]
             [bali-bike.colors :as colors]
             [re-frame.core :as rf]))

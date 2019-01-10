@@ -5,6 +5,7 @@
 (def silver "#bdc3c7")
 (def concrete "#95a5a6")
 (def midnight-blue "#2c3e50")
+(def wet-asphalt "#34495e")
 (def turquoise "#1abc9c")
 (def gree-sea "#16a085")
 (def alizarin "#e74c3c")

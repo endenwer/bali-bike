@@ -1,7 +1,8 @@
 (ns bali-bike.ui.screens.search
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
-            [bali-bike.rn :refer [text view]]
+            [bali-bike.rn :refer [view]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.ui.components.bikes-list :as bikes-list]
             [bali-bike.ui.components.search-header :as search-header]))
 
