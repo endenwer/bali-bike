@@ -29,8 +29,21 @@
 (rf/reg-event-fx
  :navigate-to-bike
  (fn [{:keys [db]} [_ bike-id]]
-   {:db (edb/insert-named-item db :bikes :current {:id bike-id})
+   {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
+    :dispatch [::re-graph/query
+               (str
+                "query($id: ID!){bike(bikeId: $id){"
+                "id modelId photos price rating reviewsCount mileage manufactureYear "
+                "reviews {id rating comment}}}")
+               {:id bike-id}
+               [:on-bike-loaded]]
     ::navigate-to :bike}))
+
+(rf/reg-event-db
+ :on-bike-loaded
+ [interceptors/transform-event-to-kebab]
+ (fn [db [_ {:keys [data]}]]
+   (edb/insert-named-item db :bikes :current (:bike data) {:loading? false})))
 
 (rf/reg-event-db
  :change-area-search-bar-text
@@ -62,7 +75,7 @@
  (fn [{:keys [db]} [_ _]]
    {:db (edb/insert-meta db :bikes :list {:loading? true})
     :dispatch [::re-graph/query
-               "{ bikes {id, modelId, photos, price, rating, reviewsCount, mileage, manufactureYear}}"
+               "{bikes {id, modelId, photos, price, rating, reviewsCount, mileage, manufactureYear}}"
                nil
                [:on-bikes-loaded]]}))
 

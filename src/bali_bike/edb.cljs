@@ -2,7 +2,10 @@
   (:require [clojure.spec.alpha :as s]
             [entitydb.core :as edb]))
 
-(def dbal (edb/make-dbal {:bikes {:id :id}}))
+(def dbal (edb/make-dbal {:bikes {:id :id
+                                  :relations {:reviews [:many :reviews]}}
+                          :reviews {:id :id
+                                    :relations {:bike [:one :bike]}}}))
 
 (defn insert-item [& args] (apply (:insert-item dbal) args))
 (defn insert-named-item [& args] (apply (:insert-named-item dbal) args))

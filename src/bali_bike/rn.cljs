@@ -8,7 +8,7 @@
 ; react native
 
 (def app-registry (.-AppRegistry ReactNative))
-(def text (r/adapt-react-class (.-Text ReactNativeElements)))
+(def text (r/adapt-react-class (.-Text ReactNative)))
 (def view (r/adapt-react-class (.-View ReactNative)))
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
