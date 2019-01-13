@@ -4,6 +4,7 @@
             [bali-bike.colors :as colors]
             [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.search :as search-screen]
+            [bali-bike.ui.screens.login :as login-screen]
             [bali-bike.ui.screens.bike :as bike-screen]
             [bali-bike.ui.screens.area-filter :as area-filter]
             [bali-bike.ui.screens.dates-filter :as dates-filter]))
@@ -36,6 +37,9 @@
 (defn- create-bottom-tab-navigator [route-configs]
   (.createBottomTabNavigator ReactNavigation (clj->js route-configs)))
 
+(defn- create-switch-navigator [route-configs]
+  (.createSwitchNavigator ReactNavigation (clj->js route-configs)))
+
 (defn- create-app-container [component]
   (.createAppContainer ReactNavigation component))
 
@@ -54,9 +58,14 @@
   [navigator]
   (clj->js {:tabBarVisible (= (.-navigation.state.index navigator) 0)}))
 
+(def main-tabs
+  (create-bottom-tab-navigator
+   {:search {:screen search-stack
+             :navigationOptions search-stack-navigation-options}
+    :saved {:screen (r/reactify-component saved-screen/main)}}))
+
 (defn container []
-  [:> (create-app-container (create-bottom-tab-navigator
-                             {:search {:screen search-stack
-                                       :navigationOptions search-stack-navigation-options}
-                              :saved {:screen (r/reactify-component saved-screen/main)}}))
+  [:> (create-app-container
+       (create-switch-navigator {:auth {:screen (r/reactify-component login-screen/main)}
+                                 :app {:screen main-tabs}}))
    {:ref (fn [ref] (reset! navigator-ref ref))}])

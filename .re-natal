@@ -12,7 +12,9 @@
     "react-native-elements",
     "react-native-vector-icons/MaterialIcons",
     "react-native-calendar-picker",
-    "moment"
+    "moment",
+    "react-native-google-signin",
+    "react-native-firebase"
   ],
   "imageDirs": [
     "images"
