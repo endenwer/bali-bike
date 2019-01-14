@@ -1,12 +1,9 @@
 (ns bali-bike.rn
   (:require [reagent.core :as r]))
 
-(def ReactNative (js/require "react-native"))
-(def ReactNativeElements (js/require "react-native-elements"))
-(def MaterialIcons (js/require "react-native-vector-icons/MaterialIcons"))
-
 ; react native
 
+(def ReactNative (js/require "react-native"))
 (def app-registry (.-AppRegistry ReactNative))
 (def text (r/adapt-react-class (.-Text ReactNative)))
 (def view (r/adapt-react-class (.-View ReactNative)))
@@ -19,6 +16,7 @@
 
 ; react native elements
 
+(def ReactNativeElements (js/require "react-native-elements"))
 (def rating (r/adapt-react-class (.-Rating ReactNativeElements)))
 (def search-bar (r/adapt-react-class (.-SearchBar ReactNativeElements)))
 (def list (r/adapt-react-class (.-List ReactNativeElements)))
@@ -27,5 +25,11 @@
 
 ; icons
 
+(def MaterialIcons (js/require "react-native-vector-icons/MaterialIcons"))
 (def material-icon (r/adapt-react-class MaterialIcons))
 
+; firebase
+
+(def firebase (js/require "react-native-firebase"))
+(def ReactNativeGoogleSignin (js/require "react-native-google-signin"))
+(def google-signin (.-GoogleSignin ReactNativeGoogleSignin))

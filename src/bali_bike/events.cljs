@@ -4,27 +4,30 @@
    [re-graph.core :as re-graph]
    [bali-bike.edb :as edb]
    [bali-bike.interceptors :as interceptors]
-   [bali-bike.routing :as routing]))
+   [promesa.core :as p]
+   [bali-bike.rn :as rn]
+   [bali-bike.routing :as routing]
+   [bali-bike.events.auth :as auth]))
 
 (rf/reg-fx
- ::navigate-to
+ :navigation/navigate-to
  (fn [view-id]
    (routing/navigate-to view-id)))
 
 (rf/reg-fx
- ::navigate-back
+ :navigation/navigate-back
  (fn []
    (routing/navigate-back)))
 
 (rf/reg-event-fx
  :navigate-to
  (fn [_ [_ view-id]]
-   {::navigate-to view-id}))
+   {:navigation/navigate-to view-id}))
 
 (rf/reg-event-fx
  :navigate-back
  (fn [_ _]
-   {::navigate-back nil}))
+   {:navigation/navigate-back nil}))
 
 (rf/reg-event-fx
  :navigate-to-bike
@@ -33,11 +36,10 @@
     :dispatch [::re-graph/query
                (str
                 "query($id: ID!){bike(bikeId: $id){"
-                "id modelId photos price rating reviewsCount mileage manufactureYear "
-                "reviews {id rating comment}}}")
+                "id modelId photos price rating reviewsCount mileage manufactureYear " "reviews {id rating comment}}}")
                {:id bike-id}
                [:on-bike-loaded]]
-    ::navigate-to :bike}))
+    :navigation/navigate-to :bike}))
 
 (rf/reg-event-db
  :on-bike-loaded
@@ -56,13 +58,13 @@
    {:db (-> db
             (assoc :area-filter-id area-id)
             (dissoc :area-search-bar-text))
-    ::navigate-back nil}))
+    :navigation/navigate-back nil}))
 
 (rf/reg-event-fx
  :set-dates-range
  (fn [{:keys [db]} [_ start-date end-date]]
    {:db (assoc db :dates-range {:start-date start-date :end-date end-date})
-    ::navigate-back nil}))
+    :navigation/navigate-back nil}))
 
 (rf/reg-event-db
  :on-bikes-loaded
@@ -83,3 +85,14 @@
  :initialize-db
  (fn [_ _]
    edb/initial-app-db))
+
+;; auth handlers
+
+(rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
+
+(rf/reg-event-fx :signin-with-google auth/sign-in-with-google-event)
+
+(rf/reg-event-fx
+ :auth-state-changed
+ [interceptors/transform-event-to-kebab]
+ auth/auth-state-changed-event)
