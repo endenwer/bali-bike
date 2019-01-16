@@ -7,7 +7,8 @@
    [promesa.core :as p]
    [bali-bike.rn :as rn]
    [bali-bike.routing :as routing]
-   [bali-bike.events.auth :as auth]))
+   [bali-bike.events.auth :as auth]
+   [bali-bike.events.booking :as booking]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -96,3 +97,8 @@
  :auth-state-changed
  [interceptors/transform-event-to-kebab]
  auth/auth-state-changed-event)
+
+;; booking handlers
+
+(rf/reg-fx :booking/create booking/create-booking)
+(rf/reg-event-fx :create-booking booking/create-booking-event)

@@ -6,6 +6,7 @@
             [bali-bike.ui.screens.search :as search-screen]
             [bali-bike.ui.screens.login :as login-screen]
             [bali-bike.ui.screens.bike :as bike-screen]
+            [bali-bike.ui.screens.new-booking :as new-booking-screen]
             [bali-bike.ui.screens.area-filter :as area-filter]
             [bali-bike.ui.screens.dates-filter :as dates-filter]))
 
@@ -52,7 +53,8 @@
                                                     :borderBottomWidth 0}}}
     :dates-filter {:screen (r/reactify-component dates-filter/main)}
     :bike {:screen (r/reactify-component bike-screen/main)
-           :navigationOptions {:headerTransparent true}}}))
+           :navigationOptions {:headerTransparent true}}
+    :new-booking {:screen (r/reactify-component new-booking-screen/main)}}))
 
 (defn- search-stack-navigation-options
   [navigator]
