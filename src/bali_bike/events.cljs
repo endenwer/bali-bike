@@ -1,7 +1,6 @@
 (ns bali-bike.events
   (:require
    [re-frame.core :refer [reg-event-db after] :as rf]
-   [re-graph.core :as re-graph]
    [bali-bike.edb :as edb]
    [bali-bike.interceptors :as interceptors]
    [promesa.core :as p]
@@ -9,6 +8,7 @@
    [bali-bike.routing :as routing]
    [bali-bike.events.auth :as auth-events]
    [bali-bike.auth :as auth]
+   [bali-bike.api :as api]
    [bali-bike.events.booking :as booking-events]))
 
 (rf/reg-fx
@@ -35,13 +35,13 @@
  :navigate-to-bike
  (fn [{:keys [db]} [_ bike-id]]
    {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
-    :dispatch [::re-graph/query
-               (str
-                "query($id: ID!){bike(id: $id){"
-                "id modelId photos price rating reviewsCount mileage manufactureYear "
-                "reviews {id rating comment}}}")
-               {:id bike-id}
-               [:on-bike-loaded]]
+    :api/send-graphql {:query (str
+                               "query($id: ID!){bike(id: $id){"
+                               "id modelId photos price rating "
+                               "reviewsCount mileage manufactureYear "
+                               "reviews {id rating comment}}}")
+                       :variables {:id bike-id}
+                       :callback-event :on-bike-loaded}
     :navigation/navigate-to :bike}))
 
 (rf/reg-event-db
@@ -79,10 +79,10 @@
  :load-bikes
  (fn [{:keys [db]} [_ _]]
    {:db (edb/insert-meta db :bikes :list {:loading? true})
-    :dispatch [::re-graph/query
-               "{bikes {id, modelId, photos, price, rating, reviewsCount, mileage, manufactureYear}}"
-               nil
-               [:on-bikes-loaded]]}))
+    :api/send-graphql {:query (str "{bikes "
+                                   "{id, modelId, photos, price, rating, "
+                                   "reviewsCount, mileage, manufactureYear}}")
+                       :callback-event :on-bikes-loaded}}))
 
 (rf/reg-event-db
  :initialize-db
@@ -92,11 +92,8 @@
 ;; auth handlers
 
 (rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
-
 (rf/reg-event-fx :signin-with-google auth-events/sign-in-with-google-event)
-
-(rf/reg-event-fx
- :auth-state-changed
+(rf/reg-event-fx :auth-state-changed
  [interceptors/transform-event-to-kebab]
  auth-events/auth-state-changed-event)
 
@@ -104,3 +101,6 @@
 
 (rf/reg-fx :booking/create booking-events/create-booking)
 (rf/reg-event-fx :create-booking booking-events/create-booking-event)
+
+;; api
+(rf/reg-fx :api/send-graphql api/send-graphql)

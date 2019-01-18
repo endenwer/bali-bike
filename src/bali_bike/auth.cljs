@@ -7,11 +7,10 @@
 (def user-instance (atom nil))
 
 (defn get-token []
-  (->
-   (alet [user @user-instance
-          token (p/await (.getIdToken user))]
-         token)
-   (p/catch (fn [error] nil))))
+  (if-let [user @user-instance]
+    (->
+     (alet [token (p/await (.getIdToken user))] token)
+     (p/catch (fn [error] nil)))))
 
 (defn sign-in-with-google []
   (->
