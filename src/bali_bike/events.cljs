@@ -7,8 +7,9 @@
    [promesa.core :as p]
    [bali-bike.rn :as rn]
    [bali-bike.routing :as routing]
-   [bali-bike.events.auth :as auth]
-   [bali-bike.events.booking :as booking]))
+   [bali-bike.events.auth :as auth-events]
+   [bali-bike.auth :as auth]
+   [bali-bike.events.booking :as booking-events]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -36,8 +37,9 @@
    {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
     :dispatch [::re-graph/query
                (str
-                "query($id: ID!){bike(bikeId: $id){"
-                "id modelId photos price rating reviewsCount mileage manufactureYear " "reviews {id rating comment}}}")
+                "query($id: ID!){bike(id: $id){"
+                "id modelId photos price rating reviewsCount mileage manufactureYear "
+                "reviews {id rating comment}}}")
                {:id bike-id}
                [:on-bike-loaded]]
     :navigation/navigate-to :bike}))
@@ -91,14 +93,14 @@
 
 (rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
 
-(rf/reg-event-fx :signin-with-google auth/sign-in-with-google-event)
+(rf/reg-event-fx :signin-with-google auth-events/sign-in-with-google-event)
 
 (rf/reg-event-fx
  :auth-state-changed
  [interceptors/transform-event-to-kebab]
- auth/auth-state-changed-event)
+ auth-events/auth-state-changed-event)
 
 ;; booking handlers
 
-(rf/reg-fx :booking/create booking/create-booking)
-(rf/reg-event-fx :create-booking booking/create-booking-event)
+(rf/reg-fx :booking/create booking-events/create-booking)
+(rf/reg-event-fx :create-booking booking-events/create-booking-event)
