@@ -1,8 +1,12 @@
 (ns bali-bike.routing
   (:require [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [reagent.core :as r]
+            [bali-bike.rn :as rn]
             [bali-bike.colors :as colors]
             [bali-bike.ui.screens.saved :as saved-screen]
+            [bali-bike.ui.screens.bookings :as bookings-screen]
+            [bali-bike.ui.screens.messages :as messages-screen]
+            [bali-bike.ui.screens.profile :as profile-screen]
             [bali-bike.ui.screens.search :as search-screen]
             [bali-bike.ui.screens.login :as login-screen]
             [bali-bike.ui.screens.bike :as bike-screen]
@@ -35,8 +39,11 @@
 (defn- create-stack-navigator [route-configs]
   (.createStackNavigator ReactNavigation (clj->js route-configs)))
 
-(defn- create-bottom-tab-navigator [route-configs]
-  (.createBottomTabNavigator ReactNavigation (clj->js route-configs)))
+(defn- create-bottom-tab-navigator [route-configs default-navigation-options]
+  (.createBottomTabNavigator
+   ReactNavigation
+   (clj->js route-configs)
+   (clj->js default-navigation-options)))
 
 (defn- create-switch-navigator [route-configs]
   (.createSwitchNavigator ReactNavigation (clj->js route-configs)))
@@ -56,15 +63,31 @@
            :navigationOptions {:headerTransparent true}}
     :new-booking {:screen (r/reactify-component new-booking-screen/main)}}))
 
-(defn- search-stack-navigation-options
-  [navigator]
-  (clj->js {:tabBarVisible (= (.-navigation.state.index navigator) 0)}))
+(defn get-icon-name
+  [tab-name]
+  (case tab-name
+    "search"   "search"
+    "saved"    "favorite-border"
+    "bookings" "event-available"
+    "messages" "chat-bubble-outline"
+    "profile"  "person-outline"))
 
 (def main-tabs
   (create-bottom-tab-navigator
-   {:search {:screen search-stack
-             :navigationOptions search-stack-navigation-options}
-    :saved {:screen (r/reactify-component saved-screen/main)}}))
+   {:search {:screen search-stack}
+    :saved {:screen (r/reactify-component saved-screen/main)}
+    :bookings {:screen (r/reactify-component bookings-screen/main)}
+    :messages {:screen (r/reactify-component messages-screen/main)}
+    :profile {:screen (r/reactify-component profile-screen/main)}}
+   {:defaultNavigationOptions
+    (fn [navigator]
+      (let [route-name (.-navigation.state.routeName navigator)]
+        #js {:title route-name
+             :tabBarIcon (fn [options]
+                           (let [color (.-tintColor options)]
+                             (r/create-element
+                              rn/Icon
+                              #js {:name (get-icon-name route-name) :color color})))}))}))
 
 (defn container []
   [:> (create-app-container

@@ -22,6 +22,8 @@
 (def list (r/adapt-react-class (.-List ReactNativeElements)))
 (def list-item (r/adapt-react-class (.-ListItem ReactNativeElements)))
 (def button (r/adapt-react-class (.-Button ReactNativeElements)))
+(def Icon (.-Icon ReactNativeElements))
+(def icon (r/adapt-react-class Icon))
 
 ; icons
 
