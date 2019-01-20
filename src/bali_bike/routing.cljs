@@ -51,18 +51,6 @@
 (defn- create-app-container [component]
   (.createAppContainer ReactNavigation component))
 
-(def search-stack
-  (create-stack-navigator
-   {:search {:screen (r/reactify-component search-screen/main)
-             :navigationOptions {:header nil}}
-    :area-filter {:screen (r/reactify-component area-filter/main)
-                  :navigationOptions {:headerStyle {:backgroundColor colors/clouds
-                                                    :borderBottomWidth 0}}}
-    :dates-filter {:screen (r/reactify-component dates-filter/main)}
-    :bike {:screen (r/reactify-component bike-screen/main)
-           :navigationOptions {:headerTransparent true}}
-    :new-booking {:screen (r/reactify-component new-booking-screen/main)}}))
-
 (defn get-icon-name
   [tab-name]
   (case tab-name
@@ -74,7 +62,7 @@
 
 (def main-tabs
   (create-bottom-tab-navigator
-   {:search {:screen search-stack}
+   {:search {:screen (r/reactify-component search-screen/main)}
     :saved {:screen (r/reactify-component saved-screen/main)}
     :bookings {:screen (r/reactify-component bookings-screen/main)}
     :messages {:screen (r/reactify-component messages-screen/main)}
@@ -88,9 +76,16 @@
                              (r/create-element
                               rn/Icon
                               #js {:name (get-icon-name route-name) :color color})))}))}))
+(def app-stack
+  (create-stack-navigator
+   {:tabs {:screen main-tabs :navigationOptions {:header nil}}
+    :area-filter {:screen (r/reactify-component area-filter/main)}
+    :dates-filter {:screen (r/reactify-component dates-filter/main)}
+    :bike {:screen (r/reactify-component bike-screen/main)}
+    :new-booking {:screen (r/reactify-component new-booking-screen/main)}}))
 
 (defn container []
   [:> (create-app-container
        (create-switch-navigator {:auth {:screen (r/reactify-component login-screen/main)}
-                                 :app {:screen main-tabs}}))
+                                 :app {:screen app-stack}}))
    {:ref (fn [ref] (reset! navigator-ref ref))}])
