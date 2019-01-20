@@ -10,6 +10,6 @@
   (r/create-class
    {:component-did-mount (fn [] (rf/dispatch [:load-bikes]))
     :render (fn []
-              [view {:style {:flex 1 :flex-direction "column"}}
+              [view {:style {:flex 1 :flex-direction "column" :margin-horizontal 10}}
                [search-header/main]
                [bikes-list/main]])}))

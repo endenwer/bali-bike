@@ -3,9 +3,12 @@
             [entitydb.core :as edb]))
 
 (def dbal (edb/make-dbal {:bikes {:id :id
-                                  :relations {:reviews [:many :reviews]}}
+                                  :relations {:reviews [:many :reviews]
+                                              :bookings [:many :bookings]}}
                           :reviews {:id :id
-                                    :relations {:bike [:one :bike]}}}))
+                                    :relations {:bike [:one :bikes]}}
+                          :bookings {:id :id
+                                     :relations {:bike [:one :bikes]}}}))
 
 (defn insert-item [& args] (apply (:insert-item dbal) args))
 (defn insert-named-item [& args] (apply (:insert-named-item dbal) args))

@@ -1,5 +1,6 @@
 (ns bali-bike.routing
   (:require [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [clojure.string :as string]
             [reagent.core :as r]
             [bali-bike.rn :as rn]
             [bali-bike.colors :as colors]
@@ -70,7 +71,7 @@
    {:defaultNavigationOptions
     (fn [navigator]
       (let [route-name (.-navigation.state.routeName navigator)]
-        #js {:title route-name
+        #js {:title (string/capitalize route-name)
              :tabBarIcon (fn [options]
                            (let [color (.-tintColor options)]
                              (r/create-element

@@ -32,3 +32,8 @@
  :current-bike
  (fn [app-db _]
    (edb/get-named-item app-db :bikes :current)))
+
+(rf/reg-sub
+ :bookings
+ (fn [app-db _]
+   (edb/get-collection app-db :bookings :list)))

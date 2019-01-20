@@ -8,7 +8,6 @@
 (defn main []
   [safe-area-view {:style {:flex-direction "row"
                            :flex-wrap "wrap"
-                           :padding-horizontal 10
                            :align-self "stretch"
                            :align-items "center"
                            :border-bottom-width 1

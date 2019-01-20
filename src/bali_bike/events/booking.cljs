@@ -17,3 +17,14 @@
      :booking/create {:bike-id bike-id
                       :start-date (:start-date dates-range)
                       :end-date (:end-date dates-range)}}))
+
+(defn on-bookings-loaded-event
+  [db [_ {:keys [data]}]]
+  (edb/insert-collection db :bookings :list (:bookings data) {:loading? false}))
+
+(defn load-bookings-event
+  [{:keys [db]} [_ _]]
+  {:db (edb/insert-meta db :bookings :list {:loading? true})
+   :api/send-graphql {:query (str "{bookings {id startDate endDate status "
+                                  "bike {id modelId photos}}}")
+                      :callback-event :on-bookings-loaded}})

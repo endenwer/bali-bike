@@ -5,6 +5,12 @@
 (defn button [props]
   [rn/button (merge {:border-radius 5} props)])
 
+(defn h1
+  ([content] (h1 {} content))
+  ([style-props content]
+   (let [default-styles {:color colors/wet-asphalt :font-weight "600" :font-size 32}]
+     [rn/text {:style (merge default-styles style-props)} content])))
+
 (defn h2
   ([content] (h2 {} content))
   ([style-props content]

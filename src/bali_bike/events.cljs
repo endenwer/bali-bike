@@ -101,6 +101,11 @@
 
 (rf/reg-fx :booking/create booking-events/create-booking)
 (rf/reg-event-fx :create-booking booking-events/create-booking-event)
+(rf/reg-event-fx :load-bookings booking-events/load-bookings-event)
+(rf/reg-event-db
+ :on-bookings-loaded
+ [interceptors/transform-event-to-kebab]
+ booking-events/on-bookings-loaded-event)
 
 ;; api
 (rf/reg-fx :api/send-graphql api/send-graphql)
