@@ -17,6 +17,12 @@
    (let [default-styles {:color colors/wet-asphalt :font-weight "600" :font-size 28}]
      [rn/text {:style (merge default-styles style-props)} content])))
 
+(defn h3
+  ([content] (h3 {} content))
+  ([style-props content]
+   (let [default-styles {:color colors/wet-asphalt :font-weight "600" :font-size 22}]
+     [rn/text {:style (merge default-styles style-props)} content])))
+
 (defn text
   ([content] (text {} content))
   ([{:keys [style] :as props} content]

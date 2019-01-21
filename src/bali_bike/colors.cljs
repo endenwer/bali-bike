@@ -9,3 +9,5 @@
 (def turquoise "#1abc9c")
 (def gree-sea "#16a085")
 (def alizarin "#e74c3c")
+(def carrot "#e67e22")
+(def emerald "#2ecc71")
