@@ -1,5 +1,6 @@
 (ns bali-bike.ui.components.booking-card
   (:require [reagent.core :as r]
+            [bali-bike.utils :as utils]
             [bali-bike.rn :refer [view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text h3]]
             [bali-bike.constants :as constants]
@@ -25,9 +26,7 @@
 
 (defn render-dates
   [start-date end-date]
-  [text (str (.format (moment start-date) "MMM D")
-             " - "
-             (.format (moment end-date) "MMM D"))])
+  [text (utils/get-short-dates-range-string start-date end-date)])
 
 (defn main [booking-data]
   (r/with-let [get-bike (:bike booking-data)]

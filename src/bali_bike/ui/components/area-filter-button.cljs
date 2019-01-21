@@ -3,6 +3,7 @@
             [bali-bike.ui.components.common :refer [text]]
             [bali-bike.colors :as colors]
             [bali-bike.constants :as constants]
+            [bali-bike.utils :as utils]
             [re-frame.core :as rf]
             [reagent.core :as r]))
 
@@ -42,9 +43,9 @@
     (let [start-date (:start-date @dates-range)
           end-date (:end-date @dates-range)]
       [render-button {:title (if @dates-range
-                               (str (.format (moment start-date) "MMM D")
-                                    " - "
-                                    (.format (moment end-date) "MMM D"))
+                               (utils/get-short-dates-range-string
+                                (:start-date @dates-range)
+                                (:end-date @dates-range))
                                "Any dates")
                       :is-active @dates-range
                       :filter-screen-name :dates-filter}])))
