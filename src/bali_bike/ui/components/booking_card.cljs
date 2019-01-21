@@ -32,7 +32,7 @@
 (defn main [booking-data]
   (r/with-let [get-bike (:bike booking-data)]
     (let [bike-data (get-bike)]
-      [touchable-highlight {:on-press #(.log js/console "on press")}
+      [touchable-highlight {:on-press #(rf/dispatch [:navigate-to-booking (:id booking-data)])}
        [view {:flex-direction "row" :margin-bottom 20}
         [render-bike-photo (first (:photos bike-data))]
         [view {:margin-left 10}

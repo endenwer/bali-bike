@@ -28,3 +28,8 @@
    :api/send-graphql {:query (str "{bookings {id startDate endDate status "
                                   "bike {id modelId photos}}}")
                       :callback-event :on-bookings-loaded}})
+
+(defn navigate-to-booking-event
+  [{:keys [db]} [_ booking-id]]
+  {:db (edb/insert-named-item db :bookings :current {:id booking-id})
+   :navigation/navigate-to :booking})

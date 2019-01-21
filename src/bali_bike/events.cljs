@@ -102,6 +102,7 @@
 (rf/reg-fx :booking/create booking-events/create-booking)
 (rf/reg-event-fx :create-booking booking-events/create-booking-event)
 (rf/reg-event-fx :load-bookings booking-events/load-bookings-event)
+(rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
 (rf/reg-event-db
  :on-bookings-loaded
  [interceptors/transform-event-to-kebab]

@@ -37,3 +37,8 @@
  :bookings
  (fn [app-db _]
    (edb/get-collection app-db :bookings :list)))
+
+(rf/reg-sub
+ :current-booking
+ (fn [app-db _]
+   (edb/get-named-item app-db :bookings :current)))
