@@ -135,6 +135,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-maps')
     compile project(':react-native-firebase')
     compile project(':react-native-google-signin')
     compile project(':react-native-vector-icons')

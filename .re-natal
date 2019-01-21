@@ -14,7 +14,8 @@
     "react-native-calendar-picker",
     "moment",
     "react-native-google-signin",
-    "react-native-firebase"
+    "react-native-firebase",
+    "react-native-maps"
   ],
   "imageDirs": [
     "images"

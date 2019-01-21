@@ -6,13 +6,18 @@ target 'BaliBike' do
   # but if not, adjust the `:path` accordingly
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'Core',
-    'CxxBridge', # Include this for RN >= 0.47
-    'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
-    'RCTText',
+    'CxxBridge',
+    'DevSupport',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
     'RCTNetwork',
-    'RCTWebSocket', # Needed for debugging
-    'RCTAnimation', # Needed for FlatList and animations running on native UI thread
-    # Add any other subspecs you want to use in your project
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket',
   ]
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
@@ -25,4 +30,21 @@ target 'BaliBike' do
   pod 'GoogleSignIn', '~> 4.4.0'
   pod 'Firebase/Core', '~> 5.15.0'
   pod 'Firebase/Auth', '~> 5.15.0'
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', path: '../node_modules/react-native-maps'
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end

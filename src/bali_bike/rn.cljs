@@ -35,3 +35,9 @@
 (def firebase (js/require "react-native-firebase"))
 (def ReactNativeGoogleSignin (js/require "react-native-google-signin"))
 (def google-signin (.-GoogleSignin ReactNativeGoogleSignin))
+
+; maps
+
+(def MapView (.-default (js/require "react-native-maps")))
+(def PROVIDER_GOOGLE (.-PROVIDER_GOOGLE MapView))
+(def map-view (r/adapt-react-class MapView))

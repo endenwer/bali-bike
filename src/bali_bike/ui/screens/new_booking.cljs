@@ -2,6 +2,7 @@
   (:require [bali-bike.rn :refer [view safe-area-view scroll-view]]
             [bali-bike.ui.components.common :refer [text button]]
             [bali-bike.colors :as colors]
+            [bali-bike.rn :as rn]
             [re-frame.core :as rf]))
 
 (defn render-bottom []
@@ -16,5 +17,11 @@
 
 (defn main []
   [view {:style {:flex 1}}
-   [scroll-view {:style {:flex 1}}]
+   [rn/map-view {:provider rn/PROVIDER_GOOGLE
+                 :style {:height 400
+                         :width 400}
+                 :initial-region {:latitude 37.78825
+                                  :longitude -122.4324
+                                  :latitudeDelta 0.0922
+                                  :longitudeDelta 0.0421}}]
    [render-bottom]])
