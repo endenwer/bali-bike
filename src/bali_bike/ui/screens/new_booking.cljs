@@ -1,5 +1,5 @@
 (ns bali-bike.ui.screens.new-booking
-  (:require [bali-bike.rn :refer [view safe-area-view scroll-view image]]
+  (:require [bali-bike.rn :refer [view safe-area-view scroll-view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text button h3]]
             [reagent.core :as r]
             [bali-bike.colors :as colors]
@@ -38,7 +38,7 @@
     [bike-rating/main bike-data]]])
 
 (defn render-property
-  [{:keys [title value]}]
+  [{:keys [title value on-change]}]
   [view {:style {:padding-vertical 15
                  :border-top-width 1
                  :border-color colors/clouds}}
@@ -47,7 +47,8 @@
                   :align-items "center"
                   :margin-bottom 10}}
     [h3 title]
-    [text {:style {:color colors/turquoise}} "CHANGE"]]
+    [touchable-highlight {:on-press on-change}
+     [text {:style {:color colors/turquoise}} "CHANGE"]]]
    [text value]])
 
 (defn render-total []
@@ -70,10 +71,12 @@
                            :margin-top 10}}
       [render-bike-preview @current-bike]
       [render-property {:title "Dates"
+                        :on-change #(.log js/console "dates change")
                         :value (utils/get-short-dates-range-string
                                 (:start-date @dates-range)
                                 (:end-date @dates-range))}]
       [render-property {:title "Delivery location"
+                        :on-change #(rf/dispatch [:navigate-to :new-booking-map])
                         :value "Aasdfjaldf, Casdffi, Bodkyfds, 123123, 348"}]
       [render-total]]
      [render-bottom]]))

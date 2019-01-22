@@ -4,6 +4,7 @@
             [reagent.core :as r]
             [bali-bike.rn :as rn]
             [bali-bike.colors :as colors]
+            [bali-bike.ui.screens.new-booking-map :as new-booking-map-screen]
             [bali-bike.ui.screens.booking :as booking-screen]
             [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.bookings :as bookings-screen]
@@ -85,6 +86,7 @@
     :dates-filter {:screen (r/reactify-component dates-filter/main)}
     :bike {:screen (r/reactify-component bike-screen/main)}
     :new-booking {:screen (r/reactify-component new-booking-screen/main)}
+    :new-booking-map {:screen (r/reactify-component new-booking-map-screen/main)}
     :booking {:screen (r/reactify-component booking-screen/main)}}))
 
 (defn container []
