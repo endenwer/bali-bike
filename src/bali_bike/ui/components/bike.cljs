@@ -12,7 +12,7 @@
   [touchable-highlight
    {:on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])}
    [view {:flex 1 :margin-bottom 25}
-    [bike-photos-swiper/main (:photos bike-data)]
+    [bike-photos-swiper/main {:photos (:photos bike-data) :image-styles {:border-radius 5}}]
     [bike-title/main bike-data]
     [bike-rating/main bike-data]
     [text {:style {:margin-top 5}} (str (:price bike-data) "K IDR per month")]]])

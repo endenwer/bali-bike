@@ -42,7 +42,7 @@
       [view {:style {:flex 1}}
        [scroll-view {:style {:flex 1}}
         [safe-area-view {:style {:margin-bottom 10}}
-         [bike-photos-swiper/main (:photos @bike-data)]]
+         [bike-photos-swiper/main @bike-data]]
         [view {:style {:margin-horizontal 10}}
          [render-bike-info @bike-data]
          (when-not (:loading? bike-meta)

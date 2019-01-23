@@ -32,7 +32,7 @@
       [view {:style {:flex 1}}
        [scroll-view {:style {:flex 1}}
         [safe-area-view {:style {:flex 1}}
-         [bike-photos-swiper/main (:photos bike-data)]]
+         [bike-photos-swiper/main bike-data]]
         [render-status (:status @booking-data)]
         [view {:style {:flex 1 :margin-horizontal 10 :margin-top 20}}
          [render-dates (:start-date @booking-data) (:end-date @booking-data)]
