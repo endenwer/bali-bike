@@ -4,6 +4,7 @@
 ; react native
 
 (def ReactNative (js/require "react-native"))
+(def async-storage (.-AsyncStorage ReactNative))
 (def app-registry (.-AppRegistry ReactNative))
 (def text (r/adapt-react-class (.-Text ReactNative)))
 (def view (r/adapt-react-class (.-View ReactNative)))

@@ -25,4 +25,8 @@
     (.configure rn/google-signin)
     (.onAuthStateChanged auth (fn [user]
                                 (reset! user-instance user)
-                                (rf/dispatch [:auth-state-changed (js->clj (.toJSON user))])))))
+                                (if js/goog.DEBUG
+                                  (js/setTimeout
+                                   #(rf/dispatch [:auth-state-changed (js->clj (.toJSON user))])
+                                   1000)
+                                  (rf/dispatch [:auth-state-changed (js->clj (.toJSON user))]))))))

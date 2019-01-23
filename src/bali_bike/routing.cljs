@@ -93,4 +93,5 @@
   [:> (create-app-container
        (create-switch-navigator {:auth {:screen (r/reactify-component login-screen/main)}
                                  :app {:screen app-stack}}))
-   {:ref (fn [ref] (reset! navigator-ref ref))}])
+   {:ref (fn [ref] (reset! navigator-ref ref))
+    :persistenceKey (if js/goog.DEBUG "NavigationState" nil)}])

@@ -10,7 +10,7 @@
 (defn- post
   [params]
   (alet [token (p/await (auth/get-token))
-         headers (if token {"Authorization" token} nil)
+         headers {"Authorization" token}
          response (p/await (http/POST http-url {:headers headers
                                                 :with-credentials? false
                                                 :json-params params}))]

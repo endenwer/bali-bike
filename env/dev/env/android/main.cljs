@@ -4,7 +4,8 @@
             [bali-bike.android.core :as core]
             [figwheel.client :as fw]
             [re-frisk-remote.core :as rr]
-            [env.config :as conf]))
+            [env.config :as conf]
+            [bali-bike.rn :as rn]))
 
 (enable-console-print!)
 
@@ -27,5 +28,11 @@
            :websocket-url    (:android conf/figwheel-urls)
            :heads-up-display false
            :jsload-callback  force-reload!})
+
+;; hide useless warning
+(.YellowBox.ignoreWarnings rn/ReactNative #js ["re-frame: overwriting"])
+
+;; clear navigation state to load from start screen
+(.removeItem rn/async-storage "NavigationState")
 
 (core/init)
