@@ -100,13 +100,19 @@
 ;; booking handlers
 
 (rf/reg-fx :booking/create booking-events/create-booking)
+(rf/reg-fx :booking/load-delivery-address booking-events/load-delivery-address)
 (rf/reg-event-fx :create-booking booking-events/create-booking-event)
 (rf/reg-event-fx :load-bookings booking-events/load-bookings-event)
 (rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
-(rf/reg-event-db
- :on-bookings-loaded
- [interceptors/transform-event-to-kebab]
- booking-events/on-bookings-loaded-event)
+(rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location)
+(rf/reg-event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
+(rf/reg-event-fx :update-delivery-region
+                 [interceptors/transform-event-to-kebab]
+                 booking-events/update-delivery-region)
+(rf/reg-event-db :update-delivery-location booking-events/update-delivery-location)
+(rf/reg-event-db :on-bookings-loaded
+                 [interceptors/transform-event-to-kebab]
+                 booking-events/on-bookings-loaded-event)
 
 ;; api
 (rf/reg-fx :api/send-graphql api/send-graphql)

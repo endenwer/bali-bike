@@ -42,3 +42,13 @@
  :current-booking
  (fn [app-db _]
    (edb/get-named-item app-db :bookings :current)))
+
+(rf/reg-sub
+ :delivery-location
+ (fn [app-db _]
+   (:delivery-location app-db)))
+
+(rf/reg-sub
+ :new-booking
+ (fn [app-db _]
+   (:new-booking app-db)))

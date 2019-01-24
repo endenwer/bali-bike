@@ -23,7 +23,7 @@
       (str (:price bike-data) "K IDR per month")]
      [bike-rating/main bike-data]]
     [button {:title "Book"
-             :on-press #(rf/dispatch [:navigate-to :new-booking])
+             :on-press #(rf/dispatch [:navigate-to-new-booking])
              :background-color colors/alizarin
              :container-view-style {:margin-left 0 :margin-right 0}
              :text-style {:margin-horizontal 20 :font-weight "bold"}}]]])

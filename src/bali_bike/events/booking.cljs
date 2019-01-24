@@ -1,11 +1,22 @@
 (ns bali-bike.events.booking
-  (:require [bali-bike.edb :as edb]))
+  (:require [bali-bike.edb :as edb]
+            [bali-bike.api :as api]
+            [promesa.core :as p]
+            [re-frame.core :as rf]))
 
 ;; effects
 
 (defn create-booking
   [params]
   (.log js/console (clj->js params)))
+
+(defn load-delivery-address
+  [{:keys [lat lng]}]
+  (->
+   (api/get-address-from-coordinates lat lng)
+   (p/then (fn [address]
+             (rf/dispatch [:update-delivery-location {:address address :loading? false}])))
+   (p/catch (fn [error] (.log js/console error)))))
 
 ;; events
 
@@ -33,3 +44,26 @@
   [{:keys [db]} [_ booking-id]]
   {:db (edb/insert-named-item db :bookings :current {:id booking-id})
    :navigation/navigate-to :booking})
+
+(defn update-delivery-region
+  [{:keys [db]} [_ region]]
+  {:dispatch [:update-delivery-location {:region region :loading? true}]
+   :booking/load-delivery-address {:lat (:latitude region)
+                                   :lng (:longitude region)}})
+
+(defn update-delivery-location
+  [db [_ data]]
+  (let [delivery-location (:delivery-location db)
+        updated-delivery-location (merge delivery-location data)]
+    (assoc db :delivery-location updated-delivery-location)))
+
+(defn set-delivery-location
+  [{:keys [db]} [_ _]]
+  (let [delivery-location (:delivery-location db)]
+    {:db (assoc-in db [:new-booking :delivery-location] delivery-location)
+     :navigation/navigate-to :new-booking}))
+
+(defn navigate-to-new-booking-event
+  [{:keys [db]} [_ _]]
+  {:db (assoc-in db [:new-booking :dates-range] (:dates-range db))
+   :navigation/navigate-to :new-booking})
