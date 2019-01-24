@@ -9,12 +9,15 @@
             [bali-bike.utils :as utils]
             [re-frame.core :as rf]))
 
-(defn render-bottom []
+(defn render-bottom
+  [{:keys [on-submit submiting?]}]
   [safe-area-view {:style {:border-top-width 3
                            :border-color colors/clouds
                            :padding 10}}
    [button {:title "Book"
-            :on-press #(rf/dispatch [:create-booking])
+            :on-press on-submit
+            :disabled submiting?
+            :loading submiting?
             :background-color colors/alizarin
             :container-view-style {:margin 10}
             :text-style {:margin-horizontal 20 :font-weight "bold"}}]])
@@ -80,4 +83,6 @@
                           :on-change #(rf/dispatch [:navigate-to :new-booking-map])
                           :value (:address delivery-location)}]
         [render-total]]
-       [render-bottom]])))
+       [render-bottom
+        {:on-submit #(rf/dispatch [:create-booking])
+         :submiting? (:submiting? @new-booking)}]])))

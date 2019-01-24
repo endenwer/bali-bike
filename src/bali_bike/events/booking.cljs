@@ -6,10 +6,6 @@
 
 ;; effects
 
-(defn create-booking
-  [params]
-  (.log js/console (clj->js params)))
-
 (defn load-delivery-address
   [{:keys [lat lng]}]
   (->
@@ -20,14 +16,43 @@
 
 ;; events
 
+(defn on-booking-created-event
+  [db [_ data]]
+  (.log js/console data)
+  (assoc-in db [:new-booking :submiting?] false))
+
 (defn create-booking-event
   [{:keys [db]} [_ _]]
   (let [bike-id (:id (edb/get-named-item db :bikes :current))
-        dates-range (:dates-range db)]
-    {:db (assoc db :booking-submiting? true)
-     :booking/create {:bike-id bike-id
-                      :start-date (:start-date dates-range)
-                      :end-date (:end-date dates-range)}}))
+        dates-range (:dates-range db)
+        new-booking (:new-booking db)]
+    {:db (assoc-in db [:new-booking :submiting?] true)
+     :api/send-graphql {:mutation
+                        [:createBooking {:bikeId bike-id
+                                         :startDate
+                                         (get-in new-booking [:dates-range :start-date])
+                                         :endDate
+                                         (get-in new-booking [:dates-range :end-date])
+                                         :deliveryLocationLatitude
+                                         (get-in
+                                          new-booking
+                                          [:delivery-location :region :latitude])
+                                         :deliveryLocationLatitudeDelta
+                                         (get-in
+                                          new-booking
+                                          [:delivery-location :region :latitude-delta])
+                                         :deliveryLocationLongitudeDelta
+                                         (get-in
+                                          new-booking
+                                          [:delivery-location :region :longitude-delta])
+                                         :deliveryLocationLongitude
+                                         (get-in
+                                          new-booking
+                                          [:delivery-location :region :longitude])
+                                         :deliveryLocationAddress
+                                         (get-in new-booking [:delivery-location :address])}
+                         [:id]]
+                        :callback-event :on-booking-created}}))
 
 (defn on-bookings-loaded-event
   [db [_ {:keys [data]}]]
@@ -36,8 +61,8 @@
 (defn load-bookings-event
   [{:keys [db]} [_ _]]
   {:db (edb/insert-meta db :bookings :list {:loading? true})
-   :api/send-graphql {:query (str "{bookings {id startDate endDate status "
-                                  "bike {id modelId photos}}}")
+   :api/send-graphql {:query [:bookings [:id :startDate :endDate :status
+                                         :bike [:id :modelId :photos]]]
                       :callback-event :on-bookings-loaded}})
 
 (defn navigate-to-booking-event
@@ -45,19 +70,19 @@
   {:db (edb/insert-named-item db :bookings :current {:id booking-id})
    :navigation/navigate-to :booking})
 
-(defn update-delivery-region
+(defn update-delivery-region-event
   [{:keys [db]} [_ region]]
   {:dispatch [:update-delivery-location {:region region :loading? true}]
    :booking/load-delivery-address {:lat (:latitude region)
                                    :lng (:longitude region)}})
 
-(defn update-delivery-location
+(defn update-delivery-location-event
   [db [_ data]]
   (let [delivery-location (:delivery-location db)
         updated-delivery-location (merge delivery-location data)]
     (assoc db :delivery-location updated-delivery-location)))
 
-(defn set-delivery-location
+(defn set-delivery-location-event
   [{:keys [db]} [_ _]]
   (let [delivery-location (:delivery-location db)]
     {:db (assoc-in db [:new-booking :delivery-location] delivery-location)

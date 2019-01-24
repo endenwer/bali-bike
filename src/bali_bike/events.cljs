@@ -35,12 +35,9 @@
  :navigate-to-bike
  (fn [{:keys [db]} [_ bike-id]]
    {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
-    :api/send-graphql {:query (str
-                               "query($id: ID!){bike(id: $id){"
-                               "id modelId photos price rating "
-                               "reviewsCount mileage manufactureYear "
-                               "reviews {id rating comment}}}")
-                       :variables {:id bike-id}
+    :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :price :rating
+                                                    :reviewsCount :mileage :manufactureYear
+                                                    :reviews [:id :rating :comment]]]
                        :callback-event :on-bike-loaded}
     :navigation/navigate-to :bike}))
 
@@ -79,9 +76,8 @@
  :load-bikes
  (fn [{:keys [db]} [_ _]]
    {:db (edb/insert-meta db :bikes :list {:loading? true})
-    :api/send-graphql {:query (str "{bikes "
-                                   "{id, modelId, photos, price, rating, "
-                                   "reviewsCount, mileage, manufactureYear}}")
+    :api/send-graphql {:query [:bikes [:id :modelId :photos :price :rating :reviewsCount
+                                       :mileage :manufactureYear]]
                        :callback-event :on-bikes-loaded}}))
 
 (rf/reg-event-db
@@ -99,17 +95,18 @@
 
 ;; booking handlers
 
-(rf/reg-fx :booking/create booking-events/create-booking)
 (rf/reg-fx :booking/load-delivery-address booking-events/load-delivery-address)
 (rf/reg-event-fx :create-booking booking-events/create-booking-event)
 (rf/reg-event-fx :load-bookings booking-events/load-bookings-event)
 (rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
-(rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location)
+(rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location-event)
 (rf/reg-event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
+(rf/reg-event-fx :create-booking booking-events/create-booking-event)
 (rf/reg-event-fx :update-delivery-region
                  [interceptors/transform-event-to-kebab]
-                 booking-events/update-delivery-region)
-(rf/reg-event-db :update-delivery-location booking-events/update-delivery-location)
+                 booking-events/update-delivery-region-event)
+(rf/reg-event-db :on-booking-created booking-events/on-booking-created-event)
+(rf/reg-event-db :update-delivery-location booking-events/update-delivery-location-event)
 (rf/reg-event-db :on-bookings-loaded
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-bookings-loaded-event)

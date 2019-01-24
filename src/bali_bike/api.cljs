@@ -3,10 +3,37 @@
   (:require [bali-bike.http :as http]
             [bali-bike.auth :as auth]
             [re-frame.core :as rf]
-            [promesa.core :as p]))
+            [promesa.core :as p]
+            [clojure.string]))
 
 (def http-url "http://localhost:4000")
 (def google-api-token "AIzaSyCoOBiH4wbBS6_r43ayNXVsDOW1p5uWxpk")
+
+(defn parse-query [q]
+  (cond
+    (keyword? q)
+    (let [[query alias] (clojure.string/split (name q) #"->")]
+      (if alias
+        (str alias ":" query)
+        query))
+    (map? q)
+    (str \(
+         (clojure.string/join
+          \,
+          (map (fn [[k v]]
+                 (let [v (if (keyword? v) (name v) v)]
+                   (str (name k) ":\"" (str v) \")))
+               q))
+         \))
+    (vector? q)
+    (str \{
+         (clojure.string/join
+          \space
+          (map parse-query q))
+         \})
+
+    :else
+    (throw (js/Error. "Cannot parse query"))))
 
 (defn- post
   [params]
@@ -18,11 +45,12 @@
         response))
 
 (defn send-graphql
-  [{:keys [query variables callback-event]}]
-  (->
-   (alet [response (p/await (post {:query query :variables variables}))]
-         (rf/dispatch [callback-event (:body response)]))
-   (p/catch (fn [error] (.log js/console (clj->js error))))))
+  [{:keys [query mutation callback-event]}]
+  (let [parsed-query (if query (parse-query query) (str "mutation " (parse-query mutation)))]
+    (->
+     (alet [response (p/await (post {:query parsed-query}))]
+           (rf/dispatch [callback-event (:body response)]))
+     (p/catch (fn [error] (.log js/console (clj->js error)))))))
 
 (defn get-address-from-coordinates
   [lat lng]
