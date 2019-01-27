@@ -1,9 +1,8 @@
 (ns bali-bike.core
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
-            [bali-bike.rn :refer [app-registry]]
             [bali-bike.routing :as routing]
-            [bali-bike.rn :as rn]
+            [bali-bike.rn :as rn :refer [app-registry]]
             [bali-bike.subs]
             [bali-bike.events]
             [bali-bike.auth :as auth]))

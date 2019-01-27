@@ -12,4 +12,4 @@
     :render (fn []
               [view {:style {:flex 1 :flex-direction "column" :margin-horizontal 10}}
                [search-header/main]
-               [bikes-list/main]])}))
+               [bikes-list/main :bikes]])}))

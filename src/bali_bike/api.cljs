@@ -1,9 +1,8 @@
 (ns bali-bike.api
-  (:require-macros [promesa.core :refer [alet]])
   (:require [bali-bike.http :as http]
             [bali-bike.auth :as auth]
             [re-frame.core :as rf]
-            [promesa.core :as p]
+            [promesa.core :as p :refer-macros [alet]]
             [clojure.string]))
 
 (def http-url "http://localhost:4000")
@@ -49,7 +48,8 @@
   (let [parsed-query (if query (parse-query query) (str "mutation " (parse-query mutation)))]
     (->
      (alet [response (p/await (post {:query parsed-query}))]
-           (rf/dispatch [callback-event (:body response)]))
+           (when callback-event
+             (rf/dispatch [callback-event (:body response)])))
      (p/catch (fn [error] (.log js/console (clj->js error)))))))
 
 (defn get-address-from-coordinates

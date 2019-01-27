@@ -5,8 +5,9 @@
             [bali-bike.rn :refer [scroll-view activity-indicator view]]
             [re-frame.core :as rf]))
 
-(defn main []
-  (r/with-let [bikes (rf/subscribe [:bikes])]
+(defn main
+  [sub-name]
+  (r/with-let [bikes (rf/subscribe [sub-name])]
     (let [bikes-meta (meta @bikes)]
       (if (:loading? bikes-meta)
         [view {:style {:flex 1 :align-items "center" :justify-content "center"}}

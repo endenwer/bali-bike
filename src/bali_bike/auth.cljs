@@ -1,13 +1,12 @@
 (ns bali-bike.auth
-  (:require-macros [promesa.core :refer [alet]])
-  (:require [promesa.core :as p]
+  (:require [promesa.core :as p :refer-macros [alet]]
             [bali-bike.rn :as rn]
             [re-frame.core :as rf]))
 
 (def user-instance (atom nil))
 
 (defn get-token []
-  (if-let [user @user-instance]
+  (when-let [user @user-instance]
     (->
      (alet [token (p/await (.getIdToken user))] token)
      (p/catch (fn [error] nil)))))

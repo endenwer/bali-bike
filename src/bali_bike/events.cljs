@@ -3,13 +3,12 @@
    [re-frame.core :refer [reg-event-db after] :as rf]
    [bali-bike.edb :as edb]
    [bali-bike.interceptors :as interceptors]
-   [promesa.core :as p]
-   [bali-bike.rn :as rn]
    [bali-bike.routing :as routing]
    [bali-bike.events.auth :as auth-events]
    [bali-bike.auth :as auth]
    [bali-bike.api :as api]
-   [bali-bike.events.booking :as booking-events]))
+   [bali-bike.events.booking :as booking-events]
+   [bali-bike.events.bike :as bike-events]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -37,7 +36,7 @@
    {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
     :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :price :rating
                                                     :reviewsCount :mileage :manufactureYear
-                                                    :reviews [:id :rating :comment]]]
+                                                    :saved :reviews [:id :rating :comment]]]
                        :callback-event :on-bike-loaded}
     :navigation/navigate-to :bike}))
 
@@ -66,24 +65,25 @@
    {:db (assoc db :dates-range {:start-date start-date :end-date end-date})
     :navigation/navigate-back nil}))
 
-(rf/reg-event-db
- :on-bikes-loaded
- [interceptors/transform-event-to-kebab]
- (fn [db [_ {:keys [data]}]]
-   (edb/insert-collection db :bikes :list (:bikes data) {:loading? false})))
-
-(rf/reg-event-fx
- :load-bikes
- (fn [{:keys [db]} [_ _]]
-   {:db (edb/insert-meta db :bikes :list {:loading? true})
-    :api/send-graphql {:query [:bikes [:id :modelId :photos :price :rating :reviewsCount
-                                       :mileage :manufactureYear]]
-                       :callback-event :on-bikes-loaded}}))
 
 (rf/reg-event-db
  :initialize-db
  (fn [_ _]
    edb/initial-app-db))
+
+;; bike handlers
+(rf/reg-event-fx :load-bikes bike-events/load-bikes-event)
+(rf/reg-event-fx :load-saved-bikes bike-events/load-saved-bikes-event)
+(rf/reg-event-fx :add-bike-to-saved bike-events/add-bike-to-saved-event)
+(rf/reg-event-fx :remove-bike-from-saved bike-events/remove-bike-from-saved-event)
+(rf/reg-event-db
+ :on-bikes-loaded
+ [interceptors/transform-event-to-kebab]
+ bike-events/on-bikes-loaded-event)
+(rf/reg-event-db
+ :on-saved-bikes-loaded
+ [interceptors/transform-event-to-kebab]
+ bike-events/on-saved-bikes-loaded-event)
 
 ;; auth handlers
 
@@ -101,7 +101,6 @@
 (rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
 (rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location-event)
 (rf/reg-event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
-(rf/reg-event-fx :create-booking booking-events/create-booking-event)
 (rf/reg-event-fx :update-delivery-region
                  [interceptors/transform-event-to-kebab]
                  booking-events/update-delivery-region-event)

@@ -1,0 +1,2 @@
+{:rules {:if-without-else true}
+ :known-macros [reagent.core/with-let promesa.core/alet]}

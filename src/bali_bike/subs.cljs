@@ -10,6 +10,11 @@
    (edb/get-collection app-db :bikes :list)))
 
 (rf/reg-sub
+ :saved-bikes
+ (fn [app-db _]
+   (edb/get-collection app-db :bikes :saved)))
+
+(rf/reg-sub
  :area-filter-id
  (fn [app-db _]
    (:area-filter-id app-db)))
