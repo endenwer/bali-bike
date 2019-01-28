@@ -25,6 +25,7 @@
 (def button (r/adapt-react-class (.-Button ReactNativeElements)))
 (def Icon (.-Icon ReactNativeElements))
 (def icon (r/adapt-react-class Icon))
+(def avatar (r/adapt-react-class (.-Avatar ReactNativeElements)))
 
 ; icons
 
