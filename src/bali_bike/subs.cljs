@@ -57,3 +57,8 @@
  :new-booking
  (fn [app-db _]
    (:new-booking app-db)))
+
+(rf/reg-sub
+ :chats
+ (fn [app-db _]
+   (edb/get-collection app-db :chats :list)))

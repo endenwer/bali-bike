@@ -8,7 +8,9 @@
    [bali-bike.auth :as auth]
    [bali-bike.api :as api]
    [bali-bike.events.booking :as booking-events]
-   [bali-bike.events.bike :as bike-events]))
+   [bali-bike.events.bike :as bike-events]
+   [bali-bike.events.chat :as chat-events]
+   [bali-bike.firestore :as firestore]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -110,5 +112,17 @@
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-bookings-loaded-event)
 
-;; api
+;; api handlers
 (rf/reg-fx :api/send-graphql api/send-graphql)
+
+;; chats handlers
+
+(rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
+(rf/reg-event-db
+ :on-chats-updated
+ [interceptors/transform-event-to-kebab]
+ chat-events/on-chats-updated-event)
+
+;; firestore handlers
+
+(rf/reg-fx :firestore/listen-chats firestore/listen-chats)

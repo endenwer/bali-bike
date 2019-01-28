@@ -8,7 +8,8 @@
                           :reviews {:id :id
                                     :relations {:bike [:one :bikes]}}
                           :bookings {:id :id
-                                     :relations {:bike [:one :bikes]}}}))
+                                     :relations {:bike [:one :bikes]}}
+                          :chats {:id :id}}))
 
 (defn insert-item [& args] (apply (:insert-item dbal) args))
 (defn insert-named-item [& args] (apply (:insert-named-item dbal) args))

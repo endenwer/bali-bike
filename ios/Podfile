@@ -30,6 +30,7 @@ target 'BaliBike' do
   pod 'GoogleSignIn', '~> 4.4.0'
   pod 'Firebase/Core', '~> 5.15.0'
   pod 'Firebase/Auth', '~> 5.15.0'
+  pod 'Firebase/Firestore', '~> 5.15.0'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
   pod 'react-native-google-maps', path: '../node_modules/react-native-maps'
   pod 'GoogleMaps'
