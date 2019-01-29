@@ -1,9 +1,7 @@
 (ns bali-bike.routing
-  (:require [re-frame.core :refer [subscribe dispatch dispatch-sync]]
-            [clojure.string :as string]
+  (:require [clojure.string :as string]
             [reagent.core :as r]
             [bali-bike.rn :as rn]
-            [bali-bike.colors :as colors]
             [bali-bike.ui.components.bike-actions-header :as bike-actions-header]
             [bali-bike.ui.screens.new-booking-map :as new-booking-map-screen]
             [bali-bike.ui.screens.booking :as booking-screen]

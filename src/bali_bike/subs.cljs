@@ -62,3 +62,13 @@
  :chats
  (fn [app-db _]
    (edb/get-collection app-db :chats :list)))
+
+(rf/reg-sub
+ :messages
+ (fn [app-db _]
+   (edb/get-collection app-db :messages :list)))
+
+(rf/reg-sub
+ :current-user
+ (fn [app-db _]
+   (:current-user app-db)))

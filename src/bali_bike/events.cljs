@@ -119,8 +119,13 @@
 
 (rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
 (rf/reg-event-fx :navigate-to-chat chat-events/navigate-to-chat-event)
+(rf/reg-event-fx :listen-messages chat-events/listen-messages-event)
+(rf/reg-event-fx :unlisten-messages chat-events/unlisten-messages-event)
+(rf/reg-event-db :on-messages-updated chat-events/on-messages-updated-event)
 (rf/reg-event-db :on-chats-updated chat-events/on-chats-updated-event)
 
 ;; firestore handlers
 
 (rf/reg-fx :firestore/listen-chats firestore/listen-chats)
+(rf/reg-fx :firestore/listen-messages firestore/listen-messages)
+(rf/reg-fx :firestore/unlisten-messages firestore/unlisten-messages)
