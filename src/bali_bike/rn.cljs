@@ -43,3 +43,7 @@
 (def MapView (.-default (js/require "react-native-maps")))
 (def PROVIDER_GOOGLE (.-PROVIDER_GOOGLE MapView))
 (def map-view (r/adapt-react-class MapView))
+
+; moment
+
+(def moment (js/require "moment"))

@@ -118,10 +118,7 @@
 ;; chats handlers
 
 (rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
-(rf/reg-event-db
- :on-chats-updated
- [interceptors/transform-event-to-kebab]
- chat-events/on-chats-updated-event)
+(rf/reg-event-db :on-chats-updated chat-events/on-chats-updated-event)
 
 ;; firestore handlers
 

@@ -8,4 +8,5 @@
      chats-ref
      (fn [snapshot]
        (rf/dispatch [callback-event
-                     (map #(assoc (js->clj (.data %)) :id (.-id %)) (.-docs snapshot))])))))
+                     (map #(assoc (js->clj (.data %) :keywordize-keys true) :id (.-id %))
+                          (.-docs snapshot))])))))

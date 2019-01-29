@@ -1,10 +1,20 @@
 (ns bali-bike.events.chat
   (:require [bali-bike.edb :as edb]))
 
+(defn get-another-user-for-chat
+  [current-user chat]
+  (let [another-user-uid (first (filter #(not= % (:uid current-user)) (:userUids chat)))]
+    (get-in chat [:users (keyword another-user-uid)])))
+
+;; events
+
 (defn listen-chats-event
-  [{::keys [db]} [_ _]]
+  [_ [_ _]]
   {:firestore/listen-chats :on-chats-updated})
 
 (defn on-chats-updated-event
   [db [_ chats]]
-  (edb/insert-collection db :chats :list chats))
+  (let [current-user (:current-user db)
+        modified-chats (map #(assoc % :another-user (get-another-user-for-chat current-user %))
+                            chats)]
+    (edb/insert-collection db :chats :list modified-chats)))
