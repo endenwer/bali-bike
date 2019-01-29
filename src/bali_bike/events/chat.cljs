@@ -18,3 +18,8 @@
         modified-chats (map #(assoc % :another-user (get-another-user-for-chat current-user %))
                             chats)]
     (edb/insert-collection db :chats :list modified-chats)))
+
+(defn navigate-to-chat-event
+  [{:keys [db]} [_ id]]
+  {:db (edb/insert-named-item db :chats :current {:id id})
+   :navigation/navigate-to :chat})

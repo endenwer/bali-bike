@@ -47,3 +47,8 @@
 ; moment
 
 (def moment (js/require "moment"))
+
+; gifted chat
+
+(def ReactNativeGiftedChat (js/require "react-native-gifted-chat"))
+(def gifted-chat (r/adapt-react-class (.-GiftedChat ReactNativeGiftedChat)))

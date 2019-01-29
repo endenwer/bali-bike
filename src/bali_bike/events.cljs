@@ -118,6 +118,7 @@
 ;; chats handlers
 
 (rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
+(rf/reg-event-fx :navigate-to-chat chat-events/navigate-to-chat-event)
 (rf/reg-event-db :on-chats-updated chat-events/on-chats-updated-event)
 
 ;; firestore handlers

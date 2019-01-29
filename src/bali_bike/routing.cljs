@@ -16,7 +16,8 @@
             [bali-bike.ui.screens.bike :as bike-screen]
             [bali-bike.ui.screens.new-booking :as new-booking-screen]
             [bali-bike.ui.screens.area-filter :as area-filter]
-            [bali-bike.ui.screens.dates-filter :as dates-filter]))
+            [bali-bike.ui.screens.dates-filter :as dates-filter]
+            [bali-bike.ui.screens.chat :as chat-screen]))
 
 (def ReactNavigation (js/require "react-navigation"))
 
@@ -90,7 +91,8 @@
                                              (r/reactify-component bike-actions-header/main))}}
     :new-booking {:screen (r/reactify-component new-booking-screen/main)}
     :new-booking-map {:screen (r/reactify-component new-booking-map-screen/main)}
-    :booking {:screen (r/reactify-component booking-screen/main)}}))
+    :booking {:screen (r/reactify-component booking-screen/main)}
+    :chat {:screen (r/reactify-component chat-screen/main)}}))
 
 (defn container []
   [:> (create-app-container
