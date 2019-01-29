@@ -9,10 +9,11 @@
 
 (defn format-message
   [chat message]
-  (let [sender-uid (:senderUid message)]
+  (let [sender-uid (:senderUid message)
+        timestamp (:timestamp message)]
     (merge message
            {:_id (:id message)
-            :createdAt (rn/moment (:timestamp message))
+            :createdAt (if timestamp (rn/moment timestamp) (rn/moment))
             :user {:_id sender-uid
                    :name (get-in chat [:users (keyword sender-uid) :name])
                    :avatar (get-in chat [:users (keyword sender-uid) :photoURL])}})))
@@ -52,3 +53,11 @@
 (defn unlisten-messages-event
   [_ [_ _]]
   {:firestore/unlisten-messages nil})
+
+(defn send-message-event
+  [{:keys [db]} [_ text]]
+  (let [user (:current-user db)
+        chat (edb/get-named-item db :chats :current)]
+    {:firestore/send-message {:text text
+                             :sender-uid (:uid user)
+                             :chat-id (:id chat)}}))

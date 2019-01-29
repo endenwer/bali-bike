@@ -31,3 +31,10 @@
 (defn unlisten-messages []
   (@message-listener)
   (reset! message-listener nil))
+
+(defn send-message
+  [{:keys [text sender-uid chat-id]}]
+  (let [messages-ref (.collection (.firestore rn/firebase) (str "chats/" chat-id "/messages"))
+        timestamp (.firestore.FieldValue.serverTimestamp rn/firebase)
+        message #js {:text text :senderUid sender-uid :timestamp timestamp}]
+    (.add messages-ref message)))

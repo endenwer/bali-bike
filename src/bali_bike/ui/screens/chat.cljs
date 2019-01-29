@@ -7,7 +7,9 @@
   (r/with-let [messages (rf/subscribe [:messages])
                user (rf/subscribe [:current-user])]
     [gifted-chat {:user {:_id (:uid @user)}
-                  :messages @messages}]))
+                  :messages @messages
+                  :on-send (fn [messages]
+                             (mapv #(rf/dispatch [:send-message (.-text %)]) messages))}]))
 
 (defn main []
   (r/create-class
