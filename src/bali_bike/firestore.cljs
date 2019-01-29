@@ -3,10 +3,11 @@
             [re-frame.core :as rf]))
 
 (def message-listener (atom nil))
+(def firestore (.firestore rn/firebase))
 
 (defn listen-chats
   [callback-event]
-  (let [chats-ref (.collection (.firestore rn/firebase) "chats")]
+  (let [chats-ref (.collection firestore "chats")]
     (.onSnapshot
      chats-ref
      (fn [snapshot]
@@ -17,7 +18,7 @@
 (defn listen-messages
   [{:keys [chat-id callback-event]}]
   (let [messages-ref (.orderBy
-                      (.collection (.firestore rn/firebase) (str "chats/" chat-id "/messages"))
+                      (.collection firestore (str "chats/" chat-id "/messages"))
                       "timestamp" "desc")]
     (reset!
      message-listener
@@ -34,7 +35,12 @@
 
 (defn send-message
   [{:keys [text sender-uid chat-id]}]
-  (let [messages-ref (.collection (.firestore rn/firebase) (str "chats/" chat-id "/messages"))
+  (let [batch (.batch firestore)
+        message-ref (.doc (.collection firestore (str "chats/" chat-id "/messages")))
+        chat-ref (.doc (.collection firestore "chats") chat-id)
         timestamp (.firestore.FieldValue.serverTimestamp rn/firebase)
-        message #js {:text text :senderUid sender-uid :timestamp timestamp}]
-    (.add messages-ref message)))
+        message {:text text :senderUid sender-uid :timestamp timestamp}]
+    (-> batch
+        (.set message-ref (clj->js message))
+        (.update chat-ref #js {:lastMessage (:text message) :timestamp timestamp})
+        (.commit))))
