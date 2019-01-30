@@ -108,6 +108,9 @@
                  booking-events/update-delivery-region-event)
 (rf/reg-event-db :on-booking-created booking-events/on-booking-created-event)
 (rf/reg-event-db :update-delivery-location booking-events/update-delivery-location-event)
+(rf/reg-event-db :on-booking-loaded
+                 [interceptors/transform-event-to-kebab]
+                 booking-events/on-booking-loaded-event)
 (rf/reg-event-db :on-bookings-loaded
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-bookings-loaded-event)

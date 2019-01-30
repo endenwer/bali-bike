@@ -65,9 +65,18 @@
                                          :bike [:id :modelId :photos]]]
                       :callback-event :on-bookings-loaded}})
 
+(defn on-booking-loaded-event
+  [db [_ {:keys [data]}]]
+  (edb/insert-named-item db :bookings :current (:booking data) {:loading? false}))
+
 (defn navigate-to-booking-event
   [{:keys [db]} [_ booking-id]]
-  {:db (edb/insert-named-item db :bookings :current {:id booking-id})
+  {:db (edb/insert-named-item db :bookings :current {:id booking-id} {:loading? true})
+   :api/send-graphql {:query [:booking {:id booking-id} [:id :startDate :endDate :status
+                                                         :bike [:id :modelId :photos
+                                                                :owner [:uid :name :photoURL]]
+                                                         :user [:uid :name :photoURL]]]
+                      :callback-event :on-booking-loaded}
    :navigation/navigate-to :booking})
 
 (defn update-delivery-region-event
