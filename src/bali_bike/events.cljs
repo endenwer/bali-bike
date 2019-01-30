@@ -125,6 +125,7 @@
 (rf/reg-event-fx :listen-messages chat-events/listen-messages-event)
 (rf/reg-event-fx :send-message chat-events/send-message-event)
 (rf/reg-event-fx :unlisten-messages chat-events/unlisten-messages-event)
+(rf/reg-event-fx :create-chat chat-events/create-chat-event)
 (rf/reg-event-db :on-messages-updated chat-events/on-messages-updated-event)
 (rf/reg-event-db :on-chats-updated chat-events/on-chats-updated-event)
 
@@ -134,3 +135,4 @@
 (rf/reg-fx :firestore/listen-messages firestore/listen-messages)
 (rf/reg-fx :firestore/unlisten-messages firestore/unlisten-messages)
 (rf/reg-fx :firestore/send-message firestore/send-message)
+(rf/reg-fx :firestore/create-chat firestore/create-chat)

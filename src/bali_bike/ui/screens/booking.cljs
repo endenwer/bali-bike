@@ -5,7 +5,7 @@
             [bali-bike.utils :as utils]
             [bali-bike.ui.components.common :refer [text]]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
-            [bali-bike.rn :refer [view scroll-view safe-area-view]]
+            [bali-bike.rn :refer [view scroll-view safe-area-view touchable-highlight]]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.constants :as constants]))
 
@@ -28,7 +28,8 @@
 (defn main []
   (r/with-let [booking-data (rf/subscribe [:current-booking])]
     (let [get-bike (:bike @booking-data)
-          bike-data (get-bike)]
+          bike-data (get-bike)
+          owner (:owner bike-data)]
       [view {:style {:flex 1}}
        [scroll-view {:style {:flex 1}}
         [safe-area-view {:style {:flex 1}}
@@ -36,5 +37,7 @@
         [render-status (:status @booking-data)]
         [view {:style {:flex 1 :margin-horizontal 10 :margin-top 20}}
          [render-dates (:start-date @booking-data) (:end-date @booking-data)]
-         [bike-title/main bike-data]]]
+         [bike-title/main bike-data]
+         [touchable-highlight {:on-press #(rf/dispatch [:create-chat owner])}
+          [text "SEND MESSAGE"]]]]
        [text (:id @booking-data)]])))

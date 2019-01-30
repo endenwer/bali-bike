@@ -44,3 +44,9 @@
         (.set message-ref (clj->js message))
         (.update chat-ref #js {:lastMessage (:text message) :timestamp timestamp})
         (.commit))))
+
+(defn create-chat
+  [{:keys [id data]}]
+  (let [chat-ref (.doc (.collection firestore "chats") id)
+        timestamp (.firestore.FieldValue.serverTimestamp rn/firebase)]
+    (.set chat-ref (clj->js (assoc data :timestamp timestamp)))))

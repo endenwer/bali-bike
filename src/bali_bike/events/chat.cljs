@@ -18,6 +18,23 @@
                    :name (get-in chat [:users (keyword sender-uid) :name])
                    :avatar (get-in chat [:users (keyword sender-uid) :photoURL])}})))
 
+(defn prepare-chat-id
+  [uids]
+  (let [compare-result (apply compare uids)]
+    (if (= compare-result -1)
+      (apply str uids)
+      (apply str (reverse uids)))))
+
+(defn prepare-chat
+  [user receiver]
+  (let [user-uid (:uid user)
+        receiver-uid (:uid receiver)]
+    {:userUids [user-uid receiver-uid]
+     :users {user-uid {:name (:display-name user)
+                       :photoURL (:photo-url user)}
+             receiver-uid {:name (:name receiver)
+                           :photoURL (:photo-url receiver)}}}))
+
 ;; events
 
 (defn listen-chats-event
@@ -61,3 +78,13 @@
     {:firestore/send-message {:text text
                              :sender-uid (:uid user)
                              :chat-id (:id chat)}}))
+
+(defn create-chat-event
+  [{:keys [db]} [_ receiver]]
+  (let [user (:current-user db)
+        new-chat-id (prepare-chat-id [(:uid user) (:uid receiver)])
+        new-chat (prepare-chat user receiver)]
+    {:db (edb/prepend-collection db :chats :list [(assoc new-chat :id new-chat-id)])
+     :dispatch [:navigate-to-chat new-chat-id]
+     :firestore/create-chat {:id new-chat-id
+                             :data new-chat}}))
