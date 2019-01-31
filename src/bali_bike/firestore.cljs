@@ -7,8 +7,10 @@
 (def firestore (.firestore rn/firebase))
 
 (defn listen-chats
-  [callback-event]
-  (let [chats-ref (.orderBy (.collection firestore "chats") "timestamp" "desc")]
+  [{:keys [user-uid callback-event]}]
+  (let [chats-ref (.where
+                   (.orderBy (.collection firestore "chats") "timestamp" "desc")
+                   "userUids" "array-contains" user-uid)]
     (.onSnapshot
      chats-ref
      (fn [snapshot]

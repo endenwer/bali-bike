@@ -38,8 +38,10 @@
 ;; events
 
 (defn listen-chats-event
-  [_ [_ _]]
-  {:firestore/listen-chats :on-chats-updated})
+  [{:keys [db]} [_ _]]
+  (let [user (:current-user db)]
+    {:firestore/listen-chats {:callback-event :on-chats-updated
+                              :user-uid (:uid user)}}))
 
 (defn on-chats-updated-event
   [db [_ chats]]
