@@ -18,7 +18,7 @@
                    :name (get-in chat [:users (keyword sender-uid) :name])
                    :avatar (get-in chat [:users (keyword sender-uid) :photoURL])}})))
 
-(defn prepare-chat-id
+(defn get-chat-id
   [uids]
   (let [compare-result (apply compare uids)]
     (if (= compare-result -1)
@@ -55,6 +55,17 @@
            (edb/insert-named-item :chats :current {:id id}))
    :navigation/navigate-to :chat})
 
+(defn navigate-to-chat-from-booking-event
+  [{:keys [db]} [_ booking-id]]
+  (let [user (:current-user db)
+        booking (edb/get-item-by-id db :bookings booking-id)
+        owner (:owner ((:bike booking)))
+        chat-id (get-chat-id [(:uid user) (:uid owner)])
+        chat (edb/get-item-by-id db :chats chat-id)]
+    (if chat
+      {:dispatch [:navigate-to-chat chat-id]}
+      {:dispatch [:create-chat owner]})))
+
 (defn on-messages-updated-event
   [db [_ messages]]
   (let [chat (edb/get-named-item db :chats :current)
@@ -82,7 +93,7 @@
 (defn create-chat-event
   [{:keys [db]} [_ receiver]]
   (let [user (:current-user db)
-        new-chat-id (prepare-chat-id [(:uid user) (:uid receiver)])
+        new-chat-id (get-chat-id [(:uid user) (:uid receiver)])
         new-chat (prepare-chat user receiver)]
     {:db (edb/prepend-collection db :chats :list [(assoc new-chat :id new-chat-id)])
      :dispatch [:navigate-to-chat new-chat-id]

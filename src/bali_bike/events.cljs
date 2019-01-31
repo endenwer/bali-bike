@@ -122,6 +122,7 @@
 
 (rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
 (rf/reg-event-fx :navigate-to-chat chat-events/navigate-to-chat-event)
+(rf/reg-event-fx :navigate-to-chat-from-booking chat-events/navigate-to-chat-from-booking-event)
 (rf/reg-event-fx :listen-messages chat-events/listen-messages-event)
 (rf/reg-event-fx :send-message chat-events/send-message-event)
 (rf/reg-event-fx :unlisten-messages chat-events/unlisten-messages-event)

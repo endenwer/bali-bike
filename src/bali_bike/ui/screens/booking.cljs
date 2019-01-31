@@ -38,6 +38,7 @@
         [view {:style {:flex 1 :margin-horizontal 10 :margin-top 20}}
          [render-dates (:start-date @booking-data) (:end-date @booking-data)]
          [bike-title/main bike-data]
-         [touchable-highlight {:on-press #(rf/dispatch [:create-chat owner])}
+         [touchable-highlight
+          {:on-press #(rf/dispatch [:navigate-to-chat-from-booking (:id @booking-data)])}
           [text "SEND MESSAGE"]]]]
        [text (:id @booking-data)]])))

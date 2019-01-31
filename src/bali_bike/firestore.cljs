@@ -1,13 +1,14 @@
 (ns bali-bike.firestore
   (:require [bali-bike.rn :as rn]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [promesa.core :as p :refer-macros [alet]]))
 
 (def message-listener (atom nil))
 (def firestore (.firestore rn/firebase))
 
 (defn listen-chats
   [callback-event]
-  (let [chats-ref (.collection firestore "chats")]
+  (let [chats-ref (.orderBy (.collection firestore "chats") "timestamp" "desc")]
     (.onSnapshot
      chats-ref
      (fn [snapshot]
@@ -47,6 +48,8 @@
 
 (defn create-chat
   [{:keys [id data]}]
-  (let [chat-ref (.doc (.collection firestore "chats") id)
-        timestamp (.firestore.FieldValue.serverTimestamp rn/firebase)]
-    (.set chat-ref (clj->js (assoc data :timestamp timestamp)))))
+  (alet [chat-ref (.doc (.collection firestore "chats") id)
+         timestamp (.firestore.FieldValue.serverTimestamp rn/firebase)
+         chat-doc (p/await (p/promise (.get chat-ref)))]
+        (when-not (.-exists chat-doc)
+          (.set chat-ref (clj->js (assoc data :timestamp timestamp))))))
