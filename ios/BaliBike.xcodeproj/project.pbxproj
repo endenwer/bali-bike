@@ -55,7 +55,7 @@
 		CED53471ED2842F8BDA885F8 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23134E3F30144D77B7F2D16A /* Octicons.ttf */; };
 		D3710C019CDE435C9614C5F0 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 359D2B3A19884521AE5D8C9C /* FontAwesome5_Solid.ttf */; };
 		D43710A3AA9A49428A72BAAD /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162ABA722054864810EBC0F /* libRNVectorIcons.a */; };
-		DE89C33B21EB48950012C2AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE89C33A21EB48950012C2AD /* GoogleService-Info.plist */; };
+		DE8ED22822030BBA002DD65F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE8ED22722030BBA002DD65F /* GoogleService-Info.plist */; };
 		EDBE9EB446D044BB84EE6C21 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39E4FC23E3B3449D82B8DB14 /* Foundation.ttf */; };
 		EFF4EA5F61E147D5B809DC5E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 394DB78C1255471A85B07A81 /* SimpleLineIcons.ttf */; };
 		F216DD646678495DB965D17A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EF4A5B5B5BA41B08902349F /* Feather.ttf */; };
@@ -422,7 +422,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BE93FD3460664F3980C52B9E /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		D0F093F72DA24C828BA75617 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		DE89C33A21EB48950012C2AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DE8ED22722030BBA002DD65F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0B71C27A9D469DD11C6B5A9 /* Pods-BaliBike.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaliBike.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaliBike/Pods-BaliBike.release.xcconfig"; sourceTree = "<group>"; };
 		ED4940099FBD447B97D91CFF /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		EEDB37E0F6754BD39384F72E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -577,7 +577,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				DE89C33A21EB48950012C2AD /* GoogleService-Info.plist */,
+				DE8ED22722030BBA002DD65F /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1287,7 +1287,7 @@
 				9CA998F6FBB94509867A3675 /* FontAwesome5_Regular.ttf in Resources */,
 				D3710C019CDE435C9614C5F0 /* FontAwesome5_Solid.ttf in Resources */,
 				EDBE9EB446D044BB84EE6C21 /* Foundation.ttf in Resources */,
-				DE89C33B21EB48950012C2AD /* GoogleService-Info.plist in Resources */,
+				DE8ED22822030BBA002DD65F /* GoogleService-Info.plist in Resources */,
 				7D2BDEC909034B93B2959BD9 /* Ionicons.ttf in Resources */,
 				7696250D5DC5408CB0ED934F /* MaterialCommunityIcons.ttf in Resources */,
 				7F6680233DFD4F368B8709B4 /* MaterialIcons.ttf in Resources */,
