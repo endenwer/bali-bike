@@ -58,4 +58,4 @@
   (s/keys :req-un [::greeting]))
 
 ;; initial state of app-db
-(def initial-app-db (insert-meta {} :bikes :list {:loading? true}))
+(def initial-app-db {})

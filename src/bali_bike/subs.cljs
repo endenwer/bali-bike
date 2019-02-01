@@ -10,9 +10,19 @@
    (edb/get-collection app-db :bikes :list)))
 
 (rf/reg-sub
+ :bikes-meta
+ (fn [app-db _]
+   (edb/get-collection-meta app-db :bikes :list)))
+
+(rf/reg-sub
  :saved-bikes
  (fn [app-db _]
    (edb/get-collection app-db :bikes :saved)))
+
+(rf/reg-sub
+ :saved-bikes-meta
+ (fn [app-db _]
+   (edb/get-collection-meta app-db :bikes :saved)))
 
 (rf/reg-sub
  :area-filter-id
@@ -42,6 +52,11 @@
  :bookings
  (fn [app-db _]
    (edb/get-collection app-db :bookings :list)))
+
+(rf/reg-sub
+ :bookings-meta
+ (fn [app-db _]
+   (edb/get-collection-meta app-db :bookings :list)))
 
 (rf/reg-sub
  :current-booking
