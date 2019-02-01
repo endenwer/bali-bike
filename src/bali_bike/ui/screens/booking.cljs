@@ -5,9 +5,14 @@
             [bali-bike.utils :as utils]
             [bali-bike.ui.components.common :refer [text]]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
-            [bali-bike.rn :refer [view scroll-view safe-area-view touchable-highlight]]
+            [bali-bike.rn :refer [view
+                                  scroll-view
+                                  safe-area-view
+                                  touchable-highlight
+                                  activity-indicator]]
             [bali-bike.ui.components.bike-title :as bike-title]
-            [bali-bike.constants :as constants]))
+            [bali-bike.constants :as constants]
+            [bali-bike.ui.components.chat-preview :as chat-preview]))
 
 (defn render-status
   [status]
@@ -25,20 +30,40 @@
   [text {:style {:font-weight "bold"}}
    (utils/get-short-dates-range-string start-date end-date)])
 
+(defn render-owner
+  [{:keys [booking-id owner]}]
+  [view {:style {:flex-direction "row"
+                 :margin-top 20
+                 :padding-vertical 5
+                 :align-items "center"
+                 :border-bottom-width 1
+                 :border-top-width 1
+                 :border-color colors/clouds}}
+   [chat-preview/render-avatar (:photo-url owner)]
+   [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name owner)]
+   [touchable-highlight
+    {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])}
+    [text {:style {:color colors/turquoise}} "SEND MESSAGE"]]])
+
+(defn render-loading []
+  [view {:style {:flex 1 :margin-top 30 :align-items "center" :justify-content "center"}}
+   [activity-indicator {:size "large" :color colors/turquoise}]])
+
 (defn main []
   (r/with-let [booking-data (rf/subscribe [:current-booking])]
-    (let [get-bike (:bike @booking-data)
+    (let [booking-meta (meta @booking-data)
+          get-bike (:bike @booking-data)
           bike-data (get-bike)
           owner (:owner bike-data)]
       [view {:style {:flex 1}}
-       [scroll-view {:style {:flex 1}}
+       [scroll-view {:style {:flex 1} :showsVerticalScrollIndicator false}
         [safe-area-view {:style {:flex 1}}
          [bike-photos-swiper/main bike-data]]
         [render-status (:status @booking-data)]
         [view {:style {:flex 1 :margin-horizontal 10 :margin-top 20}}
          [render-dates (:start-date @booking-data) (:end-date @booking-data)]
          [bike-title/main bike-data]
-         [touchable-highlight
-          {:on-press #(rf/dispatch [:navigate-to-chat-from-booking (:id @booking-data)])}
-          [text "SEND MESSAGE"]]]]
-       [text (:id @booking-data)]])))
+         (if (:loading? booking-meta)
+           [render-loading]
+           [view {:style {:flex 1}}
+            [render-owner {:booking-id (:id @booking-data) :owner owner}]])]]])))
