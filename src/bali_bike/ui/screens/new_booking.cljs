@@ -1,6 +1,7 @@
 (ns bali-bike.ui.screens.new-booking
   (:require [bali-bike.rn :refer [view safe-area-view scroll-view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text button h3]]
+            [bali-bike.ui.components.property-item :as property-item]
             [reagent.core :as r]
             [bali-bike.colors :as colors]
             [bali-bike.rn :as rn]
@@ -54,16 +55,29 @@
      [text {:style {:color colors/turquoise}} "CHANGE"]]]
    [text value]])
 
-(defn render-total []
-  [view {:style {:padding-vertical 15
-                 :border-top-width 1
-                 :border-color colors/clouds}}
-   [view {:style {:flex-direction "row"
-                  :justify-content "space-between"
-                  :align-items "center"
-                  :margin-bottom 10}}
-    [h3 "Total payment"]]
-   [text "70k * 4 days = 280k"]])
+(defn render-total
+  [{:keys [bike dates-range]}]
+  (let [dates-diff (utils/get-dates-diff dates-range)
+        daily-price (if (:months dates-diff)
+                      (utils/round-to-thousands (/ (:monthly-price bike) 30))
+                      (:daily-price bike))]
+    [view {:style {:padding-vertical 15
+                   :border-top-width 1
+                   :border-color colors/clouds}}
+     [view {:style {:flex-direction "row"
+                    :justify-content "space-between"
+                    :align-items "center"
+                    :margin-bottom 10}}
+      [h3 "Total payment"]]
+     [property-item/main "Months" (str "Rp"
+                                       (utils/format-number (:monthly-price bike))
+                                       " x "
+                                       (:months dates-diff))]
+     [property-item/main "Days" (str "Rp"
+                                     (utils/format-number daily-price) " x " (:days dates-diff))]
+     [property-item/main "Total" (str "Rp" (utils/format-number
+                                            (+ (* (:monthly-price bike) (:months dates-diff))
+                                               (* daily-price (:days dates-diff)))))]]))
 
 (defn main []
   (r/with-let [current-bike (rf/subscribe [:current-bike])
@@ -81,8 +95,11 @@
                                   (:end-date dates-range))}]
         [render-property {:title "Delivery location"
                           :on-change #(rf/dispatch [:navigate-to :new-booking-map])
-                          :value (:address delivery-location)}]
-        [render-total]]
+                          :value (or
+                                  (:address delivery-location)
+                                  "Choose delivery location")}]
+        [render-total {:bike @current-bike
+                       :dates-range dates-range}]]
        [render-bottom
         {:on-submit #(rf/dispatch [:create-booking])
          :submiting? (:submiting? @new-booking)}]])))

@@ -16,7 +16,8 @@
     "react-native-google-signin",
     "react-native-firebase",
     "react-native-maps",
-    "react-native-gifted-chat"
+    "react-native-gifted-chat",
+    "moment-precise-range-plugin"
   ],
   "imageDirs": [
     "images"
