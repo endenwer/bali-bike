@@ -4,6 +4,7 @@
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.ui.components.bike-rating :as bike-rating]
+            [bali-bike.ui.components.bike-price :as bike-price]
             [bali-bike.colors :as colors]
             [re-frame.core :as rf]))
 
@@ -31,4 +32,4 @@
                             (:id bike-data)])}]
     [bike-title/main bike-data]
     [bike-rating/main bike-data]
-    [text {:style {:margin-top 5}} (str (:price bike-data) "K IDR per month")]]])
+    [bike-price/main bike-data]]])

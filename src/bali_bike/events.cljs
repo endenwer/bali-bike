@@ -32,21 +32,6 @@
  (fn [_ _]
    {:navigation/navigate-back nil}))
 
-(rf/reg-event-fx
- :navigate-to-bike
- (fn [{:keys [db]} [_ bike-id]]
-   {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
-    :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :price :rating
-                                                    :reviewsCount :mileage :manufactureYear
-                                                    :saved :reviews [:id :rating :comment]]]
-                       :callback-event :on-bike-loaded}
-    :navigation/navigate-to :bike}))
-
-(rf/reg-event-db
- :on-bike-loaded
- [interceptors/transform-event-to-kebab]
- (fn [db [_ {:keys [data]}]]
-   (edb/insert-named-item db :bikes :current (:bike data) {:loading? false})))
 
 (rf/reg-event-db
  :change-area-search-bar-text
@@ -78,6 +63,11 @@
 (rf/reg-event-fx :load-saved-bikes bike-events/load-saved-bikes-event)
 (rf/reg-event-fx :add-bike-to-saved bike-events/add-bike-to-saved-event)
 (rf/reg-event-fx :remove-bike-from-saved bike-events/remove-bike-from-saved-event)
+(rf/reg-event-fx :navigate-to-bike bike-events/navigate-to-bike-event)
+(rf/reg-event-db
+ :on-bike-loaded
+ [interceptors/transform-event-to-kebab]
+ bike-events/on-bike-loaded-event)
 (rf/reg-event-db
  :on-bikes-loaded
  [interceptors/transform-event-to-kebab]

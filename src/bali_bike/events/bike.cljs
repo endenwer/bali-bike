@@ -1,6 +1,20 @@
 (ns bali-bike.events.bike
   (:require [bali-bike.edb :as edb]))
 
+(defn on-bike-loaded-event
+  [db [_ {:keys [data]}]]
+  (edb/insert-named-item db :bikes :current (:bike data) {:loading? false}))
+
+(defn navigate-to-bike-event
+  [{:keys [db]} [_ bike-id]]
+  {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
+   :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :rating
+                                                   :dailyPrice :monthlyPrice
+                                                   :reviewsCount :mileage :manufactureYear
+                                                   :saved :reviews [:id :rating :comment]]]
+                      :callback-event :on-bike-loaded}
+   :navigation/navigate-to :bike})
+
 (defn on-bikes-loaded-event
   [db [_ {:keys [data]}]]
   (edb/insert-collection db :bikes :list (:bikes data) {:loading? false}))
@@ -8,7 +22,9 @@
 (defn load-bikes-event
   [{:keys [db]} [_ _]]
   {:db (edb/insert-meta db :bikes :list {:loading? true})
-   :api/send-graphql {:query [:bikes [:id :modelId :photos :price :rating :reviewsCount
+   :api/send-graphql {:query [:bikes [:id :modelId :photos
+                                      :dailyPrice :monthlyPrice
+                                      :rating :reviewsCount
                                       :mileage :manufactureYear :saved]]
                       :callback-event :on-bikes-loaded}})
 
@@ -19,8 +35,10 @@
 (defn load-saved-bikes-event
   [{:keys [db]} [_ _]]
   {:db (edb/insert-meta db :bikes :saved {:loading? true})
-   :api/send-graphql {:query [:savedBikes [:id :modelId :photos :price :rating :reviewsCount
-                                            :mileage :manufactureYear :saved]]
+   :api/send-graphql {:query [:savedBikes [:id :modelId :photos
+                                           :dailyPrice :monthlyPrice
+                                           :rating :reviewsCount
+                                           :mileage :manufactureYear :saved]]
                       :callback-event :on-saved-bikes-loaded}})
 
 (defn add-bike-to-saved-event

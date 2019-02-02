@@ -5,6 +5,7 @@
             [bali-bike.ui.components.property-item :as property-item]
             [bali-bike.ui.components.common :refer [button text h2]]
             [bali-bike.colors :as colors]
+            [bali-bike.ui.components.bike-price :as bike-price]
             [bali-bike.ui.components.bike-rating :as bike-rating]
             [bali-bike.ui.components.reviews-list :as reviews-list]
             [reagent.core :as r]
@@ -19,8 +20,7 @@
                   :align-items "center"
                   :justify-content "space-between"}}
     [view
-     [text {:style {:font-weight "bold"}}
-      (str (:price bike-data) "K IDR per month")]
+     [bike-price/main bike-data]
      [bike-rating/main bike-data]]
     [button {:title "Book"
              :on-press #(rf/dispatch [:navigate-to-new-booking])
