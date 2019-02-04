@@ -17,16 +17,26 @@
 
 (defn on-bikes-loaded-event
   [db [_ {:keys [data]}]]
-  (edb/insert-collection db :bikes :list (:bikes data) {:loading? false}))
+  (let [bikes (edb/get-collection db :bikes :list)]
+    (if (and (not= 0 (count bikes)) (= (:id (last bikes)) (:id (last (:bikes data)))))
+      (edb/insert-meta db :bikes :list {:loading? false :all-loaded? true})
+      (edb/append-collection db :bikes :list (:bikes data) {:loading? false}))))
 
 (defn load-bikes-event
   [{:keys [db]} [_ _]]
-  {:db (edb/insert-meta db :bikes :list {:loading? true})
-   :api/send-graphql {:query [:bikes [:id :modelId :photos
-                                      :dailyPrice :monthlyPrice
-                                      :rating :reviewsCount
-                                      :mileage :manufactureYear :saved]]
-                      :callback-event :on-bikes-loaded}})
+  (let [bikes (edb/get-collection db :bikes :list)
+        bikes-meta (meta bikes)
+        skip (or (:skip bikes-meta) 0)
+        load-count 5]
+    (when-not (or (:all-loaded? bikes-meta) (:loading? bikes-meta))
+      {:db (edb/insert-meta db :bikes :list {:loading? true :skip (+ skip load-count)})
+       :api/send-graphql {:query
+                          [:bikes {:skip skip :first load-count}
+                           [:id :modelId :photos
+                            :dailyPrice :monthlyPrice
+                            :rating :reviewsCount
+                            :mileage :manufactureYear :saved]]
+                          :callback-event :on-bikes-loaded}})))
 
 (defn on-saved-bikes-loaded-event
   [db [_ {:keys [data]}]]

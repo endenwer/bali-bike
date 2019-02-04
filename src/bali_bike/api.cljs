@@ -21,7 +21,9 @@
           \,
           (map (fn [[k v]]
                  (let [v (if (keyword? v) (name v) v)]
-                   (str (name k) ":\"" (str v) \")))
+                   (if (string? v)
+                     (str (name k) ":\"" (str v) \")
+                     (str (name k) ":" (str v)))))
                q))
          \))
     (vector? q)

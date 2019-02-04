@@ -52,6 +52,3 @@
 
 (defn model []
   [render-button {:title "Any model" :filter-screen-name :area-filter}])
-
-(defn filters []
-  [render-button {:title "Filters" :filter-screen-name :area-filter}])

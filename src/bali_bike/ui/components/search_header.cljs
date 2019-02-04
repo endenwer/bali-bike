@@ -10,9 +10,9 @@
                            :flex-wrap "wrap"
                            :align-self "stretch"
                            :align-items "center"
+                           :justify-content "center"
                            :border-bottom-width 1
                            :border-color colors/silver}}
    [filter-buttons/area]
    [filter-buttons/dates]
-   [filter-buttons/model]
-   [filter-buttons/filters]])
+   [filter-buttons/model]])
