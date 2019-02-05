@@ -38,7 +38,7 @@
    @navigator-ref
    (.back navigation-actions)))
 
-(defn replace
+(defn replace-route
   [route]
   (.dispatch
    @navigator-ref

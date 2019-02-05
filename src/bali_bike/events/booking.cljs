@@ -58,6 +58,7 @@
                                          :deliveryLocationAddress
                                          (get-in new-booking [:delivery-location :address])}
                          [:id :startDate :endDate :status
+                          :monthlyPrice :dailyPrice :totalPrice
                           :bike [:id :modelId :photos
                                  :owner [:uid :name :photoURL]]
                           :user [:uid :name :photoURL]]]
@@ -82,6 +83,7 @@
   [{:keys [db]} [_ booking-id]]
   {:db (edb/insert-named-item db :bookings :current {:id booking-id} {:loading? true})
    :api/send-graphql {:query [:booking {:id booking-id} [:id :startDate :endDate :status
+                                                         :monthlyPrice :dailyPrice :totalPrice
                                                          :bike [:id :modelId :photos
                                                                 :owner [:uid :name :photoURL]]
                                                          :user [:uid :name :photoURL]]]

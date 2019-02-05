@@ -25,7 +25,7 @@
 (rf/reg-fx
  :navigation/replace
  (fn [view-id]
-   (routing/replace view-id)))
+   (routing/replace-route view-id)))
 
 (rf/reg-event-fx
  :navigate-to

@@ -4,6 +4,7 @@
             [bali-bike.colors :as colors]
             [bali-bike.utils :as utils]
             [bali-bike.ui.components.common :refer [text]]
+            [bali-bike.ui.components.booking-total-price :as booking-total-price]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.rn :refer [view
                                   scroll-view
@@ -66,4 +67,8 @@
          (if (:loading? booking-meta)
            [render-loading]
            [view {:style {:flex 1}}
-            [render-owner {:booking-id (:id @booking-data) :owner owner}]])]]])))
+            [render-owner {:booking-id (:id @booking-data) :owner owner}]
+            [booking-total-price/main {:monthly-price (:monthly-price @booking-data)
+                                       :daily-price (:daily-price @booking-data)
+                                       :start-date (:start-date @booking-data)
+                                       :end-date (:end-date @booking-data)}]])]]])))
