@@ -17,9 +17,11 @@
 ;; events
 
 (defn on-booking-created-event
-  [db [_ data]]
-  (.log js/console data)
-  (assoc-in db [:new-booking :submiting?] false))
+  [{:keys [db]} [_ {:keys [data]}]]
+  {:db (-> db
+           (edb/insert-named-item :bookings :current (:create-booking data) {:loading? false})
+           (assoc-in [:new-booking :submiting?] false))
+   :navigation/replace :booking})
 
 (defn create-booking-event
   [{:keys [db]} [_ _]]
@@ -34,24 +36,31 @@
                                          :endDate
                                          (get-in new-booking [:dates-range :end-date])
                                          :deliveryLocationLatitude
-                                         (get-in
-                                          new-booking
-                                          [:delivery-location :region :latitude])
+                                         (str
+                                          (get-in
+                                           new-booking
+                                           [:delivery-location :region :latitude]))
                                          :deliveryLocationLatitudeDelta
-                                         (get-in
-                                          new-booking
-                                          [:delivery-location :region :latitude-delta])
+                                         (str
+                                          (get-in
+                                           new-booking
+                                           [:delivery-location :region :latitude-delta]))
                                          :deliveryLocationLongitudeDelta
-                                         (get-in
-                                          new-booking
-                                          [:delivery-location :region :longitude-delta])
+                                         (str
+                                          (get-in
+                                           new-booking
+                                           [:delivery-location :region :longitude-delta]))
                                          :deliveryLocationLongitude
-                                         (get-in
-                                          new-booking
-                                          [:delivery-location :region :longitude])
+                                         (str
+                                          (get-in
+                                           new-booking
+                                           [:delivery-location :region :longitude]))
                                          :deliveryLocationAddress
                                          (get-in new-booking [:delivery-location :address])}
-                         [:id]]
+                         [:id :startDate :endDate :status
+                          :bike [:id :modelId :photos
+                                 :owner [:uid :name :photoURL]]
+                          :user [:uid :name :photoURL]]]
                         :callback-event :on-booking-created}}))
 
 (defn on-bookings-loaded-event

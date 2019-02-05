@@ -6,7 +6,7 @@
             [clojure.string]))
 
 (def http-url "http://localhost:4000")
-(def google-api-token "AIzaSyCoOBiH4wbBS6_r43ayNXVsDOW1p5uWxpk")
+(def google-api-token "AIzaSyCJXzJMv646WQoLFYCnXWXscs33HrHAZfs")
 
 (defn parse-query [q]
   (cond

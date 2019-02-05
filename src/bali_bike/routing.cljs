@@ -22,6 +22,7 @@
 ;; navigation
 
 (def navigation-actions (.-NavigationActions ReactNavigation))
+(def stack-actions (.-StackActions ReactNavigation))
 
 (def navigator-ref (atom nil))
 
@@ -36,6 +37,14 @@
   (.dispatch
    @navigator-ref
    (.back navigation-actions)))
+
+(defn replace
+  [route]
+  (.dispatch
+   @navigator-ref
+   (.replace
+    stack-actions
+    #js {:routeName (name route)})))
 
 ;; routes
 

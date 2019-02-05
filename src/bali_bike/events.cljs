@@ -22,6 +22,11 @@
  (fn []
    (routing/navigate-back)))
 
+(rf/reg-fx
+ :navigation/replace
+ (fn [view-id]
+   (routing/replace view-id)))
+
 (rf/reg-event-fx
  :navigate-to
  (fn [_ [_ view-id]]
@@ -31,7 +36,6 @@
  :navigate-back
  (fn [_ _]
    {:navigation/navigate-back nil}))
-
 
 (rf/reg-event-db
  :change-area-search-bar-text
@@ -96,7 +100,9 @@
 (rf/reg-event-fx :update-delivery-region
                  [interceptors/transform-event-to-kebab]
                  booking-events/update-delivery-region-event)
-(rf/reg-event-db :on-booking-created booking-events/on-booking-created-event)
+(rf/reg-event-fx :on-booking-created
+                 [interceptors/transform-event-to-kebab]
+                 booking-events/on-booking-created-event)
 (rf/reg-event-db :update-delivery-location booking-events/update-delivery-location-event)
 (rf/reg-event-db :on-booking-loaded
                  [interceptors/transform-event-to-kebab]
