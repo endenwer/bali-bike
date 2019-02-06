@@ -6,7 +6,8 @@
 
 (defn main
   [property-name value]
-  [view {:style {:padding-vertical 10
+  [view {:style {:padding-bottom 10
+                 :margin-bottom 10
                  :border-bottom-width 1
                  :border-color colors/clouds
                  :flex-direction "row"

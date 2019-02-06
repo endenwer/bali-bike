@@ -4,6 +4,19 @@
             [promesa.core :as p]
             [re-frame.core :as rf]))
 
+(def booking-full-data-query
+  [:id :startDate :endDate :status
+   :monthlyPrice :dailyPrice :totalPrice
+   :deliveryLocationLongitude
+   :deliveryLocationLongitudeDelta
+   :deliveryLocationLatitude
+   :deliveryLocationLatitudeDelta
+   :deliveryLocationAddress
+   :deliveryLocationComment
+   :bike [:id :modelId :photos
+          :owner [:uid :name :photoURL]]
+   :user [:uid :name :photoURL]])
+
 ;; effects
 
 (defn load-delivery-address
@@ -57,11 +70,7 @@
                                            [:delivery-location :region :longitude]))
                                          :deliveryLocationAddress
                                          (get-in new-booking [:delivery-location :address])}
-                         [:id :startDate :endDate :status
-                          :monthlyPrice :dailyPrice :totalPrice
-                          :bike [:id :modelId :photos
-                                 :owner [:uid :name :photoURL]]
-                          :user [:uid :name :photoURL]]]
+                         booking-full-data-query]
                         :callback-event :on-booking-created}}))
 
 (defn on-bookings-loaded-event

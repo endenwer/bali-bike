@@ -43,7 +43,7 @@
     [bike-rating/main bike-data]]])
 
 (defn render-property
-  [{:keys [title value on-change]}]
+  [{:keys [title value on-press on-press-text]}]
   [view {:style {:padding-vertical 15
                  :border-top-width 1
                  :border-color colors/clouds}}
@@ -52,8 +52,8 @@
                   :align-items "center"
                   :margin-bottom 10}}
     [h3 title]
-    [touchable-highlight {:on-press on-change}
-     [text {:style {:color colors/turquoise}} "CHANGE"]]]
+    [touchable-highlight {:on-press on-press}
+     [text {:style {:color colors/turquoise}} on-press-text]]]
    [text value]])
 
 (defn main []
@@ -71,7 +71,8 @@
                                   (:start-date dates-range)
                                   (:end-date dates-range))}]
         [render-property {:title "Delivery location"
-                          :on-change #(rf/dispatch [:navigate-to :new-booking-map])
+                          :on-press #(rf/dispatch [:navigate-to :new-booking-map])
+                          :on-press-text "CHANGE"
                           :value (or
                                   (:address delivery-location)
                                   "Choose delivery location")}]

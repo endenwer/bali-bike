@@ -13,7 +13,8 @@
                                   activity-indicator]]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.constants :as constants]
-            [bali-bike.ui.components.chat-preview :as chat-preview]))
+            [bali-bike.ui.components.chat-preview :as chat-preview]
+            [bali-bike.ui.screens.new-booking :as new-booking]))
 
 (defn render-status
   [status]
@@ -68,6 +69,10 @@
            [render-loading]
            [view {:style {:flex 1}}
             [render-owner {:booking-id (:id @booking-data) :owner owner}]
+            [new-booking/render-property {:title "Delivery location"
+                                          :on-press #(.log js/console "show map")
+                                          :on-press-text "SHOW MAP"
+                                          :value (:delivery-location-address @booking-data)}]
             [booking-total-price/main {:monthly-price (:monthly-price @booking-data)
                                        :daily-price (:daily-price @booking-data)
                                        :start-date (:start-date @booking-data)
