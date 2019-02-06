@@ -22,7 +22,8 @@
   (r/with-let [delivery-location (rf/subscribe [:delivery-location])
                change-region #(rf/dispatch [:update-delivery-region (js->clj %)])]
     [view {:style {:flex 1}}
-     [map-view/main {:on-change change-region}]
+     [map-view/main {:on-change change-region
+                     :initial-region (:region @delivery-location)}]
      [render-bottom
       {:loading? (:loading? @delivery-location)
        :on-save

@@ -4,6 +4,7 @@
             [bali-bike.rn :as rn]
             [bali-bike.ui.components.bike-actions-header :as bike-actions-header]
             [bali-bike.ui.screens.new-booking-map :as new-booking-map-screen]
+            [bali-bike.ui.screens.booking-map :as booking-map-screen]
             [bali-bike.ui.screens.booking :as booking-screen]
             [bali-bike.ui.screens.saved :as saved-screen]
             [bali-bike.ui.screens.bookings :as bookings-screen]
@@ -48,8 +49,10 @@
 
 ;; routes
 
-(defn- create-stack-navigator [route-configs]
-  (.createStackNavigator ReactNavigation (clj->js route-configs)))
+(defn- create-stack-navigator [route-configs default-navigation-options]
+  (.createStackNavigator ReactNavigation
+                         (clj->js route-configs)
+                         (clj->js default-navigation-options)))
 
 (defn- create-bottom-tab-navigator [route-configs default-navigation-options]
   (.createBottomTabNavigator
@@ -99,7 +102,9 @@
     :new-booking {:screen (r/reactify-component new-booking-screen/main)}
     :new-booking-map {:screen (r/reactify-component new-booking-map-screen/main)}
     :booking {:screen (r/reactify-component booking-screen/main)}
-    :chat {:screen (r/reactify-component chat-screen/main)}}))
+    :booking-map {:screen (r/reactify-component booking-map-screen/main)}
+    :chat {:screen (r/reactify-component chat-screen/main)}}
+   {:initialRouteName "tabs"}))
 
 (defn container []
   [:> (create-app-container

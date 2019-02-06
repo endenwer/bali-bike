@@ -19,3 +19,8 @@
   {"WAITING_CONFIRMATION" colors/carrot
    "CONFIRMED" colors/emerald
    "CANCELED" colors/alizarin})
+
+(def default-region {:latitude 37.78825
+                     :longitude -122.4324
+                     :latitude-delta 0.0922
+                     :longitude-delta 0.0421})

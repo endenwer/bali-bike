@@ -91,11 +91,7 @@
 (defn navigate-to-booking-event
   [{:keys [db]} [_ booking-id]]
   {:db (edb/insert-named-item db :bookings :current {:id booking-id} {:loading? true})
-   :api/send-graphql {:query [:booking {:id booking-id} [:id :startDate :endDate :status
-                                                         :monthlyPrice :dailyPrice :totalPrice
-                                                         :bike [:id :modelId :photos
-                                                                :owner [:uid :name :photoURL]]
-                                                         :user [:uid :name :photoURL]]]
+   :api/send-graphql {:query [:booking {:id booking-id} booking-full-data-query]
                       :callback-event :on-booking-loaded}
    :navigation/navigate-to :booking})
 

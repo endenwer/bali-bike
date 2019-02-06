@@ -70,7 +70,7 @@
            [view {:style {:flex 1}}
             [render-owner {:booking-id (:id @booking-data) :owner owner}]
             [new-booking/render-property {:title "Delivery location"
-                                          :on-press #(.log js/console "show map")
+                                          :on-press #(rf/dispatch [:navigate-to :booking-map])
                                           :on-press-text "SHOW MAP"
                                           :value (:delivery-location-address @booking-data)}]
             [booking-total-price/main {:monthly-price (:monthly-price @booking-data)

@@ -1,5 +1,6 @@
 (ns bali-bike.ui.components.map-view
   (:require [bali-bike.rn :refer [view icon map-view PROVIDER_GOOGLE]]
+            [bali-bike.constants :as constants]
             [bali-bike.colors :as colors]))
 
 (defn main
@@ -10,7 +11,7 @@
                       :right 0
                       :top 0
                       :bottom 0}
-              :initiaRegion initial-region
+              :initialRegion (or initial-region constants/default-region)
               :onRegionChangeComplete on-change
               :showsUserLocation true
               :showsMyLocationButton true
