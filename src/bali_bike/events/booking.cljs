@@ -115,5 +115,14 @@
 
 (defn navigate-to-new-booking-event
   [{:keys [db]} [_ _]]
-  {:db (assoc-in db [:new-booking :dates-range] (:dates-range db))
-   :navigation/navigate-to :new-booking})
+  (let [dates-range (:dates-range db)
+        new-booking-dates-range (get-in db [:new-booking :dates-range])]
+    (if (or dates-range new-booking-dates-range)
+      {:db (assoc-in db [:new-booking :dates-range] (or dates-range new-booking-dates-range))
+       :navigation/navigate-to :new-booking}
+      {:navigation/navigate-to :new-booking-dates})))
+
+(defn set-new-booking-dates-range
+  [{:keys [db]} [_ start-date end-date]]
+  {:db (assoc-in db [:new-booking :dates-range] {:start-date start-date :end-date end-date})
+   :navigation/replace :new-booking})

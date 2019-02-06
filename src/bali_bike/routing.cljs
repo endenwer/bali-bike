@@ -3,6 +3,7 @@
             [reagent.core :as r]
             [bali-bike.rn :as rn]
             [bali-bike.ui.components.bike-actions-header :as bike-actions-header]
+            [bali-bike.ui.screens.new-booking-dates :as new-booking-dates-screen]
             [bali-bike.ui.screens.new-booking-map :as new-booking-map-screen]
             [bali-bike.ui.screens.booking-map :as booking-map-screen]
             [bali-bike.ui.screens.booking :as booking-screen]
@@ -101,6 +102,7 @@
                                              (r/reactify-component bike-actions-header/main))}}
     :new-booking {:screen (r/reactify-component new-booking-screen/main)}
     :new-booking-map {:screen (r/reactify-component new-booking-map-screen/main)}
+    :new-booking-dates {:screen (r/reactify-component new-booking-dates-screen/main)}
     :booking {:screen (r/reactify-component booking-screen/main)}
     :booking-map {:screen (r/reactify-component booking-map-screen/main)}
     :chat {:screen (r/reactify-component chat-screen/main)}}
