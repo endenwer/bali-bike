@@ -44,13 +44,11 @@
 
 (defn render-property
   [{:keys [title value on-press on-press-text]}]
-  [view {:style {:padding-vertical 15
-                 :border-top-width 1
-                 :border-color colors/clouds}}
+  [view {:style {:padding-vertical 10}}
    [view {:style {:flex-direction "row"
                   :justify-content "space-between"
                   :align-items "center"
-                  :margin-bottom 10}}
+                  :margin-bottom 5}}
     [h3 title]
     [touchable-highlight {:on-press on-press}
      [text {:style {:color colors/turquoise}} on-press-text]]]

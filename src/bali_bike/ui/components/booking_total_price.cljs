@@ -15,11 +15,11 @@
         calculated-daily-price (if (> (:months dates-diff) 0)
                                  (utils/round-to-thousands (/ monthly-price 30))
                                  daily-price)]
-    [view {:style {:padding-vertical 15 :border-top-width 1 :border-color colors/clouds}}
+    [view {:style {:padding-vertical 10}}
      [view {:style {:flex-direction "row"
                     :justify-content "space-between"
                     :align-items "center"
-                    :margin-bottom 10}}
+                    :margin-bottom 5}}
       [h3 "Total payment"]]
      (when (> (:months dates-diff) 0) [render-price "Months" (:months dates-diff) monthly-price])
      [render-price "Days" (:days dates-diff) calculated-daily-price]

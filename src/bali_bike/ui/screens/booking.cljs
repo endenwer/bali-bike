@@ -35,7 +35,7 @@
 (defn render-owner
   [{:keys [booking-id owner]}]
   [view {:style {:flex-direction "row"
-                 :margin-top 20
+                 :margin-vertical 20
                  :padding-vertical 5
                  :align-items "center"
                  :border-bottom-width 1
