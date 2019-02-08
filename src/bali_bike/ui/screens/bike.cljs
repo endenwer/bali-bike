@@ -24,9 +24,8 @@
      [bike-rating/main bike-data]]
     [button {:title "Book"
              :on-press #(rf/dispatch [:navigate-to-new-booking])
-             :background-color colors/alizarin
-             :container-view-style {:margin-left 0 :margin-right 0}
-             :text-style {:margin-horizontal 20 :font-weight "bold"}}]]])
+             :title-style {:font-weight "bold" :margin-horizontal 20}
+             :button-style {:background-color colors/alizarin}}]]])
 
 (defn render-bike-info
   [bike-data]

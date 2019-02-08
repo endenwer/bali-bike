@@ -1,11 +1,9 @@
 (ns bali-bike.ui.screens.new-booking
   (:require [bali-bike.rn :refer [view safe-area-view scroll-view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text button h3]]
-            [bali-bike.ui.components.property-item :as property-item]
             [bali-bike.ui.components.booking-total-price :as booking-total-price]
             [reagent.core :as r]
             [bali-bike.colors :as colors]
-            [bali-bike.rn :as rn]
             [bali-bike.constants :as constants]
             [bali-bike.ui.components.bike-rating :as bike-rating]
             [bali-bike.utils :as utils]
@@ -20,9 +18,8 @@
             :on-press on-submit
             :disabled submiting?
             :loading submiting?
-            :background-color colors/alizarin
-            :container-view-style {:margin 10}
-            :text-style {:margin-horizontal 20 :font-weight "bold"}}]])
+            :button-style {:margin 10 :background-color colors/alizarin}
+            :title-style {:margin-horizontal 20 :font-weight "bold"}}]])
 
 (defn render-bike-title
   [model-id]

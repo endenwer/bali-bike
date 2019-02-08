@@ -51,5 +51,6 @@
                               :margin-bottom 20}}
       [button {:title "Save"
                :disabled (or (nil? @start-date) (nil? @end-date))
-               :background-color colors/turquoise
+               :button-style {:background-color colors/turquoise
+                              :margin-horizontal 10}
                :on-press #(on-save (.toISOString @start-date) (.toISOString @end-date))}]]]))

@@ -12,9 +12,7 @@
    [button {:title "Open map"
             :on-press on-press
             :background-color colors/turquoise
-            :container-view-style {:margin-left 10
-                                   :margin-right 10
-                                   :margin 10}}]])
+            :button-style {:margin 10}}]])
 
 (defn main []
   (r/with-let [booking-data (rf/subscribe [:current-booking])]

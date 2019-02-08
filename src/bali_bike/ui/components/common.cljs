@@ -3,7 +3,7 @@
             [bali-bike.colors :as colors]))
 
 (defn button [props]
-  [rn/button (merge {:border-radius 5} props)])
+  [rn/button (assoc props :button-style (merge {:border-radius 5} (:button-style props)))])
 
 (defn h1
   ([content] (h1 {} content))
