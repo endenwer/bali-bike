@@ -13,8 +13,8 @@
                                   activity-indicator]]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.constants :as constants]
-            [bali-bike.ui.components.chat-preview :as chat-preview]
-            [bali-bike.ui.screens.new-booking :as new-booking]))
+            [bali-bike.ui.screens.new-booking :as new-booking]
+            [bali-bike.ui.components.avatar :as avatar]))
 
 (defn render-status
   [status]
@@ -41,7 +41,7 @@
                  :border-bottom-width 1
                  :border-top-width 1
                  :border-color colors/clouds}}
-   [chat-preview/render-avatar (:photo-url owner)]
+   [avatar/main {:photo-url (:photo-url owner) :size "medium"}]
    [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name owner)]
    [touchable-highlight
     {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])}

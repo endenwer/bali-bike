@@ -14,10 +14,12 @@
         color (if saved colors/alizarin colors/white)]
     [icon {:on-press on-press
            :name icon-name
-           :reverse-color color
-           :reverse true
+           :color color
            :container-style {:position "absolute"
-                             :background-color "rgba(0, 0, 0, 0.2)"
+                             :margin 10
+                             :padding 15
+                             :border-radius 30
+                             :background-color "rgba(0,0,0,0.2)"
                              :right 0}}]))
 
 (defn main [bike-data]

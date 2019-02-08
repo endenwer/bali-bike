@@ -21,7 +21,6 @@
 (def ReactNativeElements (js/require "react-native-elements"))
 (def rating (r/adapt-react-class (.-Rating ReactNativeElements)))
 (def search-bar (r/adapt-react-class (.-SearchBar ReactNativeElements)))
-(def list (r/adapt-react-class (.-List ReactNativeElements)))
 (def list-item (r/adapt-react-class (.-ListItem ReactNativeElements)))
 (def button (r/adapt-react-class (.-Button ReactNativeElements)))
 (def Icon (.-Icon ReactNativeElements))

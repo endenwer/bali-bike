@@ -1,14 +1,9 @@
 (ns bali-bike.ui.components.chat-preview
-  (:require [bali-bike.rn :as rn :refer [view avatar touchable-highlight]]
+  (:require [bali-bike.rn :as rn :refer [view touchable-highlight]]
             [bali-bike.ui.components.common :refer [text]]
+            [bali-bike.ui.components.avatar :as avatar]
             [bali-bike.colors :as colors]
             [re-frame.core :as rf]))
-
-(defn render-avatar
-  [photo-url]
-  (if photo-url
-    [avatar {:rounded true :medium true :source {:uri photo-url}}]
-    [avatar {:rounded true :medium true :title "SL"}]))
 
 (defn main
   [chat]
@@ -16,7 +11,7 @@
    [view {:style {:flex-direction "row"
                   :justify-content "space-between"
                   :margin-top 10}}
-    [render-avatar (get-in chat [:another-user :photoURL])]
+    [avatar/main {:photo-url (get-in chat [:another-user :photoURL]) :size "medium"}]
     [view {:style {:flex 1
                    :margin-left 10
                    :padding-bottom 5
