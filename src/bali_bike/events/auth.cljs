@@ -9,3 +9,8 @@
   [{:keys [db]} [_ current-user]]
   {:db (assoc db :current-user current-user :signing-in? false)
    :navigation/navigate-to (if current-user :app :auth)})
+
+(defn sign-out-event
+  [_ [_ _]]
+  {:auth/sign-out nil
+   :navigation/navigate-to :auth})

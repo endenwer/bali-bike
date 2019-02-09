@@ -87,3 +87,8 @@
  :current-user
  (fn [app-db _]
    (:current-user app-db)))
+
+(rf/reg-sub
+ :signing-in?
+ (fn [app-db _]
+   (:signing-in? app-db)))

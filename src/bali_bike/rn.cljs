@@ -14,6 +14,7 @@
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight ReactNative)))
 (def activity-indicator (r/adapt-react-class (.-ActivityIndicator ReactNative)))
 (def flat-list (r/adapt-react-class (.-FlatList ReactNative)))
+(def image-background (r/adapt-react-class (.-ImageBackground ReactNative)))
 (defn alert [title] (.alert (.-Alert ReactNative) title))
 
 ; react native elements

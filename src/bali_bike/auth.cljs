@@ -30,3 +30,7 @@
                                      #(rf/dispatch [:auth-state-changed user-data])
                                      1000)
                                     (rf/dispatch [:auth-state-changed user-data])))))))
+
+(defn sign-out []
+  (let [auth (.auth rn/firebase)]
+    (.signOut auth)))

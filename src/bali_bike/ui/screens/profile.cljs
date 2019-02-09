@@ -14,8 +14,10 @@
 
 (defn render-actions []
   [view {:style {:border-top-width 1 :border-color colors/clouds}}
-   [list-item {:title "Sign out" :container-style {:border-bottom-width 1
-                                                   :border-color colors/clouds}}]])
+   [list-item {:title "Sign out"
+               :on-press #(rf/dispatch [:sign-out])
+               :container-style {:border-bottom-width 1
+                                 :border-color colors/clouds}}]])
 
 (defn main []
   (r/with-let [current-user (rf/subscribe [:current-user])]
