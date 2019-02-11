@@ -15,6 +15,7 @@
     [icon {:on-press on-press
            :name icon-name
            :color color
+           :underlay-color "rgba(0,0,0,0.2)"
            :container-style {:position "absolute"
                              :margin 10
                              :padding 15
