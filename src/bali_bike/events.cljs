@@ -53,7 +53,10 @@
 (rf/reg-event-fx
  :set-dates-range
  (fn [{:keys [db]} [_ start-date end-date]]
-   {:db (assoc db :dates-range {:start-date start-date :end-date end-date})
+   {:db (-> db
+            (assoc :dates-range {:start-date start-date :end-date end-date})
+            (edb/remove-collection :bikes :list))
+    :dispatch [:load-bikes]
     :navigation/navigate-back nil}))
 
 

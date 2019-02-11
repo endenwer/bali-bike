@@ -26,12 +26,16 @@
   [{:keys [db]} [_ _]]
   (let [bikes (edb/get-collection db :bikes :list)
         bikes-meta (meta bikes)
+        dates-range (:dates-range db)
         skip (or (:skip bikes-meta) 0)
         load-count 5]
     (when-not (or (:all-loaded? bikes-meta) (:loading? bikes-meta))
       {:db (edb/insert-meta db :bikes :list {:loading? true :skip (+ skip load-count)})
        :api/send-graphql {:query
-                          [:bikes {:skip skip :first load-count}
+                          [:bikes
+                           (cond-> {:skip skip :first load-count}
+                             dates-range (merge {:startDate (:start-date dates-range)
+                                                 :endDate (:end-date dates-range)}))
                            [:id :modelId :photos
                             :dailyPrice :monthlyPrice
                             :rating :reviewsCount
