@@ -7,8 +7,11 @@
 
 (defn auth-state-changed-event
   [{:keys [db]} [_ current-user]]
-  {:db (assoc db :current-user current-user :signing-in? false)
-   :navigation/navigate-to (if current-user :app :auth)})
+  (let [role (:role current-user)]
+    {:db (assoc db :current-user current-user :signing-in? false)
+     :navigation/navigate-to (if current-user
+                               (if (= role "bike-owner") :bike-owner-app :app)
+                               :auth)}))
 
 (defn sign-out-event
   [_ [_ _]]

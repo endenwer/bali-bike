@@ -77,13 +77,22 @@
     "messages" "chat-bubble-outline"
     "profile"  "person-outline"))
 
-(def main-tabs
+(def regular-app-tabs
+  {:search {:screen (r/reactify-component search-screen/main)}
+   :saved {:screen (r/reactify-component saved-screen/main)}
+   :bookings {:screen (r/reactify-component bookings-screen/main)}
+   :messages {:screen (r/reactify-component messages-screen/main)}
+   :profile {:screen (r/reactify-component profile-screen/main)}})
+
+(def bike-owner-app-tabs
+  {:bookings {:screen (r/reactify-component bookings-screen/main)}
+   :messages {:screen (r/reactify-component messages-screen/main)}
+   :profile {:screen (r/reactify-component profile-screen/main)}})
+
+(defn main-tabs
+  [app-type]
   (create-bottom-tab-navigator
-   {:search {:screen (r/reactify-component search-screen/main)}
-    :saved {:screen (r/reactify-component saved-screen/main)}
-    :bookings {:screen (r/reactify-component bookings-screen/main)}
-    :messages {:screen (r/reactify-component messages-screen/main)}
-    :profile {:screen (r/reactify-component profile-screen/main)}}
+   (if (= app-type "bike-owner-app") bike-owner-app-tabs regular-app-tabs)
    {:defaultNavigationOptions
     (fn [navigator]
       (let [route-name (.-navigation.state.routeName navigator)]
@@ -93,9 +102,10 @@
                              (r/create-element
                               rn/Icon
                               #js {:name (get-icon-name route-name) :color color})))}))}))
-(def app-stack
+(defn app-stack
+  [app-type]
   (create-stack-navigator
-   {:tabs {:screen main-tabs :navigationOptions {:header nil}}
+   {:tabs {:screen (main-tabs app-type) :navigationOptions {:header nil}}
     :area-filter {:screen (r/reactify-component area-filter/main)}
     :model-filter {:screen (r/reactify-component model-filter/main)}
     :dates-filter {:screen (r/reactify-component dates-filter/main)}
@@ -113,6 +123,7 @@
 (defn container []
   [:> (create-app-container
        (create-switch-navigator {:auth {:screen (r/reactify-component login-screen/main)}
-                                 :app {:screen app-stack}}))
+                                 :app {:screen (app-stack "regular-app")}
+                                 :bike-owner-app {:screen (app-stack "bike-owner-app")}}))
    {:ref (fn [ref] (reset! navigator-ref ref))
     :persistenceKey (if js/goog.DEBUG "NavigationState" nil)}])
