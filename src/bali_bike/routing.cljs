@@ -16,6 +16,7 @@
             [bali-bike.ui.screens.bike :as bike-screen]
             [bali-bike.ui.screens.new-booking :as new-booking-screen]
             [bali-bike.ui.screens.area-filter :as area-filter]
+            [bali-bike.ui.screens.model-filter :as model-filter]
             [bali-bike.ui.screens.dates-filter :as dates-filter]
             [bali-bike.ui.screens.chat :as chat-screen]))
 
@@ -96,6 +97,7 @@
   (create-stack-navigator
    {:tabs {:screen main-tabs :navigationOptions {:header nil}}
     :area-filter {:screen (r/reactify-component area-filter/main)}
+    :model-filter {:screen (r/reactify-component model-filter/main)}
     :dates-filter {:screen (r/reactify-component dates-filter/main)}
     :bike {:screen (r/reactify-component bike-screen/main)
            :navigationOptions {:headerRight (r/create-element

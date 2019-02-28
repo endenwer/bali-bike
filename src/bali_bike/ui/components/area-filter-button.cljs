@@ -51,4 +51,7 @@
                       :filter-screen-name :dates-filter}])))
 
 (defn model []
-  [render-button {:title "Any model" :filter-screen-name :area-filter}])
+  (r/with-let [model-filter-id (rf/subscribe [:model-filter-id])]
+    [render-button {:title (get constants/models @model-filter-id "Any model")
+                    :is-active @model-filter-id
+                    :filter-screen-name :model-filter}]))

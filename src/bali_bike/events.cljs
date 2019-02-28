@@ -55,6 +55,24 @@
         :navigation/navigate-back nil
         :dispatch [:load-bikes]}))))
 
+(rf/reg-event-db
+ :change-model-search-bar-text
+ (fn [app-db [_ value]]
+   (assoc app-db :model-search-bar-text value)))
+
+(rf/reg-event-fx
+ :set-model-filter-id
+ (fn [{:keys [db]} [_ model-id]]
+   (let [current-model-id (:model-filter-id db)]
+     (if (= model-id current-model-id)
+       {:db (dissoc db :model-search-bar-text)
+        :navigation/navigate-back nil}
+       {:db (-> (edb/remove-collection db :bikes :list)
+                (dissoc :model-search-bar-text)
+                (assoc :model-filter-id model-id))
+        :navigation/navigate-back nil
+        :dispatch [:load-bikes]}))))
+
 (rf/reg-event-fx
  :set-dates-range
  (fn [{:keys [db]} [_ start-date end-date]]

@@ -30,6 +30,11 @@
    (:area-filter-id app-db)))
 
 (rf/reg-sub
+ :area-search-bar-text
+ (fn [app-db _]
+   (:area-search-bar-tex app-db)))
+
+(rf/reg-sub
  :filtered-areas
  (fn [app-db _]
    (if-let [area-search-bar-text (:area-search-bar-text app-db)]
@@ -37,6 +42,25 @@
       #(string/includes? (string/lower-case (second %)) (string/lower-case area-search-bar-text))
       constants/areas)
      constants/areas)))
+
+(rf/reg-sub
+ :model-filter-id
+ (fn [app-db _]
+   (:model-filter-id app-db)))
+
+(rf/reg-sub
+ :model-search-bar-text
+ (fn [app-db _]
+   (:model-search-bar-tex app-db)))
+
+(rf/reg-sub
+ :filtered-models
+ (fn [app-db _]
+   (if-let [model-search-bar-text (:model-search-bar-text app-db)]
+     (filter
+      #(string/includes? (string/lower-case (second %)) (string/lower-case model-search-bar-text))
+      constants/models)
+     constants/models)))
 
 (rf/reg-sub
  :dates-range
