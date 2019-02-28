@@ -24,12 +24,15 @@
     (.configure rn/google-signin)
     (.onAuthStateChanged auth (fn [user]
                                 (reset! user-instance user)
-                                (let [user-data (if user (js->clj (.toJSON user)) nil)]
-                                  (if js/goog.DEBUG
-                                    (js/setTimeout
-                                     #(rf/dispatch [:auth-state-changed user-data])
-                                     1000)
-                                    (rf/dispatch [:auth-state-changed user-data])))))))
+                                (alet [user-data (if user (js->clj (.toJSON user)) nil)
+                                       parsed-token (p/await (.getIdTokenResult user))
+                                       user-role (.-claims.role parsed-token)
+                                       user-with-role (assoc user-data :role user-role)]
+                                      (if js/goog.DEBUG
+                                        (js/setTimeout
+                                         #(rf/dispatch [:auth-state-changed user-with-role])
+                                         1000)
+                                        (rf/dispatch [:auth-state-changed user-with-role])))))))
 
 (defn sign-out []
   (let [auth (.auth rn/firebase)]
