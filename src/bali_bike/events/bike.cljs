@@ -27,6 +27,7 @@
   (let [bikes (edb/get-collection db :bikes :list)
         bikes-meta (meta bikes)
         dates-range (:dates-range db)
+        area-id (:area-filter-id db)
         skip (or (:skip bikes-meta) 0)
         load-count 5]
     (when-not (or (:all-loaded? bikes-meta) (:loading? bikes-meta))
@@ -34,6 +35,7 @@
        :api/send-graphql {:query
                           [:bikes
                            (cond-> {:skip skip :first load-count}
+                             area-id (merge {:areaId area-id})
                              dates-range (merge {:startDate (:start-date dates-range)
                                                  :endDate (:end-date dates-range)}))
                            [:id :modelId :photos

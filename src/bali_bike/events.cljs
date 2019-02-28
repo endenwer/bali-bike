@@ -45,19 +45,27 @@
 (rf/reg-event-fx
  :set-area-filter-id
  (fn [{:keys [db]} [_ area-id]]
-   {:db (-> db
-            (assoc :area-filter-id area-id)
-            (dissoc :area-search-bar-text))
-    :navigation/navigate-back nil}))
+   (let [current-area-id (:area-filter-id db)]
+     (if (= area-id current-area-id)
+       {:db (dissoc db :area-search-bar-text)
+        :navigation/navigate-back nil}
+       {:db (-> (edb/remove-collection db :bikes :list)
+                (dissoc :area-search-bar-text)
+                (assoc :area-filter-id area-id))
+        :navigation/navigate-back nil
+        :dispatch [:load-bikes]}))))
 
 (rf/reg-event-fx
  :set-dates-range
  (fn [{:keys [db]} [_ start-date end-date]]
-   {:db (-> db
-            (assoc :dates-range {:start-date start-date :end-date end-date})
-            (edb/remove-collection :bikes :list))
-    :dispatch [:load-bikes]
-    :navigation/navigate-back nil}))
+   (let [dates-range (:dates-range db)
+         new-dates-range {:start-date start-date :end-date end-date}]
+     (if (= dates-range new-dates-range)
+       {:navigation/navigate-back nil}
+       {:db (-> (edb/remove-collection db :bikes :list)
+                (assoc :dates-range new-dates-range))
+        :navigation/navigate-back nil
+        :dispatch [:load-bikes]}))))
 
 
 (rf/reg-event-db

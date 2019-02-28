@@ -2,9 +2,9 @@
   (:require [bali-bike.colors :as colors]))
 
 (def areas
-  {:canggu "Canggu"
-   :kuta "Kuta"
-   :kerobokan "Kerobokan"})
+  {1 "Canggu"
+   2 "Kuta"
+   3 "Kerobokan"})
 
 (def models
   {1 "Honda Vario"
