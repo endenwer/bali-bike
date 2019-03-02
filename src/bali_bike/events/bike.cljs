@@ -18,7 +18,9 @@
 (defn on-bikes-loaded-event
   [db [_ {:keys [data]}]]
   (let [bikes (edb/get-collection db :bikes :list)]
-    (if (and (not= 0 (count bikes)) (= (:id (last bikes)) (:id (last (:bikes data)))))
+    (if (or
+         (= 0 (count (:bikes data)))
+         (and (not= 0 (count bikes)) (= (:id (last bikes)) (:id (last (:bikes data))))))
       (edb/insert-meta db :bikes :list {:loading? false :all-loaded? true})
       (edb/append-collection db :bikes :list (:bikes data) {:loading? false}))))
 
