@@ -61,12 +61,12 @@
   [{:keys [db]} [_ booking-id]]
   (let [user (:current-user db)
         booking (edb/get-item-by-id db :bookings booking-id)
-        owner (:owner ((:bike booking)))
-        chat-id (get-chat-id [(:uid user) (:uid owner)])
+        contact-user (:contact-user booking)
+        chat-id (get-chat-id [(:uid user) (:uid contact-user)])
         chat (edb/get-item-by-id db :chats chat-id)]
     (if chat
       {:dispatch [:navigate-to-chat chat-id]}
-      {:dispatch [:create-chat owner]})))
+      {:dispatch [:create-chat contact-user]})))
 
 (defn on-messages-updated-event
   [db [_ messages]]

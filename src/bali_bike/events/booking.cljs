@@ -5,18 +5,21 @@
             [re-frame.core :as rf]
             [clojure.string :as string]))
 
-(def booking-full-data-query
-  [:id :startDate :endDate :status
-   :monthlyPrice :dailyPrice :totalPrice
-   :deliveryLocationLongitude
-   :deliveryLocationLongitudeDelta
-   :deliveryLocationLatitude
-   :deliveryLocationLatitudeDelta
-   :deliveryLocationAddress
-   :deliveryLocationComment
-   :bike [:id :modelId :photos
-          :owner [:uid :name :photoURL]]
-   :user [:uid :name :photoURL]])
+(defn booking-full-data-query
+  [user-role]
+  (let [base-query [:id :startDate :endDate :status
+                    :monthlyPrice :dailyPrice :totalPrice
+                    :deliveryLocationLongitude
+                    :deliveryLocationLongitudeDelta
+                    :deliveryLocationLatitude
+                    :deliveryLocationLatitudeDelta
+                    :deliveryLocationAddress
+                    :deliveryLocationComment]]
+    (into [] (if (= "bike-owner" user-role)
+               (concat base-query [:user [:uid :name :photoURL]
+                                   :bike [:id :modelId :photos]])
+               (concat base-query [:bike [:id :modelId :photos
+                                          :owner [:uid :name :photoURL]]])))))
 
 ;; effects
 
@@ -40,7 +43,8 @@
 
 (defn create-booking-event
   [{:keys [db]} [_ _]]
-  (let [bike-id (:id (edb/get-named-item db :bikes :current))
+  (let [user (:current-user db)
+        bike-id (:id (edb/get-named-item db :bikes :current))
         dates-range (:dates-range db)
         new-booking (:new-booking db)]
     {:db (assoc-in db [:new-booking :submiting?] true)
@@ -72,7 +76,7 @@
                                            [:delivery-location :region :longitude]))
                                          :deliveryLocationAddress
                                          (get-in new-booking [:delivery-location :address])}
-                         booking-full-data-query]
+                         (booking-full-data-query (:role user))]
                         :callback-event :on-booking-created}}))
 
 (defn on-bookings-loaded-event
@@ -91,14 +95,21 @@
 
 (defn on-booking-loaded-event
   [db [_ {:keys [data]}]]
-  (edb/insert-named-item db :bookings :current (:booking data) {:loading? false}))
+  (let [user (:current-user db)
+        booking (:booking data)
+        contact-user (if (= "bike-owner" (:role user))
+                       (:user booking)
+                       (get-in booking [:bike :owner]))]
+    (edb/insert-named-item
+     db :bookings :current (assoc booking :contact-user contact-user) {:loading? false})))
 
 (defn navigate-to-booking-event
   [{:keys [db]} [_ booking-id]]
-  {:db (edb/insert-named-item db :bookings :current {:id booking-id} {:loading? true})
-   :api/send-graphql {:query [:booking {:id booking-id} booking-full-data-query]
-                      :callback-event :on-booking-loaded}
-   :navigation/navigate-to :booking})
+  (let [user (:current-user db)]
+    {:db (edb/insert-named-item db :bookings :current {:id booking-id} {:loading? true})
+     :api/send-graphql {:query [:booking {:id booking-id} (booking-full-data-query (:role user))]
+                        :callback-event :on-booking-loaded}
+     :navigation/navigate-to :booking}))
 
 (defn update-delivery-region-event
   [{:keys [db]} [_ region]]

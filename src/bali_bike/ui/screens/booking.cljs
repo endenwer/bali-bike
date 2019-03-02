@@ -32,8 +32,8 @@
   [text {:style {:font-weight "bold"}}
    (utils/get-short-dates-range-string start-date end-date)])
 
-(defn render-owner
-  [{:keys [booking-id owner]}]
+(defn render-contact-user
+  [{:keys [booking-id user]}]
   [view {:style {:flex-direction "row"
                  :margin-vertical 10
                  :padding-vertical 5
@@ -41,8 +41,8 @@
                  :border-bottom-width 1
                  :border-top-width 1
                  :border-color colors/clouds}}
-   [avatar/main {:photo-url (:photo-url owner) :size "medium"}]
-   [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name owner)]
+   [avatar/main {:photo-url (:photo-url user) :size "medium"}]
+   [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name user)]
    [touchable-highlight
     {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])}
     [text {:style {:color colors/turquoise}} "SEND MESSAGE"]]])
@@ -75,8 +75,7 @@
                user (rf/subscribe [:current-user])]
     (let [booking-meta (meta @booking-data)
           get-bike (:bike @booking-data)
-          bike-data (get-bike)
-          owner (:owner bike-data)]
+          bike-data (get-bike)]
       [view {:style {:flex 1}}
        [scroll-view {:style {:flex 1} :showsVerticalScrollIndicator false}
         [safe-area-view {:style {:flex 1}}
@@ -88,7 +87,8 @@
          (if (:loading? booking-meta)
            [render-loading]
            [view {:style {:flex 1}}
-            [render-owner {:booking-id (:id @booking-data) :owner owner}]
+            [render-contact-user {:booking-id (:id @booking-data)
+                                  :user (:contact-user @booking-data)}]
             [new-booking/render-property {:title "Delivery location"
                                           :on-press #(rf/dispatch [:navigate-to :booking-map])
                                           :on-press-text "SHOW MAP"
