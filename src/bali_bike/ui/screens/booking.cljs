@@ -56,20 +56,23 @@
                            :border-color colors/clouds
                            :flex-direction :row}}
    [button {:title "Cancel"
+            :on-press #(rf/dispatch [:cancel-booking])
             :type "outline"
             :container-style {:flex 1}
             :title-style {:color colors/alizarin}
             :button-style {:margin 10
                            :border-color colors/alizarin
                            :margin-right 5}}]
-   [button {:title "Accept"
+   [button {:title "Confirm"
+            :on-press #(rf/dispatch [:confirm-booking])
             :container-style {:flex 1}
             :button-style {:margin 10
                            :margin-left 5
                            :background-color colors/turquoise}}]])
 
 (defn main []
-  (r/with-let [booking-data (rf/subscribe [:current-booking])]
+  (r/with-let [booking-data (rf/subscribe [:current-booking])
+               user (rf/subscribe [:current-user])]
     (let [booking-meta (meta @booking-data)
           get-bike (:bike @booking-data)
           bike-data (get-bike)
@@ -94,4 +97,8 @@
                                        :daily-price (:daily-price @booking-data)
                                        :start-date (:start-date @booking-data)
                                        :end-date (:end-date @booking-data)}]])]]
-       [render-buttons]])))
+
+       (when (and
+              (= "WAITING_CONFIRMATION" (:status @booking-data))
+              (= "bike-owner" (:role @user)))
+         [render-buttons])])))

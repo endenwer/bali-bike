@@ -37,7 +37,7 @@
      (insert-item db entity-kw (merge item data) meta))))
 
 (defn update-named-item
-  ([db entity-kw id data] (update-item-by-id db entity-kw id data nil))
+  ([db entity-kw id data] (update-named-item db entity-kw id data nil))
   ([db entity-kw id data meta]
    (let [item (get-named-item db entity-kw id)]
      (insert-item db entity-kw (merge item data) meta))))

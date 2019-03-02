@@ -128,7 +128,9 @@
 (rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
 (rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location-event)
 (rf/reg-event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
-(rf/reg-event-fx :set-new-booking-dates-range booking-events/set-new-booking-dates-range)
+(rf/reg-event-fx :set-new-booking-dates-range booking-events/set-new-booking-dates-range-event)
+(rf/reg-event-fx :cancel-booking booking-events/cancel-booking-event)
+(rf/reg-event-fx :confirm-booking booking-events/confirm-booking-event)
 (rf/reg-event-fx :update-delivery-region
                  [interceptors/transform-event-to-kebab]
                  booking-events/update-delivery-region-event)

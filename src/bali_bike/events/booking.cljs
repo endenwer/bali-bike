@@ -2,7 +2,8 @@
   (:require [bali-bike.edb :as edb]
             [bali-bike.api :as api]
             [promesa.core :as p]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [clojure.string :as string]))
 
 (def booking-full-data-query
   [:id :startDate :endDate :status
@@ -123,7 +124,19 @@
        :navigation/navigate-to :new-booking}
       {:navigation/navigate-to :new-booking-dates})))
 
-(defn set-new-booking-dates-range
+(defn set-new-booking-dates-range-event
   [{:keys [db]} [_ start-date end-date]]
   {:db (assoc-in db [:new-booking :dates-range] {:start-date start-date :end-date end-date})
    :navigation/replace :new-booking})
+
+(defn cancel-booking-event
+  [{:keys [db]} [_ ]]
+  (let [current-booking (edb/get-named-item db :bookings :current)]
+    {:db (edb/update-named-item db :bookings :current {:status "CANCELED"})
+     :api/send-graphql {:mutation [:cancelBooking {:id (:id current-booking)} [:id]]}}))
+
+(defn confirm-booking-event
+  [{:keys [db]} [_ ]]
+  (let [current-booking (edb/get-named-item db :bookings :current)]
+    {:db (edb/update-named-item db :bookings :current {:status "CONFIRMED"})
+     :api/send-graphql {:mutation [:confirmBooking {:id (:id current-booking)} [:id]]}}))
