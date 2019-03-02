@@ -11,7 +11,9 @@
    [view {:style {:flex-direction "row"
                   :justify-content "space-between"
                   :margin-top 10}}
-    [avatar/main {:photo-url (get-in chat [:another-user :photoURL]) :size "medium"}]
+    [avatar/main {:photo-url (get-in chat [:another-user :photoURL])
+                  :full-name (get-in chat [:another-user :name])
+                  :size "medium"}]
     [view {:style {:flex 1
                    :margin-left 10
                    :padding-bottom 5

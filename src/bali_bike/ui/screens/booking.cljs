@@ -41,7 +41,9 @@
                  :border-bottom-width 1
                  :border-top-width 1
                  :border-color colors/clouds}}
-   [avatar/main {:photo-url (:photo-url user) :size "medium"}]
+   [avatar/main {:photo-url (:photo-url user)
+                 :full-name (:name user)
+                 :size "medium"}]
    [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name user)]
    [touchable-highlight
     {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])}

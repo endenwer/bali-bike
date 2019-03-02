@@ -9,7 +9,9 @@
 (defn render-user
   [{:keys [display-name photo-url]}]
   [view {:flex-direction "row" :margin-vertical 30 :align-items "center"}
-   [avatar/main {:photo-url photo-url :size "large"}]
+   [avatar/main {:photo-url photo-url
+                 :full-name display-name
+                 :size "large"}]
    [h3 {:margin-left 10} display-name]])
 
 (defn render-actions []
