@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "982817603223",
+    "firebase_url": "https://bali-bike-app.firebaseio.com",
+    "project_id": "bali-bike-app",
+    "storage_bucket": "bali-bike-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982817603223:android:2308167f6aa06985",
+        "android_client_info": {
+          "package_name": "app.balibike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982817603223-nu52i2nlu8tcsgl2u0gg46a3eig17pqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZrgD2phPbQTUQuxa9qteghvKTSpUN1L4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,20 +19,26 @@
           current-user (p/await (.signInWithCredential (.auth rn/firebase) credentials))])
    (p/catch (fn [error] (.log js/console error)))))
 
+(defn- auth-state-changed
+  [user]
+  (if js/goog.DEBUG
+    (js/setTimeout
+     #(rf/dispatch [:auth-state-changed user])
+     1000)
+    (rf/dispatch [:auth-state-changed user])))
+
 (defn listen-user-auth []
   (let [auth (.auth rn/firebase)]
     (.configure rn/google-signin)
     (.onAuthStateChanged auth (fn [user]
                                 (reset! user-instance user)
-                                (alet [user-data (if user (js->clj (.toJSON user)) nil)
-                                       parsed-token (p/await (.getIdTokenResult user))
-                                       user-role (.-claims.role parsed-token)
-                                       user-with-role (assoc user-data :role user-role)]
-                                      (if js/goog.DEBUG
-                                        (js/setTimeout
-                                         #(rf/dispatch [:auth-state-changed user-with-role])
-                                         1000)
-                                        (rf/dispatch [:auth-state-changed user-with-role])))))))
+                                (if user
+                                  (alet [user-data (js->clj (.toJSON user))
+                                         parsed-token (p/await (.getIdTokenResult user))
+                                         user-role (.-claims.role parsed-token)
+                                         user-with-role (assoc user-data :role user-role)]
+                                        (auth-state-changed user-with-role))
+                                  (auth-state-changed nil))))))
 
 (defn sign-out []
   (let [auth (.auth rn/firebase)]

@@ -1,10 +1,12 @@
-package com.balibike;
+package app.balibike;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new MapsPackage(),
             new RNFirebasePackage(),
+            new RNFirebaseAuthPackage(),
+            new RNFirebaseFirestorePackage(),
             new RNGoogleSigninPackage(),
             new VectorIconsPackage(),
             new RNGestureHandlerPackage()
