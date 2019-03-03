@@ -35,8 +35,7 @@
 
 (defn on-booking-created-event
   [{:keys [db]} [_ {:keys [data]}]]
-  {:db (-> db
-           (edb/insert-named-item :bookings :current (:create-booking data) {:loading? false})
+  {:db (-> (on-booking-loaded-event db [nil {:data {:booking (:create-booking data)}}])
            (assoc-in [:new-booking :submiting?] false))
    :navigation/replace :booking
    :dispatch [:load-bookings]})
