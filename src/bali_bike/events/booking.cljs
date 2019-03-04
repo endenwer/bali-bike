@@ -33,13 +33,6 @@
 
 ;; events
 
-(defn on-booking-created-event
-  [{:keys [db]} [_ {:keys [data]}]]
-  {:db (-> (on-booking-loaded-event db [nil {:data {:booking (:create-booking data)}}])
-           (assoc-in [:new-booking :submiting?] false))
-   :navigation/replace :booking
-   :dispatch [:load-bookings]})
-
 (defn create-booking-event
   [{:keys [db]} [_ _]]
   (let [user (:current-user db)
@@ -109,6 +102,13 @@
      :api/send-graphql {:query [:booking {:id booking-id} (booking-full-data-query (:role user))]
                         :callback-event :on-booking-loaded}
      :navigation/navigate-to :booking}))
+
+(defn on-booking-created-event
+  [{:keys [db]} [_ {:keys [data]}]]
+  {:db (-> (on-booking-loaded-event db [nil {:data {:booking (:create-booking data)}}])
+           (assoc-in [:new-booking :submiting?] false))
+   :navigation/replace :booking
+   :dispatch [:load-bookings]})
 
 (defn update-delivery-region-event
   [{:keys [db]} [_ region]]

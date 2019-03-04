@@ -20,7 +20,7 @@
    "CONFIRMED" colors/emerald
    "CANCELED" colors/alizarin})
 
-(def default-region {:latitude 37.78825
-                     :longitude -122.4324
-                     :latitude-delta 0.0922
-                     :longitude-delta 0.0421})
+(def default-region {:latitude -8.745308699651275
+                     :longitude 115.16695126891136
+                     :latitude-delta 0.2558138019965117
+                     :longitude-delta 0.18417254090309143})

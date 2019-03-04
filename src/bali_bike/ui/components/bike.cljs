@@ -26,7 +26,7 @@
 (defn main [bike-data]
   [touchable-highlight
    {:on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])}
-   [view {:flex 1 :margin-bottom 25}
+   [view {:flex 1 :margin-bottom 15 :margin-top 10}
     [bike-photos-swiper/main {:photos (:photos bike-data) :image-styles {:border-radius 5}}]
     [render-save-button {:saved (:saved bike-data)
                          :on-press

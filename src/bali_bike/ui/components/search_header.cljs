@@ -7,6 +7,7 @@
 
 (defn main []
   [safe-area-view {:style {:flex-direction "row"
+                           :margin-top 10
                            :flex-wrap "wrap"
                            :align-self "stretch"
                            :align-items "center"

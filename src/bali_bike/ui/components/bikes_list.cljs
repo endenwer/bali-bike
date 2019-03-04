@@ -21,7 +21,7 @@
   [sub-name]
   (r/with-let [bikes (rf/subscribe [sub-name])
                bikes-meta (rf/subscribe [(keyword (str (name sub-name) "-meta"))])]
-    [view {:style {:flex 1 :padding-top 20}}
+    [view {:style {:flex 1}}
      (if (and (= 0 (count @bikes)) (:loading? @bikes-meta))
        [full-screen-loading/main]
        [flat-list {:data @bikes
