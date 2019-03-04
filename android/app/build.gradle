@@ -72,8 +72,6 @@ import com.android.build.OutputFile
  * ]
  */
 
-
-
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -147,6 +145,14 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-maps')
+    compile project(':react-native-google-signin')
+    compile project(':react-native-gesture-handler')
+    compile project(':react-native-firebase')
+    compile project(':appcenter-crashes')
+    compile project(':appcenter-analytics')
+    compile project(':appcenter')
     implementation project(':react-native-maps')
     implementation project(':react-native-firebase')
     implementation project(':react-native-google-signin')

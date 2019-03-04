@@ -1,6 +1,9 @@
 platform :ios, '9.0'
 # The target name is most likely the name of your project.
 target 'BaliBike' do
+  pod 'AppCenter/Crashes', '~> 1.13.2'
+  pod 'AppCenter/Analytics', '~> 1.13.2'
+  pod 'AppCenterReactNativeShared', '~> 1.12.2'
 
   # Your 'node_modules' directory is probably in the root of your project,
   # but if not, adjust the `:path` accordingly
@@ -35,6 +38,9 @@ target 'BaliBike' do
   pod 'react-native-google-maps', path: '../node_modules/react-native-maps'
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+
+  # Pods for AppCenter
+  platform :ios, '9.0'
 end
 
 post_install do |installer|
