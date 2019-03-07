@@ -170,6 +170,7 @@
 (rf/reg-fx :firestore/unlisten-messages firestore/unlisten-messages)
 (rf/reg-fx :firestore/send-message firestore/send-message)
 (rf/reg-fx :firestore/create-chat firestore/create-chat)
+(rf/reg-fx :firestore/save-fcm-token firestore/save-fcm-token)
 
 ;; notifications
 

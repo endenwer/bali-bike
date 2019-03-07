@@ -14,7 +14,7 @@
 
 (defn on-refresh-fcm-token []
   (.onTokenRefresh (.messaging rn/firebase)
-                   (fn [token] (rf/dispatch [:ser-fcm-token token]))))
+                   (fn [token] (rf/dispatch [:set-fcm-token token]))))
 
 (defn parse-notification-payload [s]
   (try

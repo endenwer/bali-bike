@@ -55,3 +55,8 @@
          chat-doc (p/await (p/promise (.get chat-ref)))]
         (when-not (.-exists chat-doc)
           (.set chat-ref (clj->js (assoc data :timestamp timestamp))))))
+
+(defn save-fcm-token
+  [{:keys [user-uid token]}]
+  (let [user-ref (.doc (.collection firestore "users") user-uid)]
+    (.set user-ref #js {:pushToken token} #js {:merge true})))
