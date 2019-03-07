@@ -17,3 +17,9 @@
   [_ [_ _]]
   {:auth/sign-out nil
    :navigation/navigate-to :auth})
+
+(defn user-signed-in-event
+  [_ [_ _]]
+  {:notifications/request-permission nil
+   :notifications/get-fcm-token nil
+   :notifications/handle-initial-push-notification nil})

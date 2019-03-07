@@ -10,7 +10,9 @@
    [bali-bike.events.booking :as booking-events]
    [bali-bike.events.bike :as bike-events]
    [bali-bike.events.chat :as chat-events]
-   [bali-bike.firestore :as firestore]))
+   [bali-bike.firestore :as firestore]
+   [bali-bike.notifications :as notifications]
+   [bali-bike.events.notifications :as notification-events]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -114,6 +116,7 @@
 
 (rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
 (rf/reg-fx :auth/sign-out auth/sign-out)
+(rf/reg-event-fx :user-signed-in auth-events/user-signed-in-event)
 (rf/reg-event-fx :signin-with-google auth-events/sign-in-with-google-event)
 (rf/reg-event-fx :sign-out auth-events/sign-out-event)
 (rf/reg-event-fx :auth-state-changed
@@ -167,3 +170,13 @@
 (rf/reg-fx :firestore/unlisten-messages firestore/unlisten-messages)
 (rf/reg-fx :firestore/send-message firestore/send-message)
 (rf/reg-fx :firestore/create-chat firestore/create-chat)
+
+;; notifications
+
+(rf/reg-fx :notifications/get-fcm-token notifications/get-fcm-token)
+(rf/reg-fx :notifications/handle-initial-push-notification
+           notifications/handle-initial-push-notification)
+(rf/reg-fx :notifications/request-permission notifications/request-permission)
+
+(rf/reg-event-fx :set-fcm-token notification-events/set-fcm-token-event)
+(rf/reg-event-fx :notification-event-received notification-events/notification-event-received-event)

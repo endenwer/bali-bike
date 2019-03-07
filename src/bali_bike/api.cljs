@@ -5,7 +5,7 @@
             [promesa.core :as p :refer-macros [alet]]
             [clojure.string]))
 
-(def http-url "http://localhost:4000")
+(def http-url "http://192.168.1.242:4000")
 (def google-api-token "AIzaSyCJXzJMv646WQoLFYCnXWXscs33HrHAZfs")
 
 (defn parse-query [q]

@@ -16,7 +16,8 @@
    (alet [data (p/await (.signIn rn/google-signin))
           credentials (.auth.GoogleAuthProvider.credential
                        rn/firebase (.-idToken data) (.-accessToken data))
-          current-user (p/await (.signInWithCredential (.auth rn/firebase) credentials))])
+          current-user (p/await (.signInWithCredential (.auth rn/firebase) credentials))]
+         (rf/dispatch [:user-signed-in]))
    (p/catch (fn [error] (.log js/console error)))))
 
 (defn- auth-state-changed
