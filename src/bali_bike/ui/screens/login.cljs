@@ -29,6 +29,24 @@
   [view {:style {:flex 1 :margin-top 30 :align-items "center" :justify-content "center"}}
    [activity-indicator {:size "large" :color colors/white}]])
 
+(defn render-email-buttons []
+  [:<>
+   [button (merge default-button-props
+                  {:title "Sign in with Email"
+                   :icon {:name "email"}})]
+   [button (merge default-button-props
+                  {:title "Sign up with Email"
+                   :type "outline"
+                   :raised false
+                   :title-style (merge (:title-style default-button-props)
+                                       {:color colors/white
+                                        :margin-left 0})
+                   :button-style {:border-radius 2
+                                  :padding-vertical 8
+                                  :border-color colors/white}
+                   :container-style {:margin-top 30
+                                     :margin 5}})]])
+
 (defn main []
   (r/with-let [signing-in? (rf/subscribe [:signing-in?])]
     [image-background {:source loginbg-img
@@ -43,23 +61,11 @@
         [render-loading]
         [view {:style {:flex 1
                        :margin-bottom 30
-                       :justify-content "space-between"}}
+                       :justify-content "flex-end"}}
          [google-signin-button {:on-press #(rf/dispatch [:signin-with-google])
                                 :style {:width 312 :height 48}
                                 :size (.-Size.Wide GoogleSigninButton)
                                 :color (.-Color.Dark GoogleSigninButton)}]
-         [button (merge default-button-props
-                        {:title "Sign in with Email"
-                         :icon {:name "email"}})]
-         [button (merge default-button-props
-                        {:title "Sign up with Email"
-                         :type "outline"
-                         :raised false
-                         :title-style (merge (:title-style default-button-props)
-                                             {:color colors/white
-                                              :margin-left 0})
-                         :button-style {:border-radius 2
-                                        :padding-vertical 8
-                                        :border-color colors/white}
-                         :container-style {:margin-top 30
-                                           :margin 5}})]])]]))
+         ; TODO: implement email sign in
+         ;[render-email-buttons]
+         ])]]))
