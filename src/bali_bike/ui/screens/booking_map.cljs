@@ -4,7 +4,16 @@
             [bali-bike.ui.components.map-view :as map-view]
             [bali-bike.ui.components.common :refer [button]]
             [bali-bike.colors :as colors]
-            [bali-bike.rn :refer [view safe-area-view]]))
+            [bali-bike.rn :as rn :refer [view safe-area-view]]))
+
+(defn open-map-app
+  [latitude longitude]
+  (let [scheme (.select rn/Platform #js {:ios "maps:0,0?q=" :android "geo:0,0?q="})
+        lat-lng (str latitude "," longitude)
+        label "Delivery location"
+        url (.select rn/Platform #js {:ios (str scheme label "@" lat-lng)
+                                      :android (str scheme lat-lng "(" label ")")})]
+    (.openURL rn/Linking url)))
 
 (defn render-bottom
   [{:keys [on-press]}]
@@ -16,18 +25,16 @@
 
 (defn main []
   (r/with-let [booking-data (rf/subscribe [:current-booking])]
-    [view {:style {:flex 1}}
-     [map-view/main {:use-marker? true
-                     :initial-region {:latitude
-                                      (js/parseFloat
-                                       (:delivery-location-latitude @booking-data))
-                                      :longitude
-                                      (js/parseFloat
-                                       (:delivery-location-longitude @booking-data))
-                                      :latitude-delta
-                                      (js/parseFloat
-                                       (:delivery-location-latitude-delta @booking-data))
-                                      :longitude-delta
-                                      (js/parseFloat
-                                       (:delivery-location-longitude-delta @booking-data))}}]
-     [render-bottom {:on-press #(.log js/console "open map")}]]))
+    (let [latitude (js/parseFloat (:delivery-location-latitude @booking-data))
+          longitude (js/parseFloat (:delivery-location-longitude @booking-data))]
+      [view {:style {:flex 1}}
+       [map-view/main {:use-marker? true
+                       :initial-region {:latitude latitude
+                                        :longitude longitude
+                                        :latitude-delta
+                                        (js/parseFloat
+                                         (:delivery-location-latitude-delta @booking-data))
+                                        :longitude-delta
+                                        (js/parseFloat
+                                         (:delivery-location-longitude-delta @booking-data))}}]
+       [render-bottom {:on-press #(open-map-app latitude longitude)}]])))
