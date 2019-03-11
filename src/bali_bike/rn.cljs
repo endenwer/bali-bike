@@ -41,9 +41,11 @@
 
 ; maps
 
-(def MapView (.-default (js/require "react-native-maps")))
+(def ReactNativeMaps (js/require "react-native-maps"))
+(def MapView (.-default ReactNativeMaps))
 (def PROVIDER_GOOGLE (.-PROVIDER_GOOGLE MapView))
 (def map-view (r/adapt-react-class MapView))
+(def map-marker (r/adapt-react-class (.-Marker MapView)))
 
 ; moment
 

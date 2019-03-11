@@ -17,7 +17,8 @@
 (defn main []
   (r/with-let [booking-data (rf/subscribe [:current-booking])]
     [view {:style {:flex 1}}
-     [map-view/main {:initial-region {:latitude
+     [map-view/main {:use-marker? true
+                     :initial-region {:latitude
                                       (js/parseFloat
                                        (:delivery-location-latitude @booking-data))
                                       :longitude
