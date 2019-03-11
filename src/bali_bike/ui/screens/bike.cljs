@@ -44,6 +44,7 @@
          [bike-photos-swiper/main @bike-data]]
         [view {:style {:margin-horizontal 10}}
          [render-bike-info @bike-data]
-         (when-not (:loading? bike-meta)
-           [reviews-list/main (get-reviews)])]]
+         ; TODO: implement review
+         ;(when-not (:loading? bike-meta) [reviews-list/main (get-reviews)])
+         ]]
        [render-bottom @bike-data]])))
