@@ -10,14 +10,14 @@
             [re-frame.core :as rf]))
 
 (defn render-bottom
-  [{:keys [on-submit submiting?]}]
+  [{:keys [on-submit disabled? loading?]}]
   [safe-area-view {:style {:border-top-width 3
                            :border-color colors/clouds
                            :padding 10}}
    [button {:title "Book"
             :on-press on-submit
-            :disabled submiting?
-            :loading submiting?
+            :disabled disabled?
+            :loading loading?
             :button-style {:margin 10 :background-color colors/alizarin}
             :title-style {:margin-horizontal 20 :font-weight "bold"}}]])
 
@@ -77,4 +77,5 @@
                                    :end-date (:end-date dates-range)}]]
        [render-bottom
         {:on-submit #(rf/dispatch [:create-booking])
-         :submiting? (:submiting? @new-booking)}]])))
+         :loading? (:submiting? @new-booking)
+         :disabled? (or (:submiting? @new-booking) (empty? delivery-location))}]])))
