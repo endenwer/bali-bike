@@ -8,7 +8,8 @@
     "run-android": "node node_modules/react-native/local-cli/cli.js run-android",
     "bundle-ios": "lein prod-build && node --expose-gc --max_old_space_size=8192 './node_modules/react-native/local-cli/cli.js' bundle --sourcemap-output main.jsbundle.map --bundle-output ios/main.jsbundle --entry-file index.ios.js --platform ios --assets-dest ios",
     "bundle-android": "lein prod-build && node --expose-gc --max_old_space_size=8192 './node_modules/react-native/local-cli/cli.js' bundle --sourcemap-output main.jsbundle.map --bundle-output android/main.jsbundle --entry-file index.android.js --platform android --assets-dest android",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "./postinstall.sh"
   },
   "dependencies": {
     "@babel/plugin-external-helpers": "^7.0.0",
