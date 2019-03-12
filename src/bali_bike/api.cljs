@@ -5,7 +5,7 @@
             [promesa.core :as p :refer-macros [alet]]
             [clojure.string]))
 
-(def http-url "http://192.168.1.242:4000")
+(goog-define api-url "http://localhost:4000")
 (def google-api-token "AIzaSyCJXzJMv646WQoLFYCnXWXscs33HrHAZfs")
 
 (defn parse-query [q]
@@ -40,9 +40,9 @@
   [params]
   (alet [token (p/await (auth/get-token))
          headers {"Authorization" token}
-         response (p/await (http/POST http-url {:headers headers
-                                                :with-credentials? false
-                                                :json-params params}))]
+         response (p/await (http/POST api-url {:headers headers
+                                               :with-credentials? false
+                                               :json-params params}))]
         response))
 
 (defn send-graphql

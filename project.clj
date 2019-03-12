@@ -38,7 +38,8 @@
                                                                      :main          "env.ios.main"
                                                                      :output-dir    "target/ios"
                                                                      :optimizations :none
-                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true
+                                                                                       bali-bike.api/api-url "http://localhost:4000"}
                                                                      :target :nodejs}}
                                                      {:id           "android"
                                                       :source-paths ["src" "env/dev"]
@@ -47,7 +48,8 @@
                                                                      :main          "env.android.main"
                                                                      :output-dir    "target/android"
                                                                      :optimizations :none
-                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true
+                                                                                       bali-bike.api/api-url "http://localhost:4000"}
                                                                      :target :nodejs}}
 #_($DEV_PROFILES$)]}
                              :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
@@ -61,7 +63,8 @@
                                                                    :optimize-constants true
                                                                    :optimizations :simple
                                                                    :target :nodejs
-                                                                   :closure-defines {"goog.DEBUG" false}}}
+                                                                   :closure-defines {"goog.DEBUG" false
+                                                                                     bali-bike.api/api-url "https://api.balibike.app"}}}
                                                    {:id           "android"
                                                     :source-paths ["src" "env/prod"]
                                                     :compiler     {:output-to     "index.android.js"
@@ -71,7 +74,8 @@
                                                                    :optimize-constants true
                                                                    :optimizations :simple
                                                                    :target :nodejs
-                                                                   :closure-defines {"goog.DEBUG" false}}}
+                                                                   :closure-defines {"goog.DEBUG" false
+                                                                                     bali-bike.api/api-url "https://api.balibike.app"}}}
 #_($PROD_PROFILES$)]}}
                        :advanced {:dependencies [[react-native-externs "0.2.0"]]
                                   :cljsbuild {:builds [
@@ -84,7 +88,8 @@
                                                                    :optimize-constants true
                                                                    :optimizations :advanced
                                                                    :target :nodejs
-                                                                   :closure-defines {"goog.DEBUG" false}}}
+                                                                   :closure-defines {"goog.DEBUG" false
+                                                                                     bali-bike.api/api-url "https://api.balibike.app"}}}
                                                    {:id           "android"
                                                     :source-paths ["src" "env/prod"]
                                                     :compiler     {:output-to     "index.android.js"
@@ -94,5 +99,6 @@
                                                                    :optimize-constants true
                                                                    :optimizations :advanced
                                                                    :target :nodejs
-                                                                   :closure-defines {"goog.DEBUG" false}}}
+                                                                   :closure-defines {"goog.DEBUG" false
+                                                                                     bali-bike.api/api-url "https://api.balibike.app"}}}
 #_($ADVANCED_PROFILES$)]}}})
