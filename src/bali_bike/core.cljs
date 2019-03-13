@@ -2,7 +2,7 @@
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [bali-bike.routing :as routing]
-            [bali-bike.rn :as rn :refer [app-registry]]
+            [bali-bike.rn :as rn :refer [app-registry code-push]]
             [bali-bike.subs]
             [bali-bike.events]
             [bali-bike.auth :as auth]
@@ -15,4 +15,7 @@
   (dispatch-sync [:initialize-db])
   (auth/listen-user-auth)
   (notifications/init)
-  (.registerComponent app-registry "BaliBike" #(r/reactify-component app-root)))
+  (.registerComponent
+   app-registry
+   "BaliBike"
+   #(code-push (r/reactify-component app-root))))

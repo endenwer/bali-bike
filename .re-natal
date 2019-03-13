@@ -17,7 +17,8 @@
     "react-native-firebase",
     "react-native-maps",
     "react-native-gifted-chat",
-    "moment-precise-range-plugin"
+    "moment-precise-range-plugin",
+    "react-native-code-push"
   ],
   "imageDirs": [
     "images"

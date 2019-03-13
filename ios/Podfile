@@ -42,6 +42,8 @@ target 'BaliBike' do
 
   # Pods for AppCenter
   platform :ios, '9.0'
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
 end
 
 post_install do |installer|

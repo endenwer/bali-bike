@@ -76,6 +76,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -126,7 +127,19 @@ android {
         }
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "CODEPUSH_KEY", '""'
+        }
+        releaseStaging {
+            buildConfigField "String", "CODEPUSH_KEY", '"_A7Kp0oezmDlq5tEzNdYTolmZUsmSk-hJG7rwN"'
+            matchingFallbacks = ['release']
+
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
         release {
+            buildConfigField "String", "CODEPUSH_KEY", '"i4MCRfs2nYZM7pkeMvFYhhcPT1EZr12JGXSwN"'
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
@@ -148,6 +161,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-code-push')
     compile project(':react-native-vector-icons')
     compile project(':react-native-maps')
     compile project(':react-native-google-signin')

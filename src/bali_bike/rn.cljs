@@ -57,3 +57,5 @@
 
 (def ReactNativeGiftedChat (js/require "react-native-gifted-chat"))
 (def gifted-chat (r/adapt-react-class (.-GiftedChat ReactNativeGiftedChat)))
+
+(def code-push (js/require "react-native-code-push"))
