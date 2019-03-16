@@ -174,6 +174,8 @@ PODS:
     - React
   - react-native-maps (0.23.0):
     - React
+  - react-native-splash-screen (3.2.0):
+    - React
   - React/Core (0.57.7):
     - yoga (= 0.57.7.React)
   - React/CxxBridge (0.57.7):
@@ -239,6 +241,7 @@ DEPENDENCIES:
   - GoogleSignIn (~> 4.4.0)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -300,6 +303,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -309,7 +314,7 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  CodePush: b4c024dfc7b1f44434aaadf9f6763bb22e243980
+  CodePush: 338a023972c64636503e8886cf4cb6ec27dd1c01
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -338,9 +343,10 @@ SPEC CHECKSUMS:
   React: 67899bbb285ceb9b4ee1c88b3991602ba5772ad2
   react-native-google-maps: 544d2208b09a7e2ec2c6112c8a97c4e7f921f74d
   react-native-maps: 9469741f77f270c605cafec603ce47327dc5b5f8
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 192d724e53380b783e09b7d687a55cd8ed5188be
 
-PODFILE CHECKSUM: 2daa56f73d04dd712d84f97857b43a27f10f25da
+PODFILE CHECKSUM: 99148f3c31f91269caa8c5bc6f13728efacc8f11
 
 COCOAPODS: 1.6.0.beta.2

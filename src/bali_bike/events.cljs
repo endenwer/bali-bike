@@ -12,7 +12,8 @@
    [bali-bike.events.chat :as chat-events]
    [bali-bike.firestore :as firestore]
    [bali-bike.notifications :as notifications]
-   [bali-bike.events.notifications :as notification-events]))
+   [bali-bike.events.notifications :as notification-events]
+   [bali-bike.rn :as rn]))
 
 (rf/reg-fx
  :navigation/navigate-to
@@ -116,6 +117,7 @@
 
 (rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
 (rf/reg-fx :auth/sign-out auth/sign-out)
+(rf/reg-fx :splash-screen/hide #(.hide rn/splash-screen))
 (rf/reg-event-fx :user-signed-in auth-events/user-signed-in-event)
 (rf/reg-event-fx :signin-with-google auth-events/sign-in-with-google-event)
 (rf/reg-event-fx :sign-out auth-events/sign-out-event)

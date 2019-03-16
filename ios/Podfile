@@ -44,6 +44,8 @@ target 'BaliBike' do
   platform :ios, '9.0'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
 end
 
 post_install do |installer|

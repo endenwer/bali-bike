@@ -59,3 +59,5 @@
 (def gifted-chat (r/adapt-react-class (.-GiftedChat ReactNativeGiftedChat)))
 
 (def code-push (js/require "react-native-code-push"))
+
+(def splash-screen (.-default (js/require "react-native-splash-screen")))

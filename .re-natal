@@ -18,7 +18,8 @@
     "react-native-maps",
     "react-native-gifted-chat",
     "moment-precise-range-plugin",
-    "react-native-code-push"
+    "react-native-code-push",
+    "react-native-splash-screen"
   ],
   "imageDirs": [
     "images"
