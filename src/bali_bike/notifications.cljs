@@ -6,7 +6,7 @@
 
 (defn request-permission []
   (alet [enabled (p/await (p/promise (.hasPermission (.messaging rn/firebase))))]
-        (when enabled (.requestPermission (.messaging rn/firebase)))))
+        (when-not enabled (.requestPermission (.messaging rn/firebase)))))
 
 (defn get-fcm-token []
   (-> (.getToken (.messaging rn/firebase))

@@ -431,6 +431,7 @@
 		3802C42159BF4EC78299E629 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		394DB78C1255471A85B07A81 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		39E4FC23E3B3449D82B8DB14 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		413913DAE95593711999E3D9 /* Pods-BaliBike.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaliBike.staging.xcconfig"; path = "Pods/Target Support Files/Pods-BaliBike/Pods-BaliBike.staging.xcconfig"; sourceTree = "<group>"; };
 		4634F9234A2047BC9545299E /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		47A46F2F29A163D747087696 /* Pods-BaliBike.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaliBike.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaliBike/Pods-BaliBike.debug.xcconfig"; sourceTree = "<group>"; };
 		5812460678F94280B7706DA9 /* libAppCenterReactNativeCrashes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeCrashes.a; sourceTree = "<group>"; };
@@ -451,6 +452,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BE93FD3460664F3980C52B9E /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		D0F093F72DA24C828BA75617 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		DE0D300F223C932900357DC9 /* BaliBike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BaliBike.entitlements; path = BaliBike/BaliBike.entitlements; sourceTree = "<group>"; };
 		DE8ED22722030BBA002DD65F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "BaliBike/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0B71C27A9D469DD11C6B5A9 /* Pods-BaliBike.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaliBike.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaliBike/Pods-BaliBike.release.xcconfig"; sourceTree = "<group>"; };
 		ED4940099FBD447B97D91CFF /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 		13B07FAE1A68108700A75B9A /* BaliBike */ = {
 			isa = PBXGroup;
 			children = (
+				DE0D300F223C932900357DC9 /* BaliBike.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -769,6 +772,7 @@
 			children = (
 				47A46F2F29A163D747087696 /* Pods-BaliBike.debug.xcconfig */,
 				E0B71C27A9D469DD11C6B5A9 /* Pods-BaliBike.release.xcconfig */,
+				413913DAE95593711999E3D9 /* Pods-BaliBike.staging.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -938,6 +942,14 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 3B93TGS2P4;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1641,6 +1653,7 @@
 			baseConfigurationReference = 47A46F2F29A163D747087696 /* Pods-BaliBike.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BaliBike/BaliBike.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 3B93TGS2P4;
@@ -1672,6 +1685,7 @@
 			baseConfigurationReference = E0B71C27A9D469DD11C6B5A9 /* Pods-BaliBike.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BaliBike/BaliBike.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3B93TGS2P4;
 				HEADER_SEARCH_PATHS = (
@@ -2036,9 +2050,10 @@
 		};
 		DEDE2228223893EF0044F759 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0B71C27A9D469DD11C6B5A9 /* Pods-BaliBike.release.xcconfig */;
+			baseConfigurationReference = 413913DAE95593711999E3D9 /* Pods-BaliBike.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BaliBike/BaliBike.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3B93TGS2P4;
 				HEADER_SEARCH_PATHS = (
