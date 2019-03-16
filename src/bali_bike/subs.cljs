@@ -116,3 +116,8 @@
  :signing-in?
  (fn [app-db _]
    (:signing-in? app-db)))
+
+(rf/reg-sub
+ :firebase-initialized?
+ (fn [app-db _]
+   (:firebase-initialized? app-db)))

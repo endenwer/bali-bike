@@ -8,7 +8,10 @@
 (defn auth-state-changed-event
   [{:keys [db]} [_ current-user]]
   (let [role (:role current-user)]
-    {:db (assoc db :current-user current-user :signing-in? false)
+    {:db (assoc db
+                :current-user current-user
+                :signing-in? false
+                :firebase-initialized? true)
      :navigation/navigate-to (if current-user
                                (if (= role "bike-owner") :bike-owner-app :app)
                                :auth)}))
