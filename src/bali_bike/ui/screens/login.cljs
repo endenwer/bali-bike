@@ -51,24 +51,24 @@
   (r/with-let [signing-in? (rf/subscribe [:signing-in?])
                firebase-initialized? (rf/subscribe [:firebase-initialized?])]
     (if @firebase-initialized?
-      [image-background {:source loginbg-img
-                         :blur-radius 10
-                         :style {:width "100%" :height "100%"}}
-       [safe-area-view {:style {:align-items "center" :flex 1 :margin 30}}
-        [view {:flex 3 :justify-content "center"}
-         [text {:style {:font-size 60
-                        :color colors/white
-                        :font-weight "bold"}} "BaliBike"]]
-        (if @signing-in?
-          [render-loading]
-          [view {:style {:flex 1
-                         :margin-bottom 30
-                         :justify-content "flex-end"}}
-           [google-signin-button {:on-press #(rf/dispatch [:signin-with-google])
-                                  :style {:width 312 :height 48}
-                                  :size (.-Size.Wide GoogleSigninButton)
-                                  :color (.-Color.Dark GoogleSigninButton)}]
+      [safe-area-view {:style {:align-items "center"
+                               :flex 1
+                               :padding 30
+                               :background-color colors/emerald}}
+       [view {:flex 3 :justify-content "center"}
+        [text {:style {:font-size 60
+                       :color colors/white
+                       :font-weight "bold"}} "BaliBike"]]
+       (if @signing-in?
+         [render-loading]
+         [view {:style {:flex 1
+                        :margin-bottom 30
+                        :justify-content "flex-end"}}
+          [google-signin-button {:on-press #(rf/dispatch [:signin-with-google])
+                                 :style {:width 312 :height 48}
+                                 :size (.-Size.Wide GoogleSigninButton)
+                                 :color (.-Color.Light GoogleSigninButton)}]
                                         ; TODO: implement email sign in
                                         ;[render-email-buttons]
-           ])]]
+          ])]
       [view])))
