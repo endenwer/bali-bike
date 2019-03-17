@@ -8,8 +8,6 @@
 (def ReactNativeGoogleSignin (js/require "react-native-google-signin"))
 (def GoogleSigninButton (.-GoogleSigninButton ReactNativeGoogleSignin))
 (def google-signin-button (r/adapt-react-class GoogleSigninButton))
-(def loginbg-img (js/require "./images/loginbg.jpg"))
-
 
 (def default-button-props
   {:raised true
