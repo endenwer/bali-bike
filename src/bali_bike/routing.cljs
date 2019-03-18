@@ -18,7 +18,8 @@
             [bali-bike.ui.screens.area-filter :as area-filter]
             [bali-bike.ui.screens.model-filter :as model-filter]
             [bali-bike.ui.screens.dates-filter :as dates-filter]
-            [bali-bike.ui.screens.chat :as chat-screen]))
+            [bali-bike.ui.screens.chat :as chat-screen]
+            [bali-bike.colors :as colors]))
 
 (def ReactNavigation (js/require "react-navigation"))
 
@@ -93,7 +94,8 @@
   [app-type]
   (create-bottom-tab-navigator
    (if (= app-type "bike-owner-app") bike-owner-app-tabs regular-app-tabs)
-   {:defaultNavigationOptions
+   {:tabBarOptions {:activeTintColor colors/nephritis}
+    :defaultNavigationOptions
     (fn [navigator]
       (let [route-name (.-navigation.state.routeName navigator)]
         #js {:title (string/capitalize route-name)

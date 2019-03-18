@@ -10,16 +10,16 @@
 (def moment (js/require "moment"))
 
 (defn button-styles [is-active]
-  {:background-color (if is-active colors/turquoise colors/white)
-   :margin-horizontal 5
+  {:background-color (if is-active colors/emerald colors/white)
+   :margin-right 5
    :margin-bottom 10
    :padding-horizontal 10
    :border-width (if is-active 0 1)
    :height 30
    :align-items "center"
    :justify-content "center"
-   :border-radius 20
-   :border-color colors/silver})
+   :border-radius 5
+   :border-color colors/clouds})
 
 (defn button-text-styles [is-active]
   {:color (if is-active colors/white colors/midnight-blue)

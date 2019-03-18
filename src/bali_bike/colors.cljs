@@ -11,3 +11,4 @@
 (def alizarin "#e74c3c")
 (def carrot "#e67e22")
 (def emerald "#2ecc71")
+(def nephritis "#27ae60")
