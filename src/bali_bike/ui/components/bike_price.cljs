@@ -11,6 +11,6 @@
     (let [dates-diff (utils/get-dates-diff @dates-range)
           units (if (> (:months dates-diff) 0) "month" "day")
           price (if (> (:months dates-diff) 0) (:monthly-price bike) (:daily-price bike))]
-      [view {:style {:flex-direction "row"}}
-       [text {:style {:font-weight "bold"}} (str "Rp " (utils/format-number price))]
-       [text {:style {:font-weight "500"}} (str " / " units)]])))
+      [view {:style {:flex-direction "row" :font-weight "600"}}
+       [text (str "Rp " (utils/format-number price))]
+       [text (str " per " units)]])))

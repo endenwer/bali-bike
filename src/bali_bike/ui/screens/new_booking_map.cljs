@@ -13,7 +13,7 @@
             :loading loading?
             :disabled loading?
             :on-press on-save
-            :button-style {:margin 10 :background-color colors/turquoise}}]])
+            :button-style {:margin 10 :background-color colors/emerald}}]])
 
 (defn main []
   (r/with-let [delivery-location (rf/subscribe [:delivery-location])

@@ -31,8 +31,9 @@
   [bike-data]
   [view {:style {:flex 1 :margin-bottom 30}}
    [bike-title/main bike-data]
-   [property-item/main "Manufacture year" (:manufacture-year bike-data)]
-   [property-item/main "Mileage" (:mileage bike-data)]])
+   [view {:style {:margin-top 10}}
+    [property-item/main "Manufacture year" (:manufacture-year bike-data)]
+    [property-item/main "Mileage" (:mileage bike-data)]]])
 
 (defn main []
   (r/with-let [bike-data (rf/subscribe [:current-bike])]

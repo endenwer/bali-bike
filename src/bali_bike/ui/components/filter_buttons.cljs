@@ -34,7 +34,7 @@
 
 (defn area []
   (r/with-let [area-filter-id (rf/subscribe [:area-filter-id])]
-    [render-button {:title (get constants/areas @area-filter-id "Any area")
+    [render-button {:title (get constants/areas @area-filter-id "Area")
                     :is-active @area-filter-id
                     :filter-screen-name :area-filter}]))
 
@@ -46,12 +46,6 @@
                                (utils/get-short-dates-range-string
                                 (:start-date @dates-range)
                                 (:end-date @dates-range))
-                               "Any dates")
+                               "Dates")
                       :is-active @dates-range
                       :filter-screen-name :dates-filter}])))
-
-(defn model []
-  (r/with-let [model-filter-id (rf/subscribe [:model-filter-id])]
-    [render-button {:title (get constants/models @model-filter-id "Any model")
-                    :is-active @model-filter-id
-                    :filter-screen-name :model-filter}]))

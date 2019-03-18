@@ -7,7 +7,7 @@
 
 (defn render-price
   [title months-count price]
-  [property-item/main title (str "Rp" (utils/format-number price) " x " months-count)])
+  [property-item/main title (str "Rp " (utils/format-number price) " x " months-count)])
 
 (defn main
   [{:keys [start-date end-date monthly-price daily-price] :as params}]
@@ -23,6 +23,6 @@
       [h3 "Total payment"]]
      (when (> (:months dates-diff) 0) [render-price "Months" (:months dates-diff) monthly-price])
      [render-price "Days" (:days dates-diff) calculated-daily-price]
-     [property-item/main "Total" (str "Rp" (utils/format-number
-                                            (+ (* monthly-price (:months dates-diff))
-                                               (* calculated-daily-price (:days dates-diff)))))]]))
+     [property-item/main "Total" (str "Rp " (utils/format-number
+                                             (+ (* monthly-price (:months dates-diff))
+                                                (* calculated-daily-price (:days dates-diff)))))]]))

@@ -33,6 +33,7 @@
                          #(rf/dispatch
                            [(if (:saved bike-data) :remove-bike-from-saved :add-bike-to-saved)
                             (:id bike-data)])}]
-    [bike-title/main bike-data]
-    [bike-rating/main bike-data]
-    [bike-price/main bike-data]]])
+    [view {:style {:margin-top 5 :margin-left 5}}
+     [bike-title/main bike-data]
+     [bike-rating/main bike-data]
+     [bike-price/main bike-data]]]])

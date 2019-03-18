@@ -38,7 +38,7 @@
     [view {:style {:flex 1
                    :flex-direction "column"}}
      [calendar-picker {:allow-range-selection true
-                       :selected-day-color colors/turquoise
+                       :selected-day-color colors/emerald
                        :selected-day-text-color colors/white
                        :start-from-monday true
                        :min-date (js/Date.)
@@ -51,6 +51,6 @@
                               :margin-bottom 20}}
       [button {:title "Save"
                :disabled (or (nil? @start-date) (nil? @end-date))
-               :button-style {:background-color colors/turquoise
+               :button-style {:background-color colors/emerald
                               :margin-horizontal 10}
                :on-press #(on-save (.toISOString @start-date) (.toISOString @end-date))}]]]))

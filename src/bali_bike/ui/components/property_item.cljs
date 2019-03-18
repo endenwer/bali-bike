@@ -12,5 +12,5 @@
                  :border-color colors/clouds
                  :flex-direction "row"
                  :justify-content "space-between"}}
-   [text {:style {:font-size 20}} property-name]
-   [text {:style {:font-size 20}} value]])
+   [text property-name]
+   [text value]])
