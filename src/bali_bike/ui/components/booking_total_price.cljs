@@ -1,7 +1,7 @@
 (ns bali-bike.ui.components.booking-total-price
   (:require [bali-bike.ui.components.property-item :as property-item]
             [bali-bike.rn :refer [view]]
-            [bali-bike.ui.components.common :refer [h3]]
+            [bali-bike.ui.components.common :refer [text]]
             [bali-bike.utils :as utils]
             [bali-bike.colors :as colors]))
 
@@ -20,7 +20,7 @@
                     :justify-content "space-between"
                     :align-items "center"
                     :margin-bottom 5}}
-      [h3 "Total payment"]]
+      [text {:style {:font-weight "bold"}} "Total payment"]]
      (when (> (:months dates-diff) 0) [render-price "Months" (:months dates-diff) monthly-price])
      [render-price "Days" (:days dates-diff) calculated-daily-price]
      [property-item/main "Total" (str "Rp " (utils/format-number

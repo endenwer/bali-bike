@@ -4,7 +4,8 @@
             [bali-bike.rn :refer [view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text h3]]
             [bali-bike.constants :as constants]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [bali-bike.colors :as colors]))
 
 (def moment (js/require "moment"))
 
@@ -26,7 +27,7 @@
 
 (defn render-dates
   [start-date end-date]
-  [text (utils/get-short-dates-range-string start-date end-date)])
+  [text {:style {:color colors/silver}} (utils/get-short-dates-range-string start-date end-date)])
 
 (defn main [booking-data]
   (r/with-let [get-bike (:bike booking-data)]

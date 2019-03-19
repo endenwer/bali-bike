@@ -26,5 +26,6 @@
 (defn text
   ([content] (text {} content))
   ([{:keys [style] :as props} content]
-   [rn/text (merge props {:style (merge {:color colors/wet-asphalt} style)})
+   [rn/text (merge props {:style (merge {:color colors/wet-asphalt
+                                         :font-size 16} style)})
     content]))

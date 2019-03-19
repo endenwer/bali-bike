@@ -22,7 +22,7 @@
                       :shadow-offset {:width 0 :height 1}
                       :shadow-opacity 0.70
                       :shadow-radius 2
-                      :elevation 10
+                      :elevation 1
                       :background-color colors/clouds}}
         [icon {:name "search"
                :color colors/silver

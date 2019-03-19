@@ -46,7 +46,7 @@
                   :justify-content "space-between"
                   :align-items "center"
                   :margin-bottom 5}}
-    [h3 title]
+    [text {:style {:font-weight "bold"}} title]
     [touchable-highlight {:on-press on-press}
      [text {:style {:color colors/turquoise}} on-press-text]]]
    [text value]])
