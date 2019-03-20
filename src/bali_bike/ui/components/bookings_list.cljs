@@ -3,14 +3,17 @@
             [bali-bike.ui.components.booking-card :as booking-card]
             [bali-bike.colors :as colors]
             [bali-bike.rn :refer [scroll-view activity-indicator view]]
+            [bali-bike.ui.components.full-screen-loading :as full-screen-loading]
+            [bali-bike.ui.components.empty-icon :as empty-icon]
             [re-frame.core :as rf]))
 
 (defn main []
   (r/with-let [bookings (rf/subscribe [:bookings])
                bookings-meta (rf/subscribe [:bookings-meta])]
     (if (:loading? @bookings-meta)
-      [view {:style {:flex 1 :align-items "center" :justify-content "center"}}
-       [activity-indicator {:size "large" :color colors/turquoise}]]
-      [scroll-view {:style {:flex 1 :padding-top 20} :showsVerticalScrollIndicator false}
-       (for [booking-data @bookings]
-         ^{:key (:id booking-data)} [booking-card/main booking-data])])))
+      [full-screen-loading/main]
+      (if (= 0 (count @bookings))
+        [empty-icon/main]
+        [scroll-view {:style {:flex 1 :padding-top 20} :showsVerticalScrollIndicator false}
+         (for [booking-data @bookings]
+           ^{:key (:id booking-data)} [booking-card/main booking-data])]))))

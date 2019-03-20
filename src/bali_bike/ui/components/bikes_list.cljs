@@ -5,6 +5,7 @@
             [bali-bike.ui.components.common :refer [text]]
             [bali-bike.ui.components.full-screen-loading :as full-screen-loading]
             [bali-bike.rn :refer [scroll-view activity-indicator view flat-list]]
+            [bali-bike.ui.components.empty-icon :as empty-icon]
             [re-frame.core :as rf]))
 
 (defn render-list-bottom
@@ -24,13 +25,15 @@
     [view {:style {:flex 1}}
      (if (and (= 0 (count @bikes)) (:loading? @bikes-meta))
        [full-screen-loading/main]
-       [flat-list {:data @bikes
-                   :bounces false
-                   :shows-vertical-scroll-indicator false
-                   :key-extractor #(.-id %)
-                   :List-footer-component #(r/as-element
-                                            [render-list-bottom (:loading? @bikes-meta)])
-                   :render-item #(r/as-element
-                                  [bike/main (js->clj (.-item %) :keywordize-keys true)])
-                   :on-end-reached-threshold 0.01
-                   :on-end-reached #(rf/dispatch [:load-bikes])}])]))
+       (if (= 0 (count @bikes))
+         [empty-icon/main]
+         [flat-list {:data @bikes
+                     :bounces false
+                     :shows-vertical-scroll-indicator false
+                     :key-extractor #(.-id %)
+                     :List-footer-component #(r/as-element
+                                              [render-list-bottom (:loading? @bikes-meta)])
+                     :render-item #(r/as-element
+                                    [bike/main (js->clj (.-item %) :keywordize-keys true)])
+                     :on-end-reached-threshold 0.01
+                     :on-end-reached #(rf/dispatch [:load-bikes])}]))]))
