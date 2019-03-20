@@ -9,9 +9,11 @@
   [{:keys [db]} [_ bike-id]]
   {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
    :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :rating
-                                                   :dailyPrice :monthlyPrice
-                                                   :reviewsCount :mileage :manufactureYear
-                                                   :saved :reviews [:id :rating :comment]]]
+                                                   :dailyPrice :monthlyPrice :reviewsCount
+                                                   :mileage :manufactureYear :saved
+                                                   :reviews [:id :rating :comment]
+                                                   :bookings [:id :startDate :endDate]]]
+
                       :callback-event :on-bike-loaded}
    :navigation/navigate-to :bike})
 

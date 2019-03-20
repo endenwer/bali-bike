@@ -22,3 +22,9 @@
 (defn round-to-thousands
   [number]
   (* (js/Math.round (/ number 1000)) 1000))
+
+(defn dates-in-range
+  [{:keys [start-date end-date] :as params}]
+  (let [date (moment start-date)
+        dates-diff (get-dates-diff params)]
+    (reduce #(conj %1 (.add (.clone date) %2 "days")) [] (range (+ (:days dates-diff) 1)))))

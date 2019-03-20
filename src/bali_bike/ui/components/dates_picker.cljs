@@ -26,7 +26,7 @@
    [render-selected-date end-date "End date"]])
 
 (defn main
-  [{:keys [dates-range on-save]}]
+  [{:keys [dates-range disabled-dates on-save]}]
   (r/with-let [saved-start-date (:start-date dates-range)
                saved-end-date (:end-date dates-range)
                start-date (r/atom (if saved-start-date (moment saved-start-date) nil))
@@ -44,7 +44,8 @@
                        :min-date (js/Date.)
                        :selected-start-date @start-date
                        :selected-end-date @end-date
-                       :on-date-change on-date-change}]
+                       :on-date-change on-date-change
+                       :disabled-dates disabled-dates}]
      [render-selected-dates @start-date @end-date]
      [safe-area-view {:style {:flex 1
                               :justify-content "flex-end"
