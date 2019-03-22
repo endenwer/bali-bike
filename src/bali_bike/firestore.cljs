@@ -58,5 +58,6 @@
 
 (defn save-fcm-token
   [{:keys [user-uid token]}]
-  (let [user-ref (.doc (.collection firestore "users") user-uid)]
-    (.set user-ref #js {:pushToken token} #js {:merge true})))
+  (when user-uid
+    (let [user-ref (.doc (.collection firestore "users") user-uid)]
+      (.set user-ref #js {:pushToken token} #js {:merge true}))))

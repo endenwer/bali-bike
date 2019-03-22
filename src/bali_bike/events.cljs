@@ -182,4 +182,7 @@
 (rf/reg-fx :notifications/request-permission notifications/request-permission)
 
 (rf/reg-event-fx :set-fcm-token notification-events/set-fcm-token-event)
-(rf/reg-event-fx :notification-event-received notification-events/notification-event-received-event)
+(rf/reg-event-fx
+ :notification-event-received
+ [interceptors/transform-event-to-kebab]
+ notification-events/notification-event-received-event)

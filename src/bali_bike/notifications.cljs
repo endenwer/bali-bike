@@ -2,7 +2,8 @@
   (:require [bali-bike.rn :as rn]
             [promesa.core :as p :refer-macros [alet]]
             [re-frame.core :as rf]
-            [goog.object :as object]))
+            [goog.object :as object]
+            [reagent.core :as r]))
 
 (defn request-permission []
   (alet [enabled (p/await (p/promise (.hasPermission (.messaging rn/firebase))))]
@@ -16,29 +17,19 @@
   (.onTokenRefresh (.messaging rn/firebase)
                    (fn [token] (rf/dispatch [:set-fcm-token token]))))
 
-(defn parse-notification-payload [s]
-  (try
-    (js/JSON.parse s)
-    (catch :default _
-      #js {})))
-
 (defn handle-notification-event [event]
-  (let [msg (object/get (.. event -notification -data) "msg")
-        data (parse-notification-payload msg)]
-    (rf/dispatch [:notification-event-received data])))
+  (let [data (.-notification.data event)]
+    (rf/dispatch [:notification-event-received (js->clj data)])))
 
 (defn on-notification-opened []
-  (.. rn/firebase
-      notifications
-      (onNotificationOpened handle-notification-event)))
+  (.onNotificationOpened
+   (.notifications rn/firebase)
+   handle-notification-event))
 
 (defn handle-initial-push-notification []
-  (.. rn/firebase
-      notifications
-      getInitialNotification
-      (then (fn [event]
-              (when event
-                (handle-notification-event event))))))
+  (.then
+   (.getInitialNotification (.notifications rn/firebase))
+   (fn [event] (when event (handle-notification-event event)))))
 
 (defn init []
   (on-refresh-fcm-token)

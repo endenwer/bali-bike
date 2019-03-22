@@ -7,4 +7,8 @@
 
 (defn notification-event-received-event
   [{:keys [db]} [_ data]]
-  (.log js/console "RECEIVED"))
+  (let [type (:type data)]
+    (case type
+      "NEW_MESSAGE" {:dispatch [:navigate-to-chat (:chat-id data)]}
+      "NEW_BOOKING" {:dispatch [:navigate-to-booking (:id data)]}
+      {})))
