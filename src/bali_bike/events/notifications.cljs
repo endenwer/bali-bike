@@ -10,5 +10,6 @@
   (let [type (:type data)]
     (case type
       "NEW_MESSAGE" {:dispatch [:navigate-to-chat (:chat-id data)]}
-      "NEW_BOOKING" {:dispatch [:navigate-to-booking (:id data)]}
+      "NEW_BOOKING" {:dispatch-n [[:navigate-to-booking (:id data)]
+                                  [:load-bookings]]}
       {})))

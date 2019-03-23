@@ -3,6 +3,7 @@
             [re-frame.core :as rf]
             [bali-bike.colors :as colors]
             [bali-bike.utils :as utils]
+            [bali-bike.ui.components.full-screen-loading :as full-screen-loading]
             [bali-bike.ui.components.common :refer [text button]]
             [bali-bike.ui.components.booking-total-price :as booking-total-price]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
@@ -78,29 +79,31 @@
     (let [booking-meta (meta @booking-data)
           get-bike (:bike @booking-data)
           bike-data (get-bike)]
-      [view {:style {:flex 1}}
-       [scroll-view {:style {:flex 1} :showsVerticalScrollIndicator false}
-        [safe-area-view {:style {:flex 1}}
-         [bike-photos-swiper/main bike-data]]
-        [render-status (:status @booking-data)]
-        [view {:style {:flex 1 :margin-horizontal 10 :margin-top 10}}
-         [render-dates (:start-date @booking-data) (:end-date @booking-data)]
-         [bike-title/main bike-data]
-         (if (:loading? booking-meta)
-           [render-loading]
-           [view {:style {:flex 1}}
-            [render-contact-user {:booking-id (:id @booking-data)
-                                  :user (:contact-user @booking-data)}]
-            [new-booking/render-property {:title "Delivery location"
-                                          :on-press #(rf/dispatch [:navigate-to :booking-map])
-                                          :on-press-text "SHOW MAP"
-                                          :value (:delivery-location-address @booking-data)}]
-            [booking-total-price/main {:monthly-price (:monthly-price @booking-data)
-                                       :daily-price (:daily-price @booking-data)
-                                       :start-date (:start-date @booking-data)
-                                       :end-date (:end-date @booking-data)}]])]]
+      (if bike-data
+        [view {:style {:flex 1}}
+         [scroll-view {:style {:flex 1} :showsVerticalScrollIndicator false}
+          [safe-area-view {:style {:flex 1}}
+           [bike-photos-swiper/main bike-data]]
+          [render-status (:status @booking-data)]
+          [view {:style {:flex 1 :margin-horizontal 10 :margin-top 10}}
+           [render-dates (:start-date @booking-data) (:end-date @booking-data)]
+           [bike-title/main bike-data]
+           (if (:loading? booking-meta)
+             [render-loading]
+             [view {:style {:flex 1}}
+              [render-contact-user {:booking-id (:id @booking-data)
+                                    :user (:contact-user @booking-data)}]
+              [new-booking/render-property {:title "Delivery location"
+                                            :on-press #(rf/dispatch [:navigate-to :booking-map])
+                                            :on-press-text "SHOW MAP"
+                                            :value (:delivery-location-address @booking-data)}]
+              [booking-total-price/main {:monthly-price (:monthly-price @booking-data)
+                                         :daily-price (:daily-price @booking-data)
+                                         :start-date (:start-date @booking-data)
+                                         :end-date (:end-date @booking-data)}]])]]
 
-       (when (and
-              (= "WAITING_CONFIRMATION" (:status @booking-data))
-              (= "bike-owner" (:role @user)))
-         [render-buttons])])))
+         (when (and
+                (= "WAITING_CONFIRMATION" (:status @booking-data))
+                (= "bike-owner" (:role @user)))
+           [render-buttons])]
+        [full-screen-loading/main]))))
