@@ -173,6 +173,7 @@
 (rf/reg-fx :firestore/send-message firestore/send-message)
 (rf/reg-fx :firestore/create-chat firestore/create-chat)
 (rf/reg-fx :firestore/save-fcm-token firestore/save-fcm-token)
+(rf/reg-fx :firestore/delete-fcm-token firestore/delete-fcm-token)
 
 ;; notifications
 

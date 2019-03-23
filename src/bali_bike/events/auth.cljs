@@ -10,16 +10,19 @@
   (let [role (:role current-user)]
     (merge
      (if (:firebase-initialized? db) {} {:splash-screen/hide nil})
+     (if current-user {:notifications/get-fcm-token nil})
      {:db (assoc db :current-user current-user :signing-in? false :firebase-initialized? true)
-      :notifications/get-fcm-token nil
       :navigation/navigate-to (if current-user
                                 (if (= role "bike-owner") :bike-owner-app :app) :auth)
       :notifications/handle-initial-push-notification nil})))
 
 (defn sign-out-event
-  [_ [_ _]]
-  {:auth/sign-out nil
-   :navigation/navigate-to :auth})
+  [{:keys [db]} [_ _]]
+  (let [user-uid (get-in db [:current-user :uid])
+        token (:fcm-token db)]
+    {:auth/sign-out nil
+     :firestore/delete-fcm-token {:user-uid user-uid :token token}
+     :navigation/navigate-to :auth}))
 
 (defn user-signed-in-event
   [_ [_ _]]

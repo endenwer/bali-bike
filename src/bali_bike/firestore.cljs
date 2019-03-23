@@ -60,4 +60,14 @@
   [{:keys [user-uid token]}]
   (when user-uid
     (let [user-ref (.doc (.collection firestore "users") user-uid)]
-      (.set user-ref #js {:pushToken token} #js {:merge true}))))
+      (.set user-ref
+            #js {:pushTokens (.firestore.FieldValue.arrayUnion rn/firebase token)}
+            #js {:merge true}))))
+
+(defn delete-fcm-token
+  [{:keys [user-uid token]}]
+  (when user-uid
+    (let [user-ref (.doc (.collection firestore "users") user-uid)]
+      (.set user-ref
+            #js {:pushTokens (.firestore.FieldValue.arrayRemove rn/firebase token)}
+            #js {:merge true}))))
