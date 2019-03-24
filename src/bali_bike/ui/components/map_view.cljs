@@ -13,8 +13,6 @@
                       :bottom 0}
               :initialRegion (or initial-region constants/default-region)
               :onRegionChangeComplete on-change
-              :showsUserLocation true
-              :showsMyLocationButton true
               :provider PROVIDER_GOOGLE}
     (when use-marker?
       [map-marker {:coordinate {:latitude (:latitude initial-region)
