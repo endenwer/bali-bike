@@ -89,10 +89,21 @@
         :dispatch [:load-bikes]}))))
 
 
-(rf/reg-event-db
+(rf/reg-event-fx
  :initialize-db
  (fn [_ _]
-   edb/initial-app-db))
+   {:db edb/initial-app-db
+    :api/send-graphql {:query [:constants [:models [:id :value] :areas [:id :value]]]
+                       :callback-event :on-constants-loaded}}))
+
+(rf/reg-event-db
+ :on-constants-loaded
+ [interceptors/transform-event-to-kebab]
+ (fn [db [_ {:keys [data]}]]
+   (let [constants (:constants data)
+         models (reduce #(assoc %1 (:id %2) (:value %2)) {} (:models constants))
+         areas (reduce #(assoc %1 (:id %2) (:value %2)) {} (:areas constants))]
+     (assoc db :constants {:models models :areas areas}))))
 
 ;; bike handlers
 (rf/reg-event-fx :load-bikes bike-events/load-bikes-event)

@@ -3,9 +3,10 @@
             [bali-bike.utils :as utils]
             [bali-bike.rn :refer [view image touchable-highlight]]
             [bali-bike.ui.components.common :refer [text h3]]
-            [bali-bike.constants :as constants]
             [re-frame.core :as rf]
-            [bali-bike.colors :as colors]))
+            [bali-bike.colors :as colors]
+            [bali-bike.constants :as constants]
+            [bali-bike.ui.components.bike-title :as bike-title]))
 
 (def moment (js/require "moment"))
 
@@ -14,11 +15,6 @@
   [text {:style {:color (get constants/status-colors status)
                  :font-weight "bold"}}
    (get constants/statuses status)])
-
-(defn render-bike-title
-  [model-id]
-  [view
-   [h3 (get constants/models model-id)]])
 
 (defn render-bike-photo [photo-url]
   [view {:style {:align-items "center" :width 100 :height 100}}
@@ -37,5 +33,5 @@
         [render-bike-photo (first (:photos bike-data))]
         [view {:margin-left 10}
          [render-status (:status booking-data)]
-         [render-bike-title (:model-id bike-data)]
+         [bike-title/main bike-data]
          [render-dates (:start-date booking-data) (:end-date booking-data)]]]])))

@@ -33,8 +33,9 @@
 
 
 (defn area []
-  (r/with-let [area-filter-id (rf/subscribe [:area-filter-id])]
-    [render-button {:title (get constants/areas @area-filter-id "Area")
+  (r/with-let [area-filter-id (rf/subscribe [:area-filter-id])
+               constants (rf/subscribe [:constants])]
+    [render-button {:title (get-in @constants [:areas @area-filter-id] "Area")
                     :is-active @area-filter-id
                     :filter-screen-name :area-filter}]))
 

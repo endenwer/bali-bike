@@ -4,7 +4,6 @@
             [bali-bike.ui.components.booking-total-price :as booking-total-price]
             [reagent.core :as r]
             [bali-bike.colors :as colors]
-            [bali-bike.constants :as constants]
             [bali-bike.ui.components.bike-rating :as bike-rating]
             [bali-bike.utils :as utils]
             [re-frame.core :as rf]))
@@ -23,8 +22,8 @@
 
 (defn render-bike-title
   [model-id]
-  [view
-   [h3 (get constants/models model-id)]])
+  (r/with-let [constants (rf/subscribe [:constants])]
+    [view [h3 (get-in @constants [:models model-id])]]))
 
 (defn render-bike-photo [photo-url]
   [view {:style {:align-items "center" :width 100 :height 100}}

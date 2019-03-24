@@ -1,8 +1,7 @@
 (ns bali-bike.subs
   (:require [re-frame.core :as rf]
             [clojure.string :as string]
-            [bali-bike.edb :as edb]
-            [bali-bike.constants :as constants]))
+            [bali-bike.edb :as edb]))
 
 (rf/reg-sub
  :bikes
@@ -40,8 +39,8 @@
    (if-let [area-search-bar-text (:area-search-bar-text app-db)]
      (filter
       #(string/includes? (string/lower-case (second %)) (string/lower-case area-search-bar-text))
-      constants/areas)
-     constants/areas)))
+      (get-in app-db [:constants :areas]))
+     (get-in app-db [:constants :areas]))))
 
 (rf/reg-sub
  :model-filter-id
@@ -59,8 +58,8 @@
    (if-let [model-search-bar-text (:model-search-bar-text app-db)]
      (filter
       #(string/includes? (string/lower-case (second %)) (string/lower-case model-search-bar-text))
-      constants/models)
-     constants/models)))
+      (get-in app-db [:constants :models]))
+     (get-in app-db [:constants :models]))))
 
 (rf/reg-sub
  :dates-range
@@ -121,3 +120,8 @@
  :firebase-initialized?
  (fn [app-db _]
    (:firebase-initialized? app-db)))
+
+(rf/reg-sub
+ :constants
+ (fn [app-db _]
+   (:constants app-db)))

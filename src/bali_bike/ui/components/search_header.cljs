@@ -4,12 +4,12 @@
             [bali-bike.ui.components.filter-buttons :as filter-buttons]
             [re-frame.core :as rf]
             [bali-bike.colors :as colors]
-            [reagent.core :as r]
-            [bali-bike.constants :as constants]))
+            [reagent.core :as r]))
 
 (defn render-model-filter []
-  (r/with-let [model-filter-id (rf/subscribe [:model-filter-id])]
-    (let [model (get constants/models @model-filter-id)]
+  (r/with-let [model-filter-id (rf/subscribe [:model-filter-id])
+               constants (rf/subscribe [:constants])]
+    (let [model (get-in @constants [:models @model-filter-id])]
       [touchable-highlight {:on-press #(rf/dispatch [:navigate-to :model-filter])}
        [view {:style {:flex-direction "row"
                       :align-self "stretch"

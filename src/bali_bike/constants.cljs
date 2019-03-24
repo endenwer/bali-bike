@@ -1,15 +1,6 @@
 (ns bali-bike.constants
   (:require [bali-bike.colors :as colors]))
 
-(def areas
-  {1 "Canggu"
-   2 "Kuta"
-   3 "Kerobokan"})
-
-(def models
-  {1 "Honda Vario"
-   2 "Honda Scoopy"})
-
 (def statuses
   {"WAITING_CONFIRMATION" "WAITING CONFIRMATION"
    "CONFIRMED" "CONFIRMED"
