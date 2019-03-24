@@ -28,3 +28,9 @@
   (let [date (moment start-date)
         dates-diff (get-dates-diff params)]
     (reduce #(conj %1 (.add (.clone date) %2 "days")) [] (range (+ (:days dates-diff) 1)))))
+
+(defn filter-map-by-value
+  [data value]
+  (if value
+    (filter #(string/includes? (string/lower-case (second %)) (string/lower-case value)) data)
+    data))

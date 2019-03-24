@@ -40,11 +40,6 @@
  (fn [_ _]
    {:navigation/navigate-back nil}))
 
-(rf/reg-event-db
- :change-area-search-bar-text
- (fn [app-db [_ value]]
-   (assoc app-db :area-search-bar-text value)))
-
 (rf/reg-event-fx
  :set-area-filter-id
  (fn [{:keys [db]} [_ area-id]]
@@ -57,11 +52,6 @@
                 (assoc :area-filter-id area-id))
         :navigation/navigate-back nil
         :dispatch [:load-bikes]}))))
-
-(rf/reg-event-db
- :change-model-search-bar-text
- (fn [app-db [_ value]]
-   (assoc app-db :model-search-bar-text value)))
 
 (rf/reg-event-fx
  :set-model-filter-id
