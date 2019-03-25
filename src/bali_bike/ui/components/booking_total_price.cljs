@@ -22,7 +22,7 @@
                     :margin-bottom 5}}
       [text {:style {:font-weight "bold"}} "Total payment"]]
      (when (> (:months dates-diff) 0) [render-price "Months" (:months dates-diff) monthly-price])
-     [render-price "Days" (:days dates-diff) calculated-daily-price]
+     (when (> (:days dates-diff) 0) [render-price "Days" (:days dates-diff) calculated-daily-price])
      [property-item/main "Total" (str "Rp " (utils/format-number
                                              (+ (* monthly-price (:months dates-diff))
                                                 (* calculated-daily-price (:days dates-diff)))))]]))

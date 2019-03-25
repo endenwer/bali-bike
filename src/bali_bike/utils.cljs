@@ -13,7 +13,13 @@
 
 (defn get-dates-diff
   [{:keys [start-date end-date]}]
-  (js->clj (.preciseDiff moment (moment start-date) (moment end-date) true) :keywordize-keys true))
+  (let [diff (.preciseDiff moment (moment start-date) (moment end-date) true)
+        months (.-months diff)]
+    (if (> months 0)
+      (js->clj diff :keywordize-keys true)
+      (do
+        (set! (.-days diff) (+ 1 (.-days diff)))
+        (js->clj diff :keywordize-keys true)))))
 
 (defn format-number
   [number]
@@ -27,7 +33,7 @@
   [{:keys [start-date end-date] :as params}]
   (let [date (moment start-date)
         dates-diff (get-dates-diff params)]
-    (reduce #(conj %1 (.add (.clone date) %2 "days")) [] (range (+ (:days dates-diff) 1)))))
+    (reduce #(conj %1 (.add (.clone date) %2 "days")) [] (range (:days dates-diff)))))
 
 (defn filter-map-by-value
   [data value]
