@@ -74,13 +74,13 @@
 (defn on-bookings-loaded-event
   [db [_ {:keys [data]}]]
   (let [bookings (or (:bookings data) (:bike-owner-bookings data))]
-    (edb/insert-collection db :bookings :list bookings {:loading? false})))
+    (edb/insert-collection db :bookings :list bookings {:loading? false :reloading? false})))
 
 (defn load-bookings-event
-  [{:keys [db]} [_ _]]
+  [{:keys [db]} [_ reloading?]]
   (let [user (:current-user db)
         query-name (if (= "bike-owner" (:role user)) :bikeOwnerBookings :bookings)]
-    {:db (edb/insert-meta db :bookings :list {:loading? true})
+    {:db (edb/insert-meta db :bookings :list (if reloading? {:reloading? true} {:loading? true}))
      :api/send-graphql {:query [query-name [:id :startDate :endDate :status
                                             :bike [:id :modelId :photos]]]
                         :callback-event :on-bookings-loaded}}))
