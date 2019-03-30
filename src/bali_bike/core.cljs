@@ -6,12 +6,14 @@
             [bali-bike.subs]
             [bali-bike.events]
             [bali-bike.auth :as auth]
-            [bali-bike.notifications :as notifications]))
+            [bali-bike.notifications :as notifications]
+            [bali-bike.bugsnag :as bugsnag]))
 
 (defn app-root []
   [routing/container])
 
 (defn init []
+  (bugsnag/init)
   (dispatch-sync [:initialize-db])
   (auth/listen-user-auth)
   (notifications/init)

@@ -19,7 +19,8 @@
     "react-native-gifted-chat",
     "moment-precise-range-plugin",
     "react-native-code-push",
-    "react-native-splash-screen"
+    "react-native-splash-screen",
+    "bugsnag-react-native"
   ],
   "imageDirs": [
     "images"

@@ -6,6 +6,11 @@
 	<string>The app needs your location to show it on the map when you select delivery address.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app needs your location to show it on the map when you select delivery address.</string>
+  <key>NSAppTransportSecurity</key>    
+  <dict>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+  </dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -75,7 +80,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>ITSAppUsesNonExemptEncryption</key>
-  <false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

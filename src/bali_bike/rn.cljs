@@ -63,3 +63,5 @@
 (def code-push (js/require "react-native-code-push"))
 
 (def splash-screen (.-default (js/require "react-native-splash-screen")))
+
+(def bugsnag-client (.-Client (js/require "bugsnag-react-native")))

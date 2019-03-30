@@ -14,6 +14,11 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
+  - BugsnagReactNative (2.15.0):
+    - BugsnagReactNative/Core (= 2.15.0)
+    - React
+  - BugsnagReactNative/Core (2.15.0):
+    - React
   - CodePush (5.5.2):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
@@ -78,7 +83,7 @@ PODS:
     - GoogleUtilities/Environment (~> 5.2)
     - GoogleUtilities/Reachability (~> 5.2)
     - Protobuf (~> 3.1)
-  - Folly (2016.10.31.00):
+  - Folly (2018.10.22.00):
     - boost-for-react-native
     - DoubleConversion
     - glog
@@ -114,31 +119,31 @@ PODS:
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.3)"
-  - GoogleUtilities/AppDelegateSwizzler (5.3.6):
+  - GoogleToolboxForMac/DebugUtils (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GoogleUtilities/AppDelegateSwizzler (5.3.7):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.6)
-  - GoogleUtilities/Logger (5.3.6):
+  - GoogleUtilities/Environment (5.3.7)
+  - GoogleUtilities/Logger (5.3.7):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.6):
+  - GoogleUtilities/MethodSwizzler (5.3.7):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.6):
+  - GoogleUtilities/Network (5.3.7):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.6)"
-  - GoogleUtilities/Reachability (5.3.6):
+  - "GoogleUtilities/NSData+zlib (5.3.7)"
+  - GoogleUtilities/Reachability (5.3.7):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.6):
+  - GoogleUtilities/UserDefaults (5.3.7):
     - GoogleUtilities/Logger
   - "gRPC-C++ (0.0.5)":
     - "gRPC-C++/Implementation (= 0.0.5)"
@@ -166,8 +171,8 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
-  - React (0.57.7):
-    - React/Core (= 0.57.7)
+  - React (0.59.2):
+    - React/Core (= 0.59.2)
   - react-native-google-maps (0.23.0):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 2.5.0)
@@ -176,58 +181,67 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - React/Core (0.57.7):
-    - yoga (= 0.57.7.React)
-  - React/CxxBridge (0.57.7):
-    - Folly (= 2016.10.31.00)
+  - React/Core (0.59.2):
+    - yoga (= 0.59.2.React)
+  - React/CxxBridge (0.59.2):
+    - Folly (= 2018.10.22.00)
     - React/Core
     - React/cxxreact
-  - React/cxxreact (0.57.7):
+    - React/jsiexecutor
+  - React/cxxreact (0.59.2):
     - boost-for-react-native (= 1.63.0)
-    - Folly (= 2016.10.31.00)
-    - React/jschelpers
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
     - React/jsinspector
-  - React/DevSupport (0.57.7):
+  - React/DevSupport (0.59.2):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.57.7)
-  - React/jschelpers (0.57.7):
-    - Folly (= 2016.10.31.00)
-    - React/PrivateDatabase
-  - React/jsinspector (0.57.7)
-  - React/PrivateDatabase (0.57.7)
-  - React/RCTActionSheet (0.57.7):
+  - React/fishhook (0.59.2)
+  - React/jsi (0.59.2):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+  - React/jsiexecutor (0.59.2):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React/cxxreact
+    - React/jsi
+  - React/jsinspector (0.59.2)
+  - React/RCTActionSheet (0.59.2):
     - React/Core
-  - React/RCTAnimation (0.57.7):
+  - React/RCTAnimation (0.59.2):
     - React/Core
-  - React/RCTBlob (0.57.7):
+  - React/RCTBlob (0.59.2):
     - React/Core
-  - React/RCTGeolocation (0.57.7):
+  - React/RCTGeolocation (0.59.2):
     - React/Core
-  - React/RCTImage (0.57.7):
+  - React/RCTImage (0.59.2):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.57.7):
+  - React/RCTLinkingIOS (0.59.2):
     - React/Core
-  - React/RCTNetwork (0.57.7):
+  - React/RCTNetwork (0.59.2):
     - React/Core
-  - React/RCTSettings (0.57.7):
+  - React/RCTSettings (0.59.2):
     - React/Core
-  - React/RCTText (0.57.7):
+  - React/RCTText (0.59.2):
     - React/Core
-  - React/RCTVibration (0.57.7):
+  - React/RCTVibration (0.59.2):
     - React/Core
-  - React/RCTWebSocket (0.57.7):
+  - React/RCTWebSocket (0.59.2):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - SSZipArchive (2.1.4)
-  - yoga (0.57.7.React)
+  - yoga (0.59.2.React)
 
 DEPENDENCIES:
   - AppCenter/Analytics (~> 1.13.2)
   - AppCenter/Crashes (~> 1.13.2)
   - AppCenterReactNativeShared (~> 1.12.2)
+  - BugsnagReactNative (from `../node_modules/bugsnag-react-native`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Firebase/Auth (~> 5.15.0)
@@ -289,6 +303,8 @@ SPEC REPOS:
     - SSZipArchive
 
 EXTERNAL SOURCES:
+  BugsnagReactNative:
+    :path: "../node_modules/bugsnag-react-native"
   CodePush:
     :path: "../node_modules/react-native-code-push"
   DoubleConversion:
@@ -314,7 +330,8 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  CodePush: b4c024dfc7b1f44434aaadf9f6763bb22e243980
+  BugsnagReactNative: 0acbd9b570c54a41a836f145f788ff28e652c831
+  CodePush: 338a023972c64636503e8886cf4cb6ec27dd1c01
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -325,14 +342,14 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 58043a1c2d2c91efdaa8d8f385cdbaa2ce750cfe
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseMessaging: b412996f6a09337d232bb3a6676ce4d1f353d024
-  Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
+  Folly: de497beb10f102453a1afa9edbf8cf8a251890de
+  glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
@@ -340,13 +357,13 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  React: 67899bbb285ceb9b4ee1c88b3991602ba5772ad2
+  React: 9d063e2f356c8cd2f54dd550d4507740037cbabe
   react-native-google-maps: 544d2208b09a7e2ec2c6112c8a97c4e7f921f74d
   react-native-maps: 9469741f77f270c605cafec603ce47327dc5b5f8
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
-  yoga: 192d724e53380b783e09b7d687a55cd8ed5188be
+  yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: c70b0c806f07eb40d0b2069ab29b1952d6837400
+PODFILE CHECKSUM: a1a7b542f8bfd087f649414a3c2c91cfde3efd5c
 
 COCOAPODS: 1.6.0.beta.2

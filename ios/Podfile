@@ -46,6 +46,8 @@ target 'BaliBike' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'BugsnagReactNative', :path => '../node_modules/bugsnag-react-native'
+
 end
 
 post_install do |installer|
@@ -55,7 +57,7 @@ post_install do |installer|
         config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
       end
     end
-    if %w(React yoga).include? target.name
+    if target.name == "React"
       target.remove_from_project
     end
   end
