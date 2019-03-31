@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+yes | cp -a node_modules_patch/* node_modules
+
 case $TARGET_PLATFORM in
     ios)
         brew install leiningen

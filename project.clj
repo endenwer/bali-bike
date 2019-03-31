@@ -63,6 +63,7 @@
                                                                    :optimize-constants true
                                                                    :optimizations :simple
                                                                    :target :nodejs
+                                                                   :source-map "index.ios.js.map"
                                                                    :closure-defines {"goog.DEBUG" false
                                                                                      bali-bike.api/api-url "https://api.balibike.app"}}}
                                                    {:id           "android"
@@ -74,6 +75,7 @@
                                                                    :optimize-constants true
                                                                    :optimizations :simple
                                                                    :target :nodejs
+                                                                   :source-map "index.android.js.map"
                                                                    :closure-defines {"goog.DEBUG" false
                                                                                      bali-bike.api/api-url "https://api.balibike.app"}}}
 #_($PROD_PROFILES$)]}}

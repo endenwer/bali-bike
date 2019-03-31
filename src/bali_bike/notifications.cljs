@@ -3,7 +3,8 @@
             [promesa.core :as p :refer-macros [alet]]
             [re-frame.core :as rf]
             [goog.object :as object]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [bali-bike.bugsnag :as bugsnag]))
 
 (defn request-permission []
   (alet [enabled (p/await (p/promise (.hasPermission (.messaging rn/firebase))))]
@@ -32,5 +33,6 @@
    (fn [event] (when event (handle-notification-event event)))))
 
 (defn init []
+  (bugsnag/leave-breadcrumb "init-notifications")
   (on-refresh-fcm-token)
   (on-notification-opened))

@@ -3,6 +3,7 @@
             [bali-bike.auth :as auth]
             [re-frame.core :as rf]
             [promesa.core :as p :refer-macros [alet]]
+            [bali-bike.bugsnag :as bugsnag]
             [clojure.string]))
 
 (goog-define api-url "http://localhost:4000")
@@ -48,11 +49,15 @@
 (defn send-graphql
   [{:keys [query mutation callback-event]}]
   (let [parsed-query (if query (parse-query query) (str "mutation " (parse-query mutation)))]
+    (bugsnag/leave-breadcrumb "graphql-request" {:query-name (or (first query) (first mutation))})
     (->
      (alet [response (p/await (post {:query parsed-query}))]
            (when callback-event
              (rf/dispatch [callback-event (:body response)])))
-     (p/catch (fn [error] (.log js/console (clj->js error)))))))
+     (p/catch (fn [error]
+                (if js/goog.DEBUG
+                  (.log js/console (clj->js error))
+                  (bugsnag/notify (clj->js error))))))))
 
 (defn get-address-from-coordinates
   [lat lng]
@@ -61,4 +66,7 @@
     (->
      (alet [response (p/await (http/POST url params))]
            (:formatted_address (first (get-in response [:body :results]))))
-     (p/catch (fn [error] (.log js/console error))))))
+     (p/catch (fn [error]
+                (if js/goog.DEBUG
+                  (.log js/console (clj->js error))
+                  (bugsnag/notify (clj->js error))))))))

@@ -15,6 +15,18 @@
    [bali-bike.events.notifications :as notification-events]
    [bali-bike.rn :as rn]))
 
+(def global-interceptors [interceptors/leave-breadcrumb])
+
+(defn event-db
+  ([event handler] (rf/reg-event-db event global-interceptors handler))
+  ([event interceptors handler]
+   (rf/reg-event-db event (concat global-interceptors interceptors) handler)))
+
+(defn event-fx
+  ([event handler] (rf/reg-event-fx event global-interceptors handler))
+  ([event interceptors handler]
+   (rf/reg-event-fx event (concat global-interceptors interceptors) handler)))
+
 (rf/reg-fx
  :navigation/navigate-to
  (fn [view-id]
@@ -30,17 +42,17 @@
  (fn [view-id]
    (routing/replace-route view-id)))
 
-(rf/reg-event-fx
+(event-fx
  :navigate-to
  (fn [_ [_ view-id]]
    {:navigation/navigate-to view-id}))
 
-(rf/reg-event-fx
+(event-fx
  :navigate-back
  (fn [_ _]
    {:navigation/navigate-back nil}))
 
-(rf/reg-event-fx
+(event-fx
  :set-area-filter-id
  (fn [{:keys [db]} [_ area-id]]
    (let [current-area-id (:area-filter-id db)]
@@ -53,7 +65,7 @@
         :navigation/navigate-back nil
         :dispatch [:load-bikes]}))))
 
-(rf/reg-event-fx
+(event-fx
  :set-model-filter-id
  (fn [{:keys [db]} [_ model-id]]
    (let [current-model-id (:model-filter-id db)]
@@ -66,7 +78,7 @@
         :navigation/navigate-back nil
         :dispatch [:load-bikes]}))))
 
-(rf/reg-event-fx
+(event-fx
  :set-dates-range
  (fn [{:keys [db]} [_ start-date end-date]]
    (let [dates-range (:dates-range db)
@@ -79,14 +91,14 @@
         :dispatch [:load-bikes]}))))
 
 
-(rf/reg-event-fx
+(event-fx
  :initialize-db
  (fn [_ _]
    {:db edb/initial-app-db
     :api/send-graphql {:query [:constants [:models [:id :value] :areas [:id :value]]]
                        :callback-event :on-constants-loaded}}))
 
-(rf/reg-event-db
+(event-db
  :on-constants-loaded
  [interceptors/transform-event-to-kebab]
  (fn [db [_ {:keys [data]}]]
@@ -96,20 +108,20 @@
      (assoc db :constants {:models models :areas areas}))))
 
 ;; bike handlers
-(rf/reg-event-fx :load-bikes bike-events/load-bikes-event)
-(rf/reg-event-fx :load-saved-bikes bike-events/load-saved-bikes-event)
-(rf/reg-event-fx :add-bike-to-saved bike-events/add-bike-to-saved-event)
-(rf/reg-event-fx :remove-bike-from-saved bike-events/remove-bike-from-saved-event)
-(rf/reg-event-fx :navigate-to-bike bike-events/navigate-to-bike-event)
-(rf/reg-event-db
+(event-fx :load-bikes bike-events/load-bikes-event)
+(event-fx :load-saved-bikes bike-events/load-saved-bikes-event)
+(event-fx :add-bike-to-saved bike-events/add-bike-to-saved-event)
+(event-fx :remove-bike-from-saved bike-events/remove-bike-from-saved-event)
+(event-fx :navigate-to-bike bike-events/navigate-to-bike-event)
+(event-db
  :on-bike-loaded
  [interceptors/transform-event-to-kebab]
  bike-events/on-bike-loaded-event)
-(rf/reg-event-db
+(event-db
  :on-bikes-loaded
  [interceptors/transform-event-to-kebab]
  bike-events/on-bikes-loaded-event)
-(rf/reg-event-db
+(event-db
  :on-saved-bikes-loaded
  [interceptors/transform-event-to-kebab]
  bike-events/on-saved-bikes-loaded-event)
@@ -119,35 +131,35 @@
 (rf/reg-fx :auth/sign-in-with-google auth/sign-in-with-google)
 (rf/reg-fx :auth/sign-out auth/sign-out)
 (rf/reg-fx :splash-screen/hide #(.hide rn/splash-screen))
-(rf/reg-event-fx :user-signed-in auth-events/user-signed-in-event)
-(rf/reg-event-fx :signin-with-google auth-events/sign-in-with-google-event)
-(rf/reg-event-fx :sign-out auth-events/sign-out-event)
-(rf/reg-event-fx :auth-state-changed
+(event-fx :user-signed-in auth-events/user-signed-in-event)
+(event-fx :signin-with-google auth-events/sign-in-with-google-event)
+(event-fx :sign-out auth-events/sign-out-event)
+(event-fx :auth-state-changed
  [interceptors/transform-event-to-kebab]
  auth-events/auth-state-changed-event)
 
 ;; booking handlers
 
 (rf/reg-fx :booking/load-delivery-address booking-events/load-delivery-address)
-(rf/reg-event-fx :create-booking booking-events/create-booking-event)
-(rf/reg-event-fx :load-bookings booking-events/load-bookings-event)
-(rf/reg-event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
-(rf/reg-event-fx :set-delivery-location booking-events/set-delivery-location-event)
-(rf/reg-event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
-(rf/reg-event-fx :set-new-booking-dates-range booking-events/set-new-booking-dates-range-event)
-(rf/reg-event-fx :cancel-booking booking-events/cancel-booking-event)
-(rf/reg-event-fx :confirm-booking booking-events/confirm-booking-event)
-(rf/reg-event-fx :update-delivery-region
+(event-fx :create-booking booking-events/create-booking-event)
+(event-fx :load-bookings booking-events/load-bookings-event)
+(event-fx :navigate-to-booking booking-events/navigate-to-booking-event)
+(event-fx :set-delivery-location booking-events/set-delivery-location-event)
+(event-fx :navigate-to-new-booking booking-events/navigate-to-new-booking-event)
+(event-fx :set-new-booking-dates-range booking-events/set-new-booking-dates-range-event)
+(event-fx :cancel-booking booking-events/cancel-booking-event)
+(event-fx :confirm-booking booking-events/confirm-booking-event)
+(event-fx :update-delivery-region
                  [interceptors/transform-event-to-kebab]
                  booking-events/update-delivery-region-event)
-(rf/reg-event-fx :on-booking-created
+(event-fx :on-booking-created
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-booking-created-event)
-(rf/reg-event-db :update-delivery-location booking-events/update-delivery-location-event)
-(rf/reg-event-db :on-booking-loaded
+(event-db :update-delivery-location booking-events/update-delivery-location-event)
+(event-db :on-booking-loaded
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-booking-loaded-event)
-(rf/reg-event-db :on-bookings-loaded
+(event-db :on-bookings-loaded
                  [interceptors/transform-event-to-kebab]
                  booking-events/on-bookings-loaded-event)
 
@@ -156,15 +168,15 @@
 
 ;; chats handlers
 
-(rf/reg-event-fx :listen-chats chat-events/listen-chats-event)
-(rf/reg-event-fx :navigate-to-chat chat-events/navigate-to-chat-event)
-(rf/reg-event-fx :navigate-to-chat-from-booking chat-events/navigate-to-chat-from-booking-event)
-(rf/reg-event-fx :listen-messages chat-events/listen-messages-event)
-(rf/reg-event-fx :send-message chat-events/send-message-event)
-(rf/reg-event-fx :unlisten-messages chat-events/unlisten-messages-event)
-(rf/reg-event-fx :create-chat chat-events/create-chat-event)
-(rf/reg-event-db :on-messages-updated chat-events/on-messages-updated-event)
-(rf/reg-event-db :on-chats-updated chat-events/on-chats-updated-event)
+(event-fx :listen-chats chat-events/listen-chats-event)
+(event-fx :navigate-to-chat chat-events/navigate-to-chat-event)
+(event-fx :navigate-to-chat-from-booking chat-events/navigate-to-chat-from-booking-event)
+(event-fx :listen-messages chat-events/listen-messages-event)
+(event-fx :send-message chat-events/send-message-event)
+(event-fx :unlisten-messages chat-events/unlisten-messages-event)
+(event-fx :create-chat chat-events/create-chat-event)
+(event-db :on-messages-updated chat-events/on-messages-updated-event)
+(event-db :on-chats-updated chat-events/on-chats-updated-event)
 
 ;; firestore handlers
 
@@ -183,8 +195,8 @@
            notifications/handle-initial-push-notification)
 (rf/reg-fx :notifications/request-permission notifications/request-permission)
 
-(rf/reg-event-fx :set-fcm-token notification-events/set-fcm-token-event)
-(rf/reg-event-fx
+(event-fx :set-fcm-token notification-events/set-fcm-token-event)
+(event-fx
  :notification-event-received
  [interceptors/transform-event-to-kebab]
  notification-events/notification-event-received-event)

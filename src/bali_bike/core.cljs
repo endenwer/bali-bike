@@ -14,6 +14,7 @@
 
 (defn init []
   (bugsnag/init)
+  (bugsnag/leave-breadcrumb "init-app")
   (dispatch-sync [:initialize-db])
   (auth/listen-user-auth)
   (notifications/init)

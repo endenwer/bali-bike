@@ -1,7 +1,8 @@
 (ns bali-bike.auth
   (:require [promesa.core :as p :refer-macros [alet]]
             [bali-bike.rn :as rn]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [bali-bike.bugsnag :as bugsnag]))
 
 (def user-instance (atom nil))
 
@@ -19,7 +20,10 @@
                        rn/firebase (.-idToken data) (.-accessToken data))
           current-user (p/await (.signInWithCredential (.auth rn/firebase) credentials))]
          (rf/dispatch [:user-signed-in]))
-   (p/catch (fn [error] (.log js/console error)))))
+   (p/catch (fn [error]
+              (if js/goog.DEBUG
+                (.log js/console (clj->js error))
+                (bugsnag/notify (clj->js error)))))))
 
 (defn- auth-state-changed
   [user]
@@ -30,17 +34,22 @@
     (rf/dispatch [:auth-state-changed user])))
 
 (defn listen-user-auth []
+  (bugsnag/leave-breadcrumb "init-user-listener")
   (let [auth (.auth rn/firebase)]
     (.configure rn/google-signin)
     (.onAuthStateChanged auth (fn [user]
                                 (reset! user-instance user)
                                 (if user
-                                  (alet [user-data (js->clj (.toJSON user))
-                                         parsed-token (p/await (.getIdTokenResult user))
-                                         user-role (.-claims.role parsed-token)
-                                         user-with-role (assoc user-data :role user-role)]
-                                        (auth-state-changed user-with-role))
-                                  (auth-state-changed nil))))))
+                                  (do
+                                    (bugsnag/leave-breadcrumb "auth-state-changed-nil")
+                                    (alet [user-data (js->clj (.toJSON user))
+                                           parsed-token (p/await (.getIdTokenResult user))
+                                           user-role (.-claims.role parsed-token)
+                                           user-with-role (assoc user-data :role user-role)]
+                                          (auth-state-changed user-with-role)))
+                                  (do
+                                    (bugsnag/leave-breadcrumb "auht-state-changed")
+                                    (auth-state-changed nil)))))))
 
 (defn sign-out []
   (let [auth (.auth rn/firebase)]
