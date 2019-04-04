@@ -36,4 +36,4 @@
     [view {:style {:margin-top 5 :margin-left 5}}
      [bike-title/main bike-data]
      [bike-rating/main bike-data]
-     [bike-price/main bike-data]]]])
+     [bike-price/main {:bike bike-data :bold? false}]]]])

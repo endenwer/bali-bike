@@ -20,7 +20,7 @@
                   :align-items "center"
                   :justify-content "space-between"}}
     [view
-     [bike-price/main bike-data]
+     [bike-price/main {:bike bike-data :bold? true}]
      [bike-rating/main bike-data]]
     [button {:title "Book"
              :on-press #(rf/dispatch [:navigate-to-new-booking])
