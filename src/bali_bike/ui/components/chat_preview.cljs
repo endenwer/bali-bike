@@ -25,5 +25,10 @@
                      :margin-bottom 5
                      :flex 1}}
        (get-in chat [:another-user :name])]
-      [text {:style {:color colors/concrete}} (.calendar (rn/moment (:timestamp chat)))]]
+      [text {:style {:color colors/concrete}} (.calendar
+                                               (rn/moment (:timestamp chat))
+                                               nil
+                                               #js {:sameDay "LT"
+                                                    :lastDay "DD/MM/YYYY"
+                                                    :lastWeek "DD/MM/YYYY"})]]
      [text {:number-of-lines 1 :style {:flex 1}} (:lastMessage chat)]]]])
