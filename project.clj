@@ -11,7 +11,7 @@
                            [keechma/entitydb "0.1.5"]
                            [camel-snake-kebab "0.4.0"]
                            [funcool/promesa "2.0.0-SNAPSHOT"]
-                           [cljs-http "0.1.45"]]
+                           [cljs-http "0.1.46"]]
             :plugins [[lein-cljsbuild "1.1.4"]
                       [lein-figwheel "0.5.14"]
                       [lein-re-frisk "0.5.8"]]

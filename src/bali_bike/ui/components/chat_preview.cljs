@@ -7,7 +7,8 @@
 
 (defn main
   [chat]
-  [touchable-highlight {:on-press #(rf/dispatch [:navigate-to-chat (:id chat)])}
+  [touchable-highlight {:on-press #(rf/dispatch [:navigate-to-chat (:id chat)])
+                        :underlay-color "transparent"}
    [view {:style {:flex-direction "row"
                   :justify-content "space-between"
                   :margin-top 10}}

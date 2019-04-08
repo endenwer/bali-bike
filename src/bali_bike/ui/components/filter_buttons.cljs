@@ -28,7 +28,8 @@
 (defn- render-button
   [{:keys [title is-active filter-screen-name]}]
   [touchable-highlight
-   {:on-press #(rf/dispatch [:navigate-to filter-screen-name]) :style (button-styles is-active)}
+   {:on-press #(rf/dispatch [:navigate-to filter-screen-name]) :style (button-styles is-active)
+    :underlay-color "transparent"}
    [text {:style (button-text-styles is-active)} title]])
 
 

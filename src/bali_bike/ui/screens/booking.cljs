@@ -47,7 +47,8 @@
                  :size "medium"}]
    [text {:style {:font-weight "bold" :flex 1 :margin-left 10}} (:name user)]
    [touchable-highlight
-    {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])}
+    {:on-press #(rf/dispatch [:navigate-to-chat-from-booking booking-id])
+     :underlay-color "transparent"}
     [text {:style {:color colors/turquoise}} "SEND MESSAGE"]]])
 
 (defn render-loading []

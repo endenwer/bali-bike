@@ -46,7 +46,8 @@
                   :align-items "center"
                   :margin-bottom 5}}
     [text {:style {:font-weight "bold"}} title]
-    [touchable-highlight {:on-press on-press}
+    [touchable-highlight {:on-press on-press
+                          :underlay-color "transparent"}
      [text {:style {:color colors/turquoise}} on-press-text]]]
    [text value]])
 

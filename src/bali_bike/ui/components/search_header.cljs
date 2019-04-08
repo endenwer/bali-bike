@@ -10,7 +10,8 @@
   (r/with-let [model-filter-id (rf/subscribe [:model-filter-id])
                constants (rf/subscribe [:constants])]
     (let [model (get-in @constants [:models @model-filter-id])]
-      [touchable-highlight {:on-press #(rf/dispatch [:navigate-to :model-filter])}
+      [touchable-highlight {:on-press #(rf/dispatch [:navigate-to :model-filter])
+                            :underlay-color "transparent"}
        [view {:style {:flex-direction "row"
                       :align-self "stretch"
                       :justify-content "flex-start"
