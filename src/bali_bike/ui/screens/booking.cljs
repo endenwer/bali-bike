@@ -99,6 +99,7 @@
                                             :on-press-text "SHOW MAP"
                                             :value (:delivery-location-address @booking-data)}]
               [booking-total-price/main {:monthly-price (:monthly-price @booking-data)
+                                         :weekly-price (:weekly-price @booking-data)
                                          :daily-price (:daily-price @booking-data)
                                          :start-date (:start-date @booking-data)
                                          :end-date (:end-date @booking-data)}]])]]

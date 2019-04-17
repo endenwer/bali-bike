@@ -72,6 +72,7 @@
                                   (:address delivery-location)
                                   "Choose delivery location")}]
         [booking-total-price/main {:monthly-price (:monthly-price @current-bike)
+                                   :weekly-price (:weekly-price @current-bike)
                                    :daily-price (:daily-price @current-bike)
                                    :start-date (:start-date dates-range)
                                    :end-date (:end-date dates-range)}]]

@@ -6,12 +6,29 @@
             [bali-bike.ui.components.common :refer [text]]
             [bali-bike.colors :as colors]))
 
+(defn get-units
+  [{:keys [days months]}]
+  (cond
+    (> months 0) "month"
+    (> (quot days 7) 0) "week"
+    :else "day"))
+
+(defn get-price
+  [{:keys [daily-price weekly-price monthly-price]} {:keys [days months]}]
+  (cond
+    (> months 0) monthly-price
+    (> (quot days 7) 0) weekly-price
+    :else daily-price))
+
 (defn main
   [{:keys [bike bold?]}]
   (r/with-let [dates-range (rf/subscribe [:dates-range])]
     (let [dates-diff (utils/get-dates-diff @dates-range)
-          units (if (> (:months dates-diff) 0) "month" "day")
-          price (if (> (:months dates-diff) 0) (:monthly-price bike) (:daily-price bike))]
+          days (:days dates-diff)
+          weeks (quot days 7)
+          months (:months dates-diff)
+          units (get-units dates-diff)
+          price (get-price bike dates-diff)]
       [view {:style {:flex-direction "row" :font-weight "600"}}
        (if bold?
          [:<>

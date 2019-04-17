@@ -358,12 +358,12 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 9d063e2f356c8cd2f54dd550d4507740037cbabe
-  react-native-google-maps: 544d2208b09a7e2ec2c6112c8a97c4e7f921f74d
-  react-native-maps: 9469741f77f270c605cafec603ce47327dc5b5f8
+  react-native-google-maps: dd3cee2ea5d77ffba4f03b1fd64891e5113b3193
+  react-native-maps: 7525a32bcd025af8cf3b6c469af9b8758245db72
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
 PODFILE CHECKSUM: a1a7b542f8bfd087f649414a3c2c91cfde3efd5c
 
-COCOAPODS: 1.6.0.beta.2
+COCOAPODS: 1.7.0.beta.3

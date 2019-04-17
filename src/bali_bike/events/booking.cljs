@@ -8,7 +8,8 @@
 (defn booking-full-data-query
   [user-role]
   (let [base-query [:id :startDate :endDate :status
-                    :monthlyPrice :dailyPrice :totalPrice
+                    :monthlyPrice :dailyPrice
+                    :weeklyPrice :totalPrice
                     :deliveryLocationLongitude
                     :deliveryLocationLongitudeDelta
                     :deliveryLocationLatitude

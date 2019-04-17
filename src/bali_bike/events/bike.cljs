@@ -9,7 +9,8 @@
   [{:keys [db]} [_ bike-id]]
   {:db (edb/insert-named-item db :bikes :current {:id bike-id} {:loading? true})
    :api/send-graphql {:query [:bike {:id bike-id} [:id :modelId :photos :rating
-                                                   :dailyPrice :monthlyPrice :reviewsCount
+                                                   :dailyPrice :monthlyPrice
+                                                   :weeklyPrice :reviewsCount
                                                    :mileage :manufactureYear :saved
                                                    :reviews [:id :rating :comment]
                                                    :bookings [:id :startDate :endDate]]]
@@ -46,6 +47,7 @@
                                                  :endDate (:end-date dates-range)}))
                            [:id :modelId :photos
                             :dailyPrice :monthlyPrice
+                            :weeklyPrice
                             :rating :reviewsCount
                             :mileage :manufactureYear :saved]]
                           :callback-event :on-bikes-loaded}})))
@@ -59,6 +61,7 @@
   {:db (edb/insert-meta db :bikes :saved {:loading? true})
    :api/send-graphql {:query [:savedBikes [:id :modelId :photos
                                            :dailyPrice :monthlyPrice
+                                           :weeklyPrice
                                            :rating :reviewsCount
                                            :mileage :manufactureYear :saved]]
                       :callback-event :on-saved-bikes-loaded}})
