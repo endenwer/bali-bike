@@ -24,16 +24,18 @@
                              :right 0}}]))
 
 (defn main [bike-data]
-  [touchable-highlight
-   {:on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])
-    :underlay-color "transparent"}
-   [view {:flex 1 :margin-bottom 15 :margin-top 10}
-    [bike-photos-swiper/main {:photos (:photos bike-data) :image-styles {:border-radius 5}}]
-    [render-save-button {:saved (:saved bike-data)
-                         :on-press
-                         #(rf/dispatch
-                           [(if (:saved bike-data) :remove-bike-from-saved :add-bike-to-saved)
-                            (:id bike-data)])}]
+  [view {:flex 1 :margin-bottom 15 :margin-top 10}
+   [bike-photos-swiper/main {:photos (:photos bike-data)
+                             :on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])
+                             :image-styles {:border-radius 5}}]
+   [render-save-button {:saved (:saved bike-data)
+                        :on-press
+                        #(rf/dispatch
+                          [(if (:saved bike-data) :remove-bike-from-saved :add-bike-to-saved)
+                           (:id bike-data)])}]
+   [touchable-highlight
+    {:on-press #(rf/dispatch [:navigate-to-bike (:id bike-data)])
+     :underlay-color "transparent"}
     [view {:style {:margin-top 5 :margin-left 5}}
      [bike-title/main bike-data]
      [bike-rating/main bike-data]
