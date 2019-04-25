@@ -30,10 +30,12 @@
           units (get-units dates-diff)
           price (get-price bike dates-diff)]
       [view {:style {:flex-direction "row" :font-weight "600"}}
-       (if bold?
-         [:<>
-          [text {:style {:font-weight "bold"}} (str "Rp " (utils/format-number price))]
-          [text {:style {:color colors/silver :text-transform "uppercase"}} (str " /" units)]]
-         [:<>
-          [text (str "Rp " (utils/format-number price))]
-          [text  (str " per " units)]])])))
+       (if price
+         (if bold?
+           [:<>
+            [text {:style {:font-weight "bold"}} (str "Rp " (utils/format-number price))]
+            [text {:style {:color colors/silver :text-transform "uppercase"}} (str " /" units)]]
+           [:<>
+            [text (str "Rp " (utils/format-number price))]
+            [text  (str " per " units)]])
+         [text "Ask for price"])])))

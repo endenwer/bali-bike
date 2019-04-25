@@ -1,5 +1,5 @@
 (ns bali-bike.ui.screens.bike
-  (:require [bali-bike.rn :refer [view scroll-view safe-area-view rating]]
+  (:require [bali-bike.rn :as rn :refer [view scroll-view safe-area-view rating icon]]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.ui.components.property-item :as property-item]
@@ -22,18 +22,27 @@
     [view
      [bike-price/main {:bike bike-data :bold? true}]
      [bike-rating/main bike-data]]
-    [button {:title "Book"
-             :on-press #(rf/dispatch [:navigate-to-new-booking])
-             :title-style {:font-weight "bold" :margin-horizontal 20}
-             :button-style {:background-color colors/alizarin}}]]])
+    (if (:only-contacts bike-data)
+      [button {:title "Whatsapp"
+               :icon #(r/as-element [icon {:type "font-awesome"
+                                           :name "whatsapp"
+                                           :color colors/emerald}])
+               :on-press #(.openURL rn/Linking (str "whatsapp://send?phone=" (:whatsapp bike-data)))
+               :title-style {:font-weight "bold" :margin-left 5 :color colors/emerald}
+               :type "outline"
+               :button-style {:border-color colors/emerald}}]
+      [button {:title "Book"
+               :on-press #(rf/dispatch [:navigate-to-new-booking])
+               :title-style {:font-weight "bold" :margin-horizontal 20}
+               :button-style {:background-color colors/alizarin}}])]])
 
 (defn render-bike-info
   [bike-data]
   [view {:style {:flex 1 :margin-bottom 30}}
    [bike-title/main bike-data]
    [view {:style {:margin-top 10}}
-    [property-item/main "Manufacture year" (:manufacture-year bike-data)]
-    [property-item/main "Mileage" (:mileage bike-data)]]])
+    [property-item/main "Manufacture year" (or (:manufacture-year bike-data) "-")]
+    [property-item/main "Mileage" (or (:mileage bike-data) "-")]]])
 
 (defn main []
   (r/with-let [bike-data (rf/subscribe [:current-bike])]
@@ -48,4 +57,5 @@
          ; TODO: implement review
          ;(when-not (:loading? bike-meta) [reviews-list/main (get-reviews)])
          ]]
-       [render-bottom @bike-data]])))
+       (when-not (:loading? bike-meta)
+         [render-bottom @bike-data])])))

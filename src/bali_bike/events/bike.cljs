@@ -12,9 +12,9 @@
                                                    :dailyPrice :monthlyPrice
                                                    :weeklyPrice :reviewsCount
                                                    :mileage :manufactureYear :saved
+                                                   :onlyContacts :whatsapp
                                                    :reviews [:id :rating :comment]
                                                    :bookings [:id :startDate :endDate]]]
-
                       :callback-event :on-bike-loaded}
    :navigation/navigate-to :bike})
 
