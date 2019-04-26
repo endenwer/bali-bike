@@ -42,7 +42,9 @@
    [bike-title/main bike-data]
    [view {:style {:margin-top 10}}
     [property-item/main "Manufacture year" (or (:manufacture-year bike-data) "-")]
-    [property-item/main "Mileage" (or (:mileage bike-data) "-")]]])
+    [property-item/main "Mileage" (or (:mileage bike-data) "-")]
+    (when (:whatsapp bike-data)
+      [property-item/with-icon "whatsapp" (:whatsapp bike-data)])]])
 
 (defn main []
   (r/with-let [bike-data (rf/subscribe [:current-bike])]
