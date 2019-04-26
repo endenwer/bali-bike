@@ -1,5 +1,5 @@
 (ns bali-bike.ui.screens.bike
-  (:require [bali-bike.rn :as rn :refer [view scroll-view safe-area-view rating icon]]
+  (:require [bali-bike.rn :as rn :refer [view scroll-view safe-area-view rating icon overlay]]
             [bali-bike.ui.components.bike-photos-swiper :as bike-photos-swiper]
             [bali-bike.ui.components.bike-title :as bike-title]
             [bali-bike.ui.components.property-item :as property-item]
@@ -12,29 +12,45 @@
             [re-frame.core :as rf]))
 
 (defn render-bottom [bike-data]
-  [safe-area-view
-   [view {:style {:flex-direction "row"
-                  :border-top-width 3
-                  :border-color colors/clouds
-                  :padding 10
-                  :align-items "center"
-                  :justify-content "space-between"}}
+  (r/with-let [show-overlay (r/atom false)]
     [view
-     [bike-price/main {:bike bike-data :bold? true}]
-     [bike-rating/main bike-data]]
-    (if (:only-contacts bike-data)
-      [button {:title "Whatsapp"
-               :icon #(r/as-element [icon {:type "font-awesome"
-                                           :name "whatsapp"
-                                           :color colors/emerald}])
-               :on-press #(.openURL rn/Linking (str "whatsapp://send?phone=" (:whatsapp bike-data)))
-               :title-style {:font-weight "bold" :margin-left 5 :color colors/emerald}
-               :type "outline"
-               :button-style {:border-color colors/emerald}}]
-      [button {:title "Book"
-               :on-press #(rf/dispatch [:navigate-to-new-booking])
-               :title-style {:font-weight "bold" :margin-horizontal 20}
-               :button-style {:background-color colors/alizarin}}])]])
+     [overlay {:is-visible @show-overlay}
+      [view {:style {:flex 1
+                     :justify-content "center"
+                     :align-items "center"}}
+       [text "Whatsapp number copied."]
+       [button {:on-press #(reset! show-overlay false)
+                :title-style {:margin-horizontal 20}
+                :container-style {:margin-top 20}
+                :title "OK"}]]]
+     [safe-area-view
+      [view {:style {:flex-direction "row"
+                     :border-top-width 3
+                     :border-color colors/clouds
+                     :padding 10
+                     :align-items "center"
+                     :justify-content "space-between"}}
+       [view
+        [bike-price/main {:bike bike-data :bold? true}]
+        [bike-rating/main bike-data]]
+       (if (:only-contacts bike-data)
+         [button {:title "Whatsapp"
+                  :icon #(r/as-element [icon {:type "font-awesome"
+                                              :name "whatsapp"
+                                              :color colors/emerald}])
+                  :on-press (fn []
+                              (.catch
+                               (.openURL rn/Linking (str "whatsapp://send?phone=" (:whatsapp bike-data)))
+                               #(do
+                                  (.setString rn/Clipboard (:whatsapp bike-data))
+                                  (reset! show-overlay true))))
+                  :title-style {:font-weight "bold" :margin-left 5 :color colors/emerald}
+                  :type "outline"
+                  :button-style {:border-color colors/emerald}}]
+         [button {:title "Book"
+                  :on-press #(rf/dispatch [:navigate-to-new-booking])
+                  :title-style {:font-weight "bold" :margin-horizontal 20}
+                  :button-style {:background-color colors/alizarin}}])]]]))
 
 (defn render-bike-info
   [bike-data]

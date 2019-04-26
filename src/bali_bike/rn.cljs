@@ -6,6 +6,7 @@
 (def ReactNative (js/require "react-native"))
 (def Platform (.-Platform ReactNative))
 (def Linking (.-Linking ReactNative))
+(def Clipboard (.-Clipboard ReactNative))
 (def RefreshControl (.-RefreshControl ReactNative))
 (def async-storage (.-AsyncStorage ReactNative))
 (def app-registry (.-AppRegistry ReactNative))
@@ -31,6 +32,7 @@
 (def avatar (r/adapt-react-class (.-Avatar ReactNativeElements)))
 (def text (r/adapt-react-class (.-Text ReactNativeElements)))
 (def normalize (.-normalize ReactNativeElements))
+(def overlay (r/adapt-react-class (.-Overlay ReactNativeElements)))
 
 ; icons
 
